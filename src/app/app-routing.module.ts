@@ -149,6 +149,11 @@ const routes: Routes = [
     component: AuthComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'auth/signin',
+        pathMatch: 'full'
+      },
+      {
         path: 'auth',
         loadChildren: () => import('./demo/pages/authentication/authentication.module').then(module => module.AuthenticationModule)
       },

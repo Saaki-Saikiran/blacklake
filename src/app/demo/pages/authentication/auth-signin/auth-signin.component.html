@@ -16,9 +16,11 @@
               <input type="checkbox" class="custom-control-input" id="customCheck1">
               <label class="custom-control-label" for="customCheck1">Save credentials.</label>
             </div>
-            <button class="btn btn-block btn-primary mb-4">Signin</button>
-            <p class="mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/reset-password']" class="f-w-400">Reset</a></p>
-            <p class="mb-0 text-muted">Don’t have an account? <a [routerLink]="['/auth/signup']" class="f-w-400">Signup</a></p>
+            <button class="btn btn-block btn-primary mb-4" (click)="signin();">Signin</button>
+            <p class="mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/reset-password']"
+                class="f-w-400">Reset</a></p>
+            <p class="mb-0 text-muted">Don’t have an account? <a [routerLink]="['/auth/signup']"
+                class="f-w-400">Signup</a></p>
           </div>
         </div>
       </div>
