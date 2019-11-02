@@ -6,11 +6,30 @@ import { AuthComponent } from './theme/layout/auth/auth.component';
 const routes: Routes = [
   {
     path: '',
+    component: AuthComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'auth/signin',
+        pathMatch: 'full'
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('./demo/pages/authentication/authentication.module').then(module => module.AuthenticationModule)
+      },
+      {
+        path: 'maintenance',
+        loadChildren: () => import('./demo/pages/maintenance/maintenance.module').then(module => module.MaintenanceModule)
+      }
+    ]
+  },
+  {
+    path: '',
     component: AdminComponent,
     children: [
       {
         path: '',
-        redirectTo: 'admin/user-entry',
+        redirectTo: 'dashboard/analytics',
         pathMatch: 'full'
       },
       {
@@ -33,6 +52,11 @@ const routes: Routes = [
         path: 'dashboard',
         loadChildren: () => import('./demo/dashboard/dashboard.module').then(module => module.DashboardModule)
       },
+      {
+        path: 'usermanagement',
+        loadChildren: () => import('./usermanagement/usermanagement.module').then(module => module.UsermanagementModule)
+      },
+
       {
         path: 'layout',
         loadChildren: () => import('./demo/pages/layout/layout.module').then(module => module.LayoutModule)
@@ -141,25 +165,6 @@ const routes: Routes = [
       {
         path: 'sample-page',
         loadChildren: () => import('./demo/pages/sample-page/sample-page.module').then(module => module.SamplePageModule)
-      }
-    ]
-  },
-  {
-    path: '',
-    component: AuthComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'auth/signin',
-        pathMatch: 'full'
-      },
-      {
-        path: 'auth',
-        loadChildren: () => import('./demo/pages/authentication/authentication.module').then(module => module.AuthenticationModule)
-      },
-      {
-        path: 'maintenance',
-        loadChildren: () => import('./demo/pages/maintenance/maintenance.module').then(module => module.MaintenanceModule)
       }
     ]
   }

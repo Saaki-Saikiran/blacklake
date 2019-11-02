@@ -209,6 +209,24 @@ const NavigationItems = [
           }
         ]
       },
+      {
+        id: 'usermanagement',
+        title: 'User Management',
+        type: 'collapse',
+        icon: 'feather icon-layers',
+        badge: {
+          title: '100+',
+          type: 'badge-success'
+        },
+        children: [
+          {
+            id: 'roles',
+            title: 'Roles',
+            type: 'item',
+            url: '/usermanagement/roles'
+          }
+        ]
+      },
 
 
 

@@ -14,7 +14,7 @@ export class AuthSigninComponent implements OnInit {
   }
 
   signin() {
-    this.router.navigate(['/admin/user-entry']);
+    this.router.navigate(['/dashboard/analytics']);
   }
 
 }
