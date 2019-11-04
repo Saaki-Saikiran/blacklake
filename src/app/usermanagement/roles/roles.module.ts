@@ -6,6 +6,7 @@ import { RolesComponent } from './roles.component';
 import { FormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -13,9 +14,10 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
   imports: [
     CommonModule,
     RolesRoutingModule,
+    SharedModule,
     FormsModule,
     DataTablesModule,
-    SharedModule
+    NgbModule
   ]
 })
 export class RolesModule { }

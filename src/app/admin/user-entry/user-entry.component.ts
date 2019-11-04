@@ -3,7 +3,6 @@ import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from './add-user/add-user.component';
-import { UiModalComponent } from 'src/app/theme/shared/components/modal/ui-modal/ui-modal.component';
 
 @Component({
   selector: 'app-user-entry',
