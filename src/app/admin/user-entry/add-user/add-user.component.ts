@@ -4,9 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 
 @Component({
     selector: 'add-user',
-    templateUrl: 'add-user.component.html',
-    styleUrls: ['add-user.component.scss']
-
+    templateUrl: 'add-user.component.html'
 })
 export class AddUserComponent implements OnInit {
     @Input() public data;

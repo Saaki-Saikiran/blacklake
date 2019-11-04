@@ -97,3 +97,13 @@ File: style.css
 
 // custom
 @import "themes/custom";
+
+.basic-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.bold {
+  font-weight: bold;
+}

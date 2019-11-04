@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RolesComponent } from './roles/roles.component';
 
 
 const routes: Routes = [
@@ -8,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'roles',
-        loadChildren: () => import('./roles/roles.module').then(module => module.RolesModule)
+        component: RolesComponent
       }
     ]
   }
