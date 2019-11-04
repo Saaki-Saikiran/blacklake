@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UserEntryComponent } from './user-entry/user-entry.component';
+import { MeterTypesComponent } from './meter-types/meter-types.component';
 
 
 const routes: Routes = [
@@ -8,11 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: 'user-entry',
-        loadChildren: () => import('./user-entry/user-entry.module').then(module => module.UserEntryModule)
+        component: UserEntryComponent
       },
       {
         path: 'meter-types',
-        loadChildren: () => import('./meter-types/meter-types.module').then(module => module.MeterTypesModule)
+        component: MeterTypesComponent
       }
     ]
   }
