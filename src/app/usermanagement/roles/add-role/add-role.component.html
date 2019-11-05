@@ -1,4 +1,3 @@
-<!-- main app container -->
 <div class="card m-3">
   <h5 class="card-header">{{formHeader}}</h5>
   <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="hideModal()">
@@ -6,20 +5,6 @@
   <div class="card-body">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
-        <!-- <div class="form-group col">
-          <label>Title</label>
-          <select formControlName="title" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-            <option value=""></option>
-            <option value="Mr">Mr</option>
-            <option value="Mrs">Mrs</option>
-            <option value="Miss">Miss</option>
-            <option value="Ms">Ms</option>
-          </select>
-          <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-            <div *ngIf="f.title.errors.required">Title is required</div>
-          </div>
-        </div> -->
         <div class="form-group col">
           <label>Name</label>
           <input type="text" formControlName="name" class="form-control"
@@ -41,180 +26,52 @@
           </div>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
 
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
+      <div formGroupName="menus">
+        <div formArrayName="options">
+          <div *ngFor="let child of userForm.get('menus.options').controls; let i = index">
+            <div [formGroupName]="i">
+              <div class="form-row">
+                <div class="form-group col-4">
+                  <label>{{menuNameItems[i].slug}} </label>
+                </div>
+                <div class="form-group col-2">
+                  <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="add">
+                    <label class="form-check-label" for="exampleCheck1">Create</label>
+                  </div>
+                </div>
+
+                <div class="form-group col-2">
+                  <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck2" formControlName="link">
+                    <label class="form-check-label" for="exampleCheck2">Read</label>
+                  </div>
+                </div>
+
+                <div class="form-group col-2">
+                  <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck3" formControlName="update">
+                    <label class="form-check-label" for="exampleCheck3">Update</label>
+                  </div>
+                </div>
+                <div class="form-group col-2">
+                  <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck4" formControlName="delete">
+                    <label class="form-check-label" for="exampleCheck4">Delete</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-4">
-          <label class="bold">Admin User Entry : </label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-1" value="view" formControlName="myValues" /> &nbsp;
-          <label>View</label>
-        </div>
-        <div class="form-group col-2">
-
-          <input type="checkbox" id="checkbox-2" value="create" formControlName="myValues" />&nbsp;
-          <label>Create</label>
-        </div>
-        <div class="form-group col-2">
-          <input type="checkbox" id="checkbox-3" value="update" formControlName="myValues" />&nbsp;
-          <label>Update</label>
-        </div>
-      </div>
       <div class="text-center">
-        <button class="btn btn-primary mr-1">{{buttonType}}</button>
+        <button class="btn btn-primary mr-1" (click)="submit()">{{buttonType}}</button>
         <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
       </div>
     </form>
+
   </div>
 </div>
