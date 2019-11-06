@@ -1,1 +1,51 @@
-<p>meter-types works!</p>
+<div class="row btn-page">
+  <div class="col-sm-12">
+    <app-card cardTitle="Meter Types" cardClass="card-datatable" [options]="false">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          <button class="btn btn-success btn-sm btn-round has-ripple" (click)="userModal('Add', '')"><i
+              class="feather icon-plus"></i> Add Meter Type</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table datatable id="report-table" class="table table-bordered table-striped mb-0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Meter Type</th>
+              <th>Is Billable</th>
+              <th>Is Common</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>XXX</td>
+              <td>True</td>
+              <td>False</td>
+              <td>Admin</td>
+              <td>
+                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'Sai')">Edit</a>
+                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>YYYY</td>
+              <td>False</td>
+              <td>True</td>
+              <td>User</td>
+              <td>
+                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'kiran')">Edit</a>
+                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

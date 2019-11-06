@@ -9,10 +9,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserEntryComponent } from './user-entry/user-entry.component';
 import { MeterTypesComponent } from './meter-types/meter-types.component';
 import { AddUserComponent } from './user-entry/add-user/add-user.component';
+import { AddMeterTypeComponent } from './meter-types/add-meter-type/add-meter-type.component';
 
 
 @NgModule({
-  declarations: [UserEntryComponent, MeterTypesComponent, AddUserComponent],
+  declarations: [UserEntryComponent, MeterTypesComponent, AddUserComponent, AddMeterTypeComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -21,6 +22,6 @@ import { AddUserComponent } from './user-entry/add-user/add-user.component';
     NgbModule,
     AdminRoutingModule
   ],
-  entryComponents: [AddUserComponent]
+  entryComponents: [AddUserComponent, AddMeterTypeComponent]
 })
 export class AdminModule { }
