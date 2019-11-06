@@ -1,1 +1,51 @@
-<p>map-meter-tenants works!</p>
+<div class="row btn-page">
+  <div class="col-sm-12">
+    <app-card cardTitle="Meters to Tenant" cardClass="card-datatable" [options]="false">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          <button class="btn btn-success btn-sm btn-round has-ripple" (click)="userModal('Add', '')"><i
+              class="feather icon-plus"></i> Map a Meters to Tenant</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table datatable id="report-table" class="table table-bordered table-striped mb-0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>User Name</th>
+              <th>Login ID</th>
+              <th>Role</th>
+              <th>Is Active</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Sai</td>
+              <td>459</td>
+              <td>Admin</td>
+              <td>Yes</td>
+              <td>
+                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'Sai')">Edit</a>
+                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Kiran</td>
+              <td>999</td>
+              <td>User</td>
+              <td>No</td>
+              <td>
+                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'kiran')">Edit</a>
+                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

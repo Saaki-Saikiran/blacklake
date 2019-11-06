@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DeptMetersComponent } from './dept-meters/dept-meters.component';
+import { MapMeterTenantsComponent } from './map-meter-tenants/map-meter-tenants.component';
+import { DgsComponent } from './dgs/dgs.component';
+import { FloorsComponent } from './floors/floors.component';
+import { TenantsComponent } from './tenants/tenants.component';
+import { MetersComponent } from './meters/meters.component';
 
 
 const routes: Routes = [
@@ -8,27 +14,27 @@ const routes: Routes = [
     children: [
       {
         path: 'dept-meters',
-        loadChildren: () => import('./dept-meters/dept-meters.module').then(module => module.DeptMetersModule)
+        component: DeptMetersComponent
       },
       {
         path: 'meters',
-        loadChildren: () => import('./meters/meters.module').then(module => module.MetersModule)
+        component: MetersComponent
       },
       {
         path: 'tenants',
-        loadChildren: () => import('./tenants/tenants.module').then(module => module.TenantsModule)
+        component: TenantsComponent
       },
       {
         path: 'floors',
-        loadChildren: () => import('./floors/floors.module').then(module => module.FloorsModule)
+        component: FloorsComponent
       },
       {
         path: 'dgs',
-        loadChildren: () => import('./dgs/dgs.module').then(module => module.DgsModule)
+        component: DgsComponent
       },
       {
         path: 'map-meter-tenants',
-        loadChildren: () => import('./map-meter-tenants/map-meter-tenants.module').then(module => module.MapMeterTenantsModule)
+        component: MapMeterTenantsComponent
       }
     ]
   }
