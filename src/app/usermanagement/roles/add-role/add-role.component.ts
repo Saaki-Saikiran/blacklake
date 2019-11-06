@@ -36,9 +36,8 @@ export class AddRoleComponent implements OnInit {
         this.menuNameItems = [];
 
         if (this.menus) {
-            var arrkeys = Object.keys(this.menus);
-            this.menus.map((key, value) => {
-                console.log(key, value);
+            var arrkeys = Object.values(this.menus);
+            arrkeys.map((key, value) => {
                 this.menuNameItems.push({
                     "slug": key,
                     "link": false,
@@ -47,6 +46,16 @@ export class AddRoleComponent implements OnInit {
                     "delete": false
                 });
             });
+            // this.menus.map((key, value) => {
+            //     console.log(key, value);
+            //     this.menuNameItems.push({
+            //             "slug": key,
+            //             "link": false,
+            //             "add": false,
+            //             "edit": false,
+            //             "delete": false
+            //     });
+            // });
         }
 
         if (this.data._id === undefined) {
@@ -88,7 +97,7 @@ export class AddRoleComponent implements OnInit {
                 //     // address: new FormControl(this.data.address, [Validators.required]),
                 isActive: new FormControl(this.data.isActive, [Validators.required])
             });
-
+            this.editPatch();
         }
 
         // this.registerForm = this.formBuilder.group({
@@ -136,24 +145,31 @@ export class AddRoleComponent implements OnInit {
 
     editPatch() {
         let data = [
-            { add: true, delete: false, link: false, update: false, slug: "User Entry" },
-            { add: false, delete: false, link: true, update: false, slug: "Meter Types" }
-            , { add: false, delete: false, link: false, update: true, slug: "Dept Meters" }
-            , { add: false, delete: true, link: false, update: false, slug: "Meters" }
-            , { add: true, delete: false, link: false, update: false, slug: "Tenants" }
-            , { add: false, delete: false, link: true, update: false, slug: "Floors" }
-            , { add: false, delete: false, link: false, update: true, slug: "DGs" }
-            , { add: false, delete: true, link: false, update: false, slug: "Map Meters Tenants" }
-        ];
+            { 0: { add: true, delete: false, link: false, update: false, slug: "User Entry" } },
+            {
+                1: { add: false, delete: false, link: true, update: false, slug: "Meter Types" }
+            }, {
+                2: { add: false, delete: false, link: false, update: true, slug: "Dept Meters" }
+            }, {
+                3: { add: false, delete: true, link: false, update: false, slug: "Meters" }
+            }, {
+                4: { add: true, delete: false, link: false, update: false, slug: "Tenants" }
+            }, {
+                5: { add: false, delete: false, link: true, update: false, slug: "Floors" }
+            }, {
+                6: { add: false, delete: false, link: false, update: true, slug: "DGs" }
+            }, {
+                7: { add: false, delete: true, link: false, update: false, slug: "Map Meters Tenants" }
+            }];
         const control = <FormArray>this.userForm.get('menus.options');
-        data.forEach(x => {
+        data.forEach((x, value) => {
             control.push(
                 this.formBuilder.group({
-                    add: x.add,
-                    delete: x.delete,
-                    link: x.link,
-                    update: x.update,
-                    slug: x.slug
+                    add: x[value].add,
+                    delete: x[value].delete,
+                    link: x[value].link,
+                    update: x[value].update,
+                    slug: x[value].slug
                 })
             )
         });
