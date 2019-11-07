@@ -108,7 +108,7 @@ const NavigationItems = [
 
       {
         id: 'bill-creation',
-        title: 'Bill-Creation',
+        title: 'Bill Creation',
         type: 'collapse',
         icon: 'feather icon-layers',
         badge: {

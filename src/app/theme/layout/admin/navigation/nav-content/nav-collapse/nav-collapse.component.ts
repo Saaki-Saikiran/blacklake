@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NavigationItem} from '../../navigation';
-import {animate, style, transition, trigger} from '@angular/animations';
-import {NextConfig} from '../../../../../../app-config';
+import { Component, Input, OnInit } from '@angular/core';
+import { NavigationItem } from '../../navigation';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { NextConfig } from '../../../../../../app-config';
 
 @Component({
   selector: 'app-nav-collapse',
@@ -10,11 +10,11 @@ import {NextConfig} from '../../../../../../app-config';
   animations: [
     trigger('slideInOut', [
       transition(':enter', [
-        style({transform: 'translateY(-100%)', display: 'block'}),
-        animate('250ms ease-in', style({transform: 'translateY(0%)'}))
+        style({ transform: 'translateY(-100%)', display: 'block' }),
+        animate('250ms ease-in', style({ transform: 'translateY(0%)' }))
       ]),
       transition(':leave', [
-        animate('250ms ease-in', style({transform: 'translateY(-100%)'}))
+        animate('250ms ease-in', style({ transform: 'translateY(-100%)' }))
       ])
     ])
   ],
@@ -64,6 +64,11 @@ export class NavCollapseComponent implements OnInit {
       } while (preParent.classList.contains('pcoded-submenu'));
     }
     parent.classList.toggle('pcoded-trigger');
+  }
+
+  menuView(menu) {
+    // console.log('menu---------->', menu);
+    return true;
   }
 
 }
