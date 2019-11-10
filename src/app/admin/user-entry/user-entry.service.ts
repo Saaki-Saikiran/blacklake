@@ -19,7 +19,7 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
-    const match = { active: true };
+    const match = { isActive: true };
     const pagination = { limit: 1000 };
 
     return this.http.post<User[]>(`${environment.baseUrl}/users/list`, { match, pagination }, httpOptions)

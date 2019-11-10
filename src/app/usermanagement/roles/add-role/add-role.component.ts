@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { RolesService } from '../roles.service';
+import { Role } from '../roles';
 
 @Component({
     selector: 'add-role',
@@ -12,17 +14,20 @@ export class AddRoleComponent implements OnInit {
     userForm: FormGroup;
     formHeader: string;
     buttonType: string;
-    // user: User;
+    role: Role;
     isEditing: boolean;
     submitted = false;
     menus: any;
     menuNameItems: any[];
+    loading: boolean;
 
     constructor(public activeModal: NgbActiveModal,
-        private formBuilder: FormBuilder) {
+        private formBuilder: FormBuilder,
+        private roleService: RolesService) {
     }
 
     ngOnInit() {
+        console.log(this.data, 'role-edit');
         this.menus = [
             "User Entry",
             "Meter Types",
@@ -40,10 +45,10 @@ export class AddRoleComponent implements OnInit {
             arrkeys.map((key, value) => {
                 this.menuNameItems.push({
                     "slug": key,
-                    "link": false,
-                    "add": false,
-                    "edit": false,
-                    "delete": false
+                    "link": true,
+                    "add": true,
+                    "edit": true,
+                    "delete": true
                 });
             });
             // this.menus.map((key, value) => {
@@ -58,13 +63,14 @@ export class AddRoleComponent implements OnInit {
             // });
         }
 
-        if (this.data._id === undefined) {
+        if (this.data.data._id === undefined) {
             this.formHeader = 'Add Role Details';
             this.buttonType = 'Add';
             this.isEditing = false;
 
             this.userForm = this.formBuilder.group({
                 name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+                isActive: new FormControl(true, [Validators.required]),
                 menus: this.formBuilder.group({
                     options: this.formBuilder.array([]) // create empty form array   
                 }),
@@ -74,7 +80,6 @@ export class AddRoleComponent implements OnInit {
                 //     // confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
                 //     // username: new FormControl('', [Validators.required]),
                 //     // address: new FormControl('', [Validators.required]),
-                isActive: new FormControl(true, [Validators.required])
             });
             console.log(this.userForm.value);
             this.patch();
@@ -84,18 +89,18 @@ export class AddRoleComponent implements OnInit {
             this.isEditing = true;
 
             this.userForm = this.formBuilder.group({
-                _id: new FormControl(this.data._id),
-                name: new FormControl(this.data.name, [Validators.required, Validators.minLength(3)]),
+                _id: new FormControl(this.data.data._id),
+                name: new FormControl(this.data.data.name, [Validators.required, Validators.minLength(3)]),
+                isActive: new FormControl(this.data.data.isActive, [Validators.required]),
                 menus: this.formBuilder.group({
                     options: this.formBuilder.array([]) // create empty form array   
                 }),
-                //     // email: new FormControl(this.data.email, [Validators.required, Validators.email]),
+                //     // email: new FormControl(this.data.data.email, [Validators.required, Validators.email]),
                 //     // phone: new FormControl(this.data.phone, [Validators.required]),
                 //     // password: new FormControl(this.data.password, [Validators.required, Validators.minLength(6)]),
                 //     // confirmPassword: new FormControl(this.data.confirmPassword, [Validators.required, Validators.minLength(6)]),
                 //     // username: new FormControl(this.data.username, [Validators.required]),
                 //     // address: new FormControl(this.data.address, [Validators.required]),
-                isActive: new FormControl(this.data.isActive, [Validators.required])
             });
             this.editPatch();
         }
@@ -116,16 +121,50 @@ export class AddRoleComponent implements OnInit {
     get f() { return this.userForm.controls; }
 
     onSubmit() {
+        const user = { ...this.role, ...this.userForm.value };
+
         this.submitted = true;
 
         // stop here if form is invalid
         if (this.userForm.invalid) {
             return;
         }
+        if (this.data.data._id === undefined) {
+            user.role = 'Admin';
+            this.roleService.createRole(user).subscribe(
+                data => {
+                    if (data['success'] === true) {
+                        this.activeModal.close();
+                        // this.router.navigate(['/dashboard/analytics']);
+                    } else {
+                        alert('Invalid User Creation');
+                        this.loading = false;
+                    }
+                },
+                error => {
+                    alert(error);
+                    this.loading = false;
+                });
+        } else {
 
-        // display form values on success
-        alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.userForm.value, null, 4));
+            this.roleService.updateRole(user).subscribe(
+                data => {
+                    if (data['success'] === true) {
+                        this.activeModal.close();
+                        // this.router.navigate(['/dashboard/analytics']);
+                    } else {
+                        alert('Invalid User Creation');
+                        this.loading = false;
+                    }
+                },
+                error => {
+                    alert(error);
+                    this.loading = false;
+                });
+
+        }
     }
+
 
     patch() {
         const control = <FormArray>this.userForm.get('menus.options');
@@ -144,32 +183,35 @@ export class AddRoleComponent implements OnInit {
 
 
     editPatch() {
-        let data = [
-            { 0: { add: true, delete: false, link: false, update: false, slug: "User Entry" } },
-            {
-                1: { add: false, delete: false, link: true, update: false, slug: "Meter Types" }
-            }, {
-                2: { add: false, delete: false, link: false, update: true, slug: "Dept Meters" }
-            }, {
-                3: { add: false, delete: true, link: false, update: false, slug: "Meters" }
-            }, {
-                4: { add: true, delete: false, link: false, update: false, slug: "Tenants" }
-            }, {
-                5: { add: false, delete: false, link: true, update: false, slug: "Floors" }
-            }, {
-                6: { add: false, delete: false, link: false, update: true, slug: "DGs" }
-            }, {
-                7: { add: false, delete: true, link: false, update: false, slug: "Map Meters Tenants" }
-            }];
+        console.log(this.data.data.menus.options);
+        let data = this.data.data.menus.options;
+        // let data = [
+        //     { 0: { add: true, delete: false, link: false, update: false, slug: "User Entry" } },
+        //     {
+        //         1: { add: false, delete: false, link: true, update: false, slug: "Meter Types" }
+        //     }, {
+        //         2: { add: false, delete: false, link: false, update: true, slug: "Dept Meters" }
+        //     }, {
+        //         3: { add: false, delete: true, link: false, update: false, slug: "Meters" }
+        //     }, {
+        //         4: { add: true, delete: false, link: false, update: false, slug: "Tenants" }
+        //     }, {
+        //         5: { add: false, delete: false, link: true, update: false, slug: "Floors" }
+        //     }, {
+        //         6: { add: false, delete: false, link: false, update: true, slug: "DGs" }
+        //     }, {
+        //         7: { add: false, delete: true, link: false, update: false, slug: "Map Meters Tenants" }
+        //     }];
         const control = <FormArray>this.userForm.get('menus.options');
         data.forEach((x, value) => {
+            console.log(x.add, value);
             control.push(
                 this.formBuilder.group({
-                    add: x[value].add,
-                    delete: x[value].delete,
-                    link: x[value].link,
-                    update: x[value].update,
-                    slug: x[value].slug
+                    add: x.add,
+                    delete: x.delete,
+                    link: x.link,
+                    update: x.update,
+                    slug: x.slug
                 })
             )
         });

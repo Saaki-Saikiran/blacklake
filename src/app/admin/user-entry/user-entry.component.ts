@@ -3,6 +3,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from './add-user/add-user.component';
+import { UsersService } from './user-entry.service';
 
 @Component({
   selector: 'app-user-entry',
@@ -11,8 +12,11 @@ import { AddUserComponent } from './add-user/add-user.component';
 })
 export class UserEntryComponent implements OnInit {
   modalOptions: NgbModalOptions;
+  loading: boolean;
+  usersList: any;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,
+    private userService: UsersService) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -21,6 +25,23 @@ export class UserEntryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getUsers();
+  }
+
+  getUsers(): void {
+    this.userService.getUsers().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.usersList = data['result'];
+        } else {
+
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+      }
+    );
   }
 
   userModal(type, data) {

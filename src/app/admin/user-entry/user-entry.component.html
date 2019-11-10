@@ -21,18 +21,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Sai</td>
-              <td>459</td>
-              <td>Admin</td>
-              <td>Yes</td>
+            <tr *ngFor="let item of usersList;let i = index;">
+              <td>{{i}}</td>
+              <td>{{item.username}}</td>
+              <td>{{item._id}}</td>
+              <td>{{item.role}}</td>
+              <td>{{item.isActive}}</td>
               <td>
-                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'Sai')">Edit</a>
+                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', item)">Edit</a>
                 <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td>2</td>
               <td>Kiran</td>
               <td>999</td>
@@ -42,7 +42,7 @@
                 <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'kiran')">Edit</a>
                 <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

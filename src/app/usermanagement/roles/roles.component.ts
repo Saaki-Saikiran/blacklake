@@ -3,6 +3,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AddRoleComponent } from './add-role/add-role.component';
+import { RolesService } from './roles.service';
 
 @Component({
   selector: 'app-roles',
@@ -10,12 +11,15 @@ import { AddRoleComponent } from './add-role/add-role.component';
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
+  rolesList: any;
+  loading: boolean;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,
+    private roleService: RolesService) {
   }
 
   ngOnInit() {
-
+    this.getRoles();
   }
 
   userModal(type, data) {
@@ -41,6 +45,23 @@ export class RolesComponent implements OnInit {
         Swal.fire('', 'Poof! Your imaginary file has been deleted!', 'success');
       }
     });
+  }
+
+  getRoles(): void {
+    this.roleService.getRoles().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.rolesList = data['result'];
+          console.log(this.rolesList, '========');
+        } else {
+
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+      }
+    );
   }
 
 }

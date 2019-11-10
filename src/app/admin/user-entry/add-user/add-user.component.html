@@ -70,7 +70,7 @@
       <div class="form-row">
         <div class="form-group col">
           <label>Address</label>
-          <input type="password" formControlName="address" class="form-control"
+          <input type="text" formControlName="address" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
           <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
             <div *ngIf="f.address.errors.required">address is required</div>
@@ -79,7 +79,7 @@
         </div>
         <div class="form-group col">
           <label>User Name</label>
-          <input type="password" formControlName="username" class="form-control"
+          <input type="text" formControlName="username" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
           <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
             <div *ngIf="f.username.errors.required">Confirm Password is required</div>

@@ -13,33 +13,18 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>User Type</th>
-              <th>Login ID</th>
               <th>Role</th>
               <th>Is Active</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Sai</td>
-              <td>459</td>
-              <td>Admin</td>
-              <td>Yes</td>
+            <tr *ngFor="let item of rolesList;let i = index;">
+              <td>{{i}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.isActive}}</td>
               <td>
-                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'Sai')">Edit</a>
-                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Kiran</td>
-              <td>999</td>
-              <td>User</td>
-              <td>No</td>
-              <td>
-                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'kiran')">Edit</a>
+                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', item)">Edit</a>
                 <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
               </td>
             </tr>
