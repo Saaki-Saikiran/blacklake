@@ -46,13 +46,15 @@ const NavigationItems = [
             id: 'user-entry',
             title: 'User Entry',
             type: 'item',
-            url: '/admin/user-entry'
+            url: '/admin/user-entry',
+            hidden: false
           },
           {
             id: 'meter-types',
             title: 'Meter Types',
             type: 'item',
-            url: '/admin/meter-types'
+            url: '/admin/meter-types',
+            hidden: false
           }
         ]
       },
@@ -71,37 +73,43 @@ const NavigationItems = [
             id: 'dept-meters',
             title: 'Dept Meters',
             type: 'item',
-            url: '/meter-management/dept-meters'
+            url: '/meter-management/dept-meters',
+            hidden: false
           },
           {
             id: 'meters',
             title: 'Meters',
             type: 'item',
-            url: '/meter-management/meters'
+            url: '/meter-management/meters',
+            hidden: false
           },
           {
             id: 'tenants',
             title: 'Tenants',
             type: 'item',
-            url: '/meter-management/tenants'
+            url: '/meter-management/tenants',
+            hidden: false
           },
           {
             id: 'floors',
             title: 'Floors',
             type: 'item',
-            url: '/meter-management/floors'
+            url: '/meter-management/floors',
+            hidden: false
           },
           {
             id: 'dgs',
             title: 'DGs',
             type: 'item',
-            url: '/meter-management/dgs'
+            url: '/meter-management/dgs',
+            hidden: false
           },
           {
             id: 'map-meter-tenants',
             title: 'Map Meter Tenants',
             type: 'item',
-            url: '/meter-management/map-meter-tenants'
+            url: '/meter-management/map-meter-tenants',
+            hidden: false
           }
         ]
       },
@@ -120,37 +128,43 @@ const NavigationItems = [
             id: 'dept-bill',
             title: 'Dept Bill',
             type: 'item',
-            url: '/bill-creation/dept-bill'
+            url: '/bill-creation/dept-bill',
+            hidden: false
           },
           {
             id: 'dg-units-entry',
             title: 'DG Units Entry',
             type: 'item',
-            url: '/bill-creation/dg-units-entry'
+            url: '/bill-creation/dg-units-entry',
+            hidden: false
           },
           {
             id: 'edit-bill-closing-readings',
             title: 'Edit Bill Closing Readings',
             type: 'item',
-            url: '/bill-creation/edit-bill-closing-readings'
+            url: '/bill-creation/edit-bill-closing-readings',
+            hidden: false
           },
           {
             id: 'occupied-sqft-entry',
             title: 'Occupied Sqft Entry',
             type: 'item',
-            url: '/bill-creation/occupied-sqft-entry'
+            url: '/bill-creation/occupied-sqft-entry',
+            hidden: false
           },
           {
             id: 'additional-components',
             title: 'Additional-Components',
             type: 'item',
-            url: '/bill-creation/additional-components'
+            url: '/bill-creation/additional-components',
+            hidden: false
           },
           {
             id: 'bill-generation',
             title: 'Bill Generation',
             type: 'item',
-            url: '/bill-creation/bill-generation'
+            url: '/bill-creation/bill-generation',
+            hidden: false
           }
         ]
       },
@@ -169,43 +183,50 @@ const NavigationItems = [
             id: 'consumption-report',
             title: 'Consumption Report',
             type: 'item',
-            url: '/reports/consumption-report'
+            url: '/reports/consumption-report',
+            hidden: false
           },
           {
             id: 'meter-log-report',
             title: 'Meter Log Report',
             type: 'item',
-            url: '/reports/meter-log-report'
+            url: '/reports/meter-log-report',
+            hidden: false
           },
           {
             id: 'occupant-summary',
             title: 'Occupant Summary',
             type: 'item',
-            url: '/reports/occupant-summary'
+            url: '/reports/occupant-summary',
+            hidden: false
           },
           {
             id: 'tenant-bills',
             title: 'Tenant Bills',
             type: 'item',
-            url: '/reports/tenant-bills'
+            url: '/reports/tenant-bills',
+            hidden: false
           },
           {
             id: 'meter-readings-of-a-bill',
             title: 'Meter Readings of a Bill',
             type: 'item',
-            url: '/reports/meter-readings-of-a-bill'
+            url: '/reports/meter-readings-of-a-bill',
+            hidden: false
           },
           {
             id: 'periodic-tenant-bills',
             title: 'Periodic Tenant Bills',
             type: 'item',
-            url: '/reports/periodic-tenant-bills'
+            url: '/reports/periodic-tenant-bills',
+            hidden: false
           },
           {
             id: 'meter-occupancy',
             title: 'Meter Occupancy',
             type: 'item',
-            url: '/reports/meter-occupancy'
+            url: '/reports/meter-occupancy',
+            hidden: false
           }
         ]
       },
@@ -223,7 +244,8 @@ const NavigationItems = [
             id: 'roles',
             title: 'Roles',
             type: 'item',
-            url: '/usermanagement/roles'
+            url: '/usermanagement/roles',
+            hidden: false
           }
         ]
       },
@@ -1491,7 +1513,28 @@ const NavigationItems = [
 
 @Injectable()
 export class NavigationItem {
+  roles: any;
   public get() {
+    let count = 0;
+    this.roles = JSON.parse(localStorage.getItem('loggedUser')).roles.menus.options;
+    // console.log(this.roles, '-----nav---------');
+    NavigationItems[0].children.map((item, index) => {
+      item.children.map((item1, index1) => {
+        count = count + 1;
+        // console.log(item1.title);
+        // if (this.roles[count]['slug'])
+        // console.log(NavigationItems[0].children[index].children[index1].title);
+        if (count <= this.roles.length)
+          // console.log(this.roles[count - 1].slug);
+          if (item1.title === this.roles[count - 1].slug) {
+            console.log(this.roles[count - 1]);
+            if (this.roles[count - 1].link)
+              // console.log(NavigationItems[0].children[index].children[index1]);
+              NavigationItems[0].children[index].children[index1].hidden = true;
+          }
+      })
+    })
+    // console.log(NavigationItems[0].children, '-----NavigationItems---------');
     return NavigationItems;
   }
 }
