@@ -36,7 +36,21 @@ export class AddRoleComponent implements OnInit {
             "Tenants",
             "Floors",
             "DGs",
-            "Map Meters Tenants"
+            "Map Meters Tenants",
+            "Dept Bill",
+            "DG Units Entry",
+            "Edit Bill Closing Readings",
+            "Occupied Sqft Entry",
+            "Additional-Components",
+            "Bill Generation",
+            "Consumption Report",
+            "Meter Log Report",
+            "Occupant Summary",
+            "Tenant Bills",
+            "Meter Readings of a Bill",
+            "Periodic Tenant Bills",
+            "Meter Occupancy",
+            "Roles"
         ];
         this.menuNameItems = [];
 
