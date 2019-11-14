@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UsersService } from './user-entry.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-user-entry',
@@ -15,6 +16,11 @@ export class UserEntryComponent implements OnInit {
   loading: boolean;
   usersList: any;
 
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+
+
+
   constructor(private modalService: NgbModal,
     private userService: UsersService) {
     this.modalOptions = {
@@ -25,6 +31,10 @@ export class UserEntryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
     this.getUsers();
   }
 
@@ -33,6 +43,7 @@ export class UserEntryComponent implements OnInit {
       data => {
         if (data['success'] === true) {
           this.usersList = data['result'];
+          this.dtTrigger.next();
         } else {
 
         }
@@ -68,6 +79,11 @@ export class UserEntryComponent implements OnInit {
         Swal.fire('', 'Poof! Your imaginary file has been deleted!', 'success');
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 
 }
