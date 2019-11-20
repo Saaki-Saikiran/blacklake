@@ -10,6 +10,7 @@ import { User } from '../user';
 })
 export class AddUserComponent implements OnInit {
     @Input() public data;
+    
 
     userForm: FormGroup;
     formHeader: string;
