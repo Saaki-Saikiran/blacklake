@@ -5,7 +5,7 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UsersService } from './user-entry.service';
 import { Subject } from 'rxjs';
-
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -37,6 +37,8 @@ export class UserEntryComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder
     , private modalService: NgbModal,
+    private route: ActivatedRoute,
+    private router: Router,
     private userService: UsersService) {
     this.modalOptions = {
       backdrop: 'static',
@@ -46,6 +48,7 @@ export class UserEntryComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 2
@@ -94,9 +97,12 @@ export class UserEntryComponent implements OnInit {
       this.buttonType = 'Add';
       this.submitted = false;
       this.userForm.reset();
+      this.router.navigateByUrl('/admin/user-entry',{skipLocationChange:true}).then(()=>{
+        this.router.navigate(['/admin/user-entry']);
+      });
     }
-
-
+  
+   
   }
   userModal(type, data) {
     debugger

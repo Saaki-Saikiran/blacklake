@@ -21,4 +21,8 @@ export class NavRightComponent implements OnInit {
     localStorage.clear();
     this.router.navigate(['/auth/signin']);
   }
+  ChangePassword()
+  {
+    this.router.navigate(['/auth/change-password']);
+  }
 }

@@ -30,7 +30,38 @@ export class AuthSigninService {
         catchError(this.errorHandler)
       );
   }
+  ChangePassworrd(currentPassword: string, newPassword: string) {
+    return this.httpClient.post<any>(`${environment.baseUrl}/users/changePassword`, { currentPassword, newPassword }, httpOptions)
+      .pipe(map
+        (user => {
+          // login successful if there's a jwt token in the response
+          if (user && user.token) {
+            console.log(user);
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('loggedUser', JSON.stringify(user));
+          }
 
+          return user;
+        }),
+        catchError(this.errorHandler)
+      );
+  }
+  ResetPassworrd(email: string) {
+    return this.httpClient.post<any>(`${environment.baseUrl}/users/forgotPassword`, { email }, httpOptions)
+      .pipe(map
+        (user => {
+          // login successful if there's a jwt token in the response
+          if (user && user.token) {
+            console.log(user);
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('loggedUser', JSON.stringify(user));
+          }
+
+          return user;
+        }),
+        catchError(this.errorHandler)
+      );
+  }
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
