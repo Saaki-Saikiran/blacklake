@@ -4,7 +4,6 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
-import { User } from './user';
 import { environment } from '../../../environments/environment';
 
 const httpOptions = {
@@ -14,15 +13,14 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class MeterTypesService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<User[]> {
-    const match = { isActive: true };
+  getAll() {
+    const match = { active: true };
     const pagination = { limit: 1000 };
-
-    return this.http.post<User[]>(`${environment.baseUrl}/users/list`, { match, pagination }, httpOptions)
+    return this.http.post(`${environment.baseUrl}/metertypes/list`, { match, pagination }, httpOptions)
       .pipe(
         map(data => {
           data['result'].map((item, index) => {
@@ -30,14 +28,14 @@ export class UsersService {
           });
           return data;
         }),
-        // tap(data => console.log('Get users called\n', JSON.stringify(data))),
+        // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
         catchError(this.errorHandler)
       );
   }
 
-  getUser(id): Observable<User> {
+  getMeterTypeById(id) {
     debugger
-    return this.http.get<User>(`${environment.baseUrl}/users/${id}`)
+    return this.http.get(`${environment.baseUrl}/metertypes/${id}`)
       .pipe(
         tap(data =>
 
@@ -46,16 +44,16 @@ export class UsersService {
       );
   }
 
-  createUser(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.baseUrl}/users/create`, user, httpOptions)
+  createMeterType(user) {
+    return this.http.post(`${environment.baseUrl}/metertypes/create`, user, httpOptions)
       .pipe(
         tap(data => console.log('Added user\n', JSON.stringify(data))),
         catchError(this.errorHandler)
       );
   }
 
-  updateUser(user: User): Observable<{}> {
-    return this.http.put<User>(`${environment.baseUrl}/users/update`, user, httpOptions)
+  updateMeterType(user) {
+    return this.http.put(`${environment.baseUrl}/metertypes/update`, user, httpOptions)
       .pipe(
         tap(data => console.log('updateUser: ', JSON.stringify(data))),
         // Return the User on an update
@@ -64,10 +62,10 @@ export class UsersService {
       );
   }
 
-  deleteUser(id): Observable<User> {
-    return this.http.delete<User>(`${environment.baseUrl}/users/${id}`, httpOptions)
+  deleteMeterType(id) {
+    return this.http.delete(`${environment.baseUrl}/metertypes/${id}`, httpOptions)
       .pipe(
-        tap(),
+        tap(data => console.log('deleted user\n' + JSON.stringify(data))),
         catchError(this.errorHandler)
       );
   }

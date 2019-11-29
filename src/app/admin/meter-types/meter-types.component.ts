@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { AddMeterTypeComponent } from './add-meter-type/add-meter-type.component';
+import { NgbModal, NgbModalOptions, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
-
+import { MeterTypesService } from './meter-types.service';
+import { Subject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-meter-types',
   templateUrl: './meter-types.component.html',
   styleUrls: ['./meter-types.component.scss']
 })
-export class MeterTypesComponent implements OnInit {
+export class MeterTypesComponent implements OnInit, OnDestroy {
+  @ViewChild('myTabSet', { static: false }) public myTabSet: NgbTabset;
+
   modalOptions: NgbModalOptions;
   userForm: FormGroup;
   formHeader: string;
@@ -20,57 +23,101 @@ export class MeterTypesComponent implements OnInit {
   tabHeader: any = "Add Meter Type";
   isEditing: boolean;
   submitted = false;
+  loading: boolean;
+  Userdata: any;
+  meterTypesList: any;
 
-  constructor(private modalService: NgbModal,
-    private formBuilder: FormBuilder) {
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  mySubscription: any;
+
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private metertypeService: MeterTypesService) {
+
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
       size: "lg"
     };
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
   }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+
+    this.getMeterTypes();
     this.tabHeader = 'Add Meter Type';
-    this.formHeader = 'Meter Type Details';
+    this.formHeader = 'Add Meter Type Details';
     this.buttonType = 'Add';
     this.userForm = this.formBuilder.group({
       type: new FormControl('', [Validators.required]),
       attribute: new FormControl('', [Validators.required]),
-      // isBillable: new FormControl(true, [Validators.required]),
-      // isCommon: new FormControl(true, [Validators.required]),
       description: new FormControl('', [Validators.required])
     });
   }
 
+  get f() { return this.userForm.controls; }
 
+  getMeterTypes(): void {
+    console.log(this.dtTrigger);
+    this.metertypeService.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.meterTypesList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+
+  beforeChange($event: NgbTabChangeEvent) {
+    // dont do anything if id matches
+    if ($event.activeId === 'AdduserId') {
+      this.tabHeader = 'Add Meter Type';
+      this.formHeader = 'Meter Type Details';
+      this.buttonType = 'Add';
+      this.submitted = false;
+      this.userForm.reset(); this.router.navigateByUrl('/admin/meter-types', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/admin/meter-types']);
+      });
+
+    }
+  }
 
   userModal(type, data) {
-    debugger
     this.formHeader = 'Edit Meter Type Details';
     this.buttonType = 'Update';
+    this.tabHeader = 'Edit Meter Type';
     this.isEditing = true;
-
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
       type: new FormControl(data.type, [Validators.required]),
       attribute: new FormControl(data.attribute, [Validators.required]),
-      // isBillable: new FormControl(data.isBillable, [Validators.required]),
-      // isCommon: new FormControl(data.isCommon, [Validators.required]),
       description: new FormControl(data.description, [Validators.required])
     });
-
-    // const initialState = {
-    //   header: type,
-    //   data: data
-    // };
-    // // const activeModal = this.modalService.open(AddUserComponent, this.modalOptions);
-    // const activeModal = this.modalService.open(AddUserComponent, { size: 'lg', backdrop: 'static', windowClass: 'animated slideInDown' });
-    // activeModal.componentInstance.data = initialState;
   }
 
-
-  confirmAlert() {
+  confirmAlert(id) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this imaginary file!',
@@ -81,23 +128,78 @@ export class MeterTypesComponent implements OnInit {
       if (willDelete.dismiss) {
         Swal.fire('', 'Your imaginary file is safe!', 'error');
       } else {
-        Swal.fire('', 'Poof! Your imaginary file has been deleted!', 'success');
+        this.metertypeService.deleteMeterType(id).subscribe(
+          data => {
+            if (data['success'] === true) {
+              Swal.fire('', 'Meter Type deleted Successfully!', 'success');
+            } else {
+              Swal.fire('', data['error'], 'error');
+            }
+          },
+          error => {
+            Swal.fire('', error, 'error');
+          }
+        );
       }
     });
   }
 
-  beforeChange($event: NgbTabChangeEvent) {
-    debugger;
-    // dont do anything if id matches
-    if ($event.activeId === 'AdduserId') {
-      this.tabHeader = 'Meter Type';
-      this.formHeader = 'Meter Type Details';
-      this.buttonType = 'Add';
-      this.submitted = false;
-      this.userForm.reset();
+
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    if (this.dtTrigger)
+      this.dtTrigger.unsubscribe();
+  }
+
+  onSubmit() {
+    const user = { ...this.userForm.value };
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.userForm.invalid) {
+      return;
     }
+    if (user._id === undefined) {
+      user.role = 'Admin';
+      user.attribute = [{
+        isBillable: true,
+        isCommon: true
+      }]
+      this.metertypeService.createMeterType(user).subscribe(
+        data => {
+          if (data['success'] === true) {
+            Swal.fire('', 'Meter Type Added Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
+          } else {
+            Swal.fire('', data['error'], 'error');
+            this.loading = false;
+          }
+        },
+        error => {
+          Swal.fire('', error, 'error');
+          this.loading = false;
+        });
+    } else {
+      this.metertypeService.updateMeterType(user).subscribe(
+        data => {
+          if (data['success'] === true) {
+            Swal.fire('', 'Meter Type Updated Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
+          } else {
+            Swal.fire('', data['error'], 'error');
+            this.loading = false;
+          }
+        },
+        error => {
+          Swal.fire('', error, 'error');
+          this.loading = false;
+        });
+    }
+  }
 
-
+  onReset() {
+    this.submitted = false;
+    this.userForm.reset();
   }
 
 }

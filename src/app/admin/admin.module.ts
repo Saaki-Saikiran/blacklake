@@ -13,7 +13,7 @@ import { AddMeterTypeComponent } from './meter-types/add-meter-type/add-meter-ty
 
 
 @NgModule({
-  declarations: [UserEntryComponent, MeterTypesComponent, AddUserComponent, AddMeterTypeComponent],
+  declarations: [UserEntryComponent, MeterTypesComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -22,6 +22,6 @@ import { AddMeterTypeComponent } from './meter-types/add-meter-type/add-meter-ty
     NgbModule,
     AdminRoutingModule
   ],
-  entryComponents: [AddUserComponent, AddMeterTypeComponent]
+  entryComponents: []
 })
 export class AdminModule { }

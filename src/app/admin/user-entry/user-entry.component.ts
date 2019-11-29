@@ -76,9 +76,8 @@ export class UserEntryComponent implements OnInit, OnDestroy {
       address: new FormControl('', [Validators.required]),
       // isActive: new FormControl(true, [Validators.required])
     });
-
-
   }
+
   get f() { return this.userForm.controls; }
 
   getUsers(): void {
@@ -98,6 +97,7 @@ export class UserEntryComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   beforeChange($event: NgbTabChangeEvent) {
     // dont do anything if id matches
     if ($event.activeId === 'AdduserId') {
@@ -146,6 +146,7 @@ export class UserEntryComponent implements OnInit, OnDestroy {
           data => {
             if (data['success'] === true) {
               Swal.fire('', 'User deleted Successfully!', 'success');
+              this.getUsers();
             } else {
               Swal.fire('', data['error'], 'error');
             }
@@ -172,7 +173,7 @@ export class UserEntryComponent implements OnInit, OnDestroy {
     if (this.userForm.invalid) {
       return;
     }
-    if (this.Userdata === undefined) {
+    if (user._id === undefined) {
       user.role = 'Admin';
       this.userService.createUser(user).subscribe(
         data => {

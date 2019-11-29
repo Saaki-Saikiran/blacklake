@@ -1,191 +1,108 @@
-<!-- <div class="row btn-page">
-  <div class="col-sm-12">
-    <app-card cardTitle="Meter Types" cardClass="card-datatable" [options]="false">
-      <div class="row align-items-center m-l-0">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6 text-right">
-          <button class="btn btn-success btn-sm btn-round has-ripple" (click)="userModal('Add', '')"><i
-              class="feather icon-plus"></i> Add Meter Type</button>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table datatable id="report-table" class="table table-bordered table-striped mb-0">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Meter Type</th>
-              <th>Is Billable</th>
-              <th>Is Common</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>XXX</td>
-              <td>True</td>
-              <td>False</td>
-              <td>Admin</td>
-              <td>
-                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'Sai')">Edit</a>
-                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>YYYY</td>
-              <td>False</td>
-              <td>True</td>
-              <td>User</td>
-              <td>
-                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'kiran')">Edit</a>
-                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </app-card>
-  </div>
-</div> -->
-
-
 <div class="row btn-page">
   <div class="col-sm-12">
-    <!-- <app-card cardTitle="Users List" cardClass="card-datatable" [options]="false"> -->
-    <!-- <div class="row align-items-center m-l-0">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6 text-right">
-          <button class="btn btn-success btn-sm btn-round has-ripple" (click)="userModal('Add', '')"><i
-              class="feather icon-plus"></i> Add User</button>
-        </div>
-      </div> -->
-
-    <div class="col-sm-12">
-      <app-card [hidHeader]="true">
-
-        <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
-          <ngb-tab title="Meter Types" id="UserlistId">
-            <ng-template ngbTabContent>
-              <div class="table-responsive p-t-20">
-                <div class="table-responsive">
-                  <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                    class="table table-bordered table-striped mb-0">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Meter Type</th>
-                        <th>Is Billable</th>
-                        <th>Is Common</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>XXX</td>
-                        <td>True</td>
-                        <td>False</td>
-                        <td>Admin</td>
-                        <td class="table-action">
-                          <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                              class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                                class="feather icon-edit"></i></a></span>
-                          <a href="javascript:" class="btn btn-icon btn-outline-danger" (click)="confirmAlert()"><i
-                              class="feather icon-trash-2"></i></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>YYYY</td>
-                        <td>False</td>
-                        <td>True</td>
-                        <td>User</td>
-                        <td class="table-action">
-                          <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                              class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                                class="feather icon-edit"></i></a></span>
-                          <a href="javascript:" class="btn btn-icon btn-outline-danger" (click)="confirmAlert()"><i
-                              class="feather icon-trash-2"></i></a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+    <app-card [hidHeader]="true">
+      <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
+        <ngb-tab title="Meter Types" id="UserlistId">
+          <ng-template ngbTabContent>
+            <div class="table-responsive p-t-20">
+              <div class="table-responsive">
+                <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                  class="table table-bordered table-striped mb-0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Meter Type</th>
+                      <th>Attributes</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of meterTypesList;let i = index;">
+                      <td>{{i+1}}</td>
+                      <td>{{item.type}}</td>
+                      <td>{{item.attribute}}</td>
+                      <td>{{item.description}}</td>
+                      <td class="table-action">
+                        <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                            class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                              class="feather icon-edit"></i></a></span>
+                        <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                          (click)="confirmAlert(item._id)"><i class="feather icon-trash-2"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </ng-template>
-          </ngb-tab>
-          <ngb-tab title={{tabHeader}} id="AdduserId">
-            <ng-template ngbTabContent>
-              <div class="card m-3">
-                <h5 class="card-header">{{formHeader}}</h5>
-                <div class="card-body">
-                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                    <div class="form-row">
-                      <div class="form-group col">
-                        <label>Type</label>
-                        <input type="text" formControlName="type" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.type.errors }" />
-                        <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
-                          <div *ngIf="f.type.errors.required">Name is required</div>
-                        </div>
-                      </div>
-                      <div class="form-group col">
-                        <label> Description</label>
-                        <input type="number" formControlName="description" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
-                        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                          <div *ngIf="f.description.errors.required">Phone is required</div>
-                        </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title={{tabHeader}} id="AdduserId">
+          <ng-template ngbTabContent>
+            <div class="card m-3">
+              <h5 class="card-header">{{formHeader}}</h5>
+              <div class="card-body">
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <label>Type</label>
+                      <input type="text" formControlName="type" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.type.errors }" />
+                      <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                        <div *ngIf="f.type.errors.required">TYpe is required</div>
                       </div>
                     </div>
-
-                    <div class="form-row">
-                      <!-- <div class="form-group form-check col"> -->
-                      <label>Attribute</label>
-                      <select formControlName="attribute" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.attribute.errors }">
-                        <option value="">Select Attributes</option>
-                        <option value="isBillable"><input type="checkbox" />isBillable</option>
-                        <option value="isCommon"> <input type="checkbox" />isCommon</option>
-                      </select>
-                      <div *ngIf="submitted && f.attribute.errors" class="invalid-feedback">
-                        <div *ngIf="f.attribute.errors.required">attribute is required</div>
+                    <div class="form-group col">
+                      <label> Description</label>
+                      <input type="text" formControlName="description" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
                       </div>
+                    </div>
+                  </div>
 
-                      <!-- <input type="checkbox" formControlName="isBillable" id="isBillable" class="form-check-input"
+                  <div class="form-row">
+                    <!-- <div class="form-group form-check col"> -->
+                    <label>Attribute</label>
+                    <select formControlName="attribute" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.attribute.errors }">
+                      <option value="">Select Attributes</option>
+                      <option value="isBillable"><input type="checkbox" />isBillable</option>
+                      <option value="isCommon"> <input type="checkbox" />isCommon</option>
+                    </select>
+                    <div *ngIf="submitted && f.attribute.errors" class="invalid-feedback">
+                      <div *ngIf="f.attribute.errors.required">attribute is required</div>
+                    </div>
+
+                    <!-- <input type="checkbox" formControlName="isBillable" id="isBillable" class="form-check-input"
                           [ngClass]="{ 'is-invalid': submitted && f.isBillable.errors }" />
                         <label for="isBillable" class="form-check-label">Is Billable</label>
                         <div *ngIf="submitted && f.isBillable.errors" class="invalid-feedback">Accept Ts & Cs is
                           required
                         </div> -->
-                      <!-- </div> -->
-                      <!-- <div class="form-group form-check col">
+                    <!-- </div> -->
+                    <!-- <div class="form-group form-check col">
                         <input type="checkbox" formControlName="isCommon" id="isCommon" class="form-check-input"
                           [ngClass]="{ 'is-invalid': submitted && f.isCommon.errors }" />
                         <label for="isCommon" class="form-check-label">Is Common</label>
                         <div *ngIf="submitted && f.isCommon.errors" class="invalid-feedback">Accept Ts & Cs is required
                         </div>
                       </div> -->
-                    </div>
+                  </div>
 
 
-                    <div class="text-center">
-                      <button class="btn btn-primary mr-1">{{buttonType}}</button>
-                      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-                    </div>
-                  </form>
-                </div>
+                  <div class="text-center">
+                    <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                    <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                  </div>
+                </form>
               </div>
+            </div>
 
-            </ng-template>
-          </ngb-tab>
-        </ngb-tabset>
-      </app-card>
-    </div>
-
-    <!-- </app-card> -->
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </app-card>
   </div>
 </div>
