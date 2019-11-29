@@ -1,11 +1,10 @@
-import { Component, ViewChild, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { AddUserComponent } from './add-user/add-user.component';
 import { UsersService } from './user-entry.service';
 import { Subject } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -14,7 +13,7 @@ import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./user-entry.component.scss']
 })
 
-export class UserEntryComponent implements OnInit {
+export class UserEntryComponent implements OnInit, OnDestroy {
 
   @Input() public data;
   userForm: FormGroup;
@@ -32,12 +31,11 @@ export class UserEntryComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
+  mySubscription: any;
 
 
   constructor(
-    private formBuilder: FormBuilder
-    , private modalService: NgbModal,
-    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private router: Router,
     private userService: UsersService) {
     this.modalOptions = {
@@ -45,14 +43,23 @@ export class UserEntryComponent implements OnInit {
       // backdropClass: 'customBackdrop',
       size: "lg"
     };
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
   }
 
   ngOnInit() {
-    debugger
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2
+      pageLength: 10
     };
+
     this.getUsers();
     this.formHeader = 'Add User Details';
     this.buttonType = 'Add';
@@ -89,7 +96,6 @@ export class UserEntryComponent implements OnInit {
     );
   }
   beforeChange($event: NgbTabChangeEvent) {
-    debugger;
     // dont do anything if id matches
     if ($event.activeId === 'AdduserId') {
       this.tabHeader = 'Add User';
@@ -97,15 +103,13 @@ export class UserEntryComponent implements OnInit {
       this.buttonType = 'Add';
       this.submitted = false;
       this.userForm.reset();
-      this.router.navigateByUrl('/admin/user-entry',{skipLocationChange:true}).then(()=>{
+      this.router.navigateByUrl('/admin/user-entry', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/admin/user-entry']);
       });
     }
-  
-   
   }
+
   userModal(type, data) {
-    debugger
     this.Userdata = data;
     this.formHeader = 'Edit User Details';
     this.buttonType = 'Update';
@@ -150,16 +154,14 @@ export class UserEntryComponent implements OnInit {
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
+    if (this.dtTrigger)
+      this.dtTrigger.unsubscribe();
   }
 
   //vijay added
   onSubmit() {
-    debugger
     const user = { ...this.userForm.value };
-
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.userForm.invalid) {
       return;
@@ -169,7 +171,7 @@ export class UserEntryComponent implements OnInit {
       this.userService.createUser(user).subscribe(
         data => {
           if (data['success'] === true) {
-            location.reload();
+            // location.reload();
             //  this.router.navigate(['/admin/user-entry']);
           } else {
             alert('Invalid User Creation');
@@ -205,7 +207,4 @@ export class UserEntryComponent implements OnInit {
     this.userForm.reset();
   }
 
-  hideModal(): void {
-
-  }
 }

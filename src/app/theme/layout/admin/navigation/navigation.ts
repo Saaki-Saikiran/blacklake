@@ -1527,7 +1527,7 @@ export class NavigationItem {
         if (count <= this.roles.length)
           // console.log(this.roles[count - 1].slug);
           if (item1.title === this.roles[count - 1].slug) {
-            console.log(this.roles[count - 1]);
+            // console.log(this.roles[count - 1]);
             if (this.roles[count - 1].link)
               // console.log(NavigationItems[0].children[index].children[index1]);
               NavigationItems[0].children[index].children[index1].hidden = true;
