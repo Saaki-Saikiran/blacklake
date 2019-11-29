@@ -40,7 +40,7 @@ export class UsersService {
     return this.http.get<User>(`${environment.baseUrl}/users/${id}`)
       .pipe(
         tap(data =>
-         
+
           console.log('Get a user called\n', JSON.stringify(data))),
         catchError(this.errorHandler)
       );
@@ -65,7 +65,7 @@ export class UsersService {
   }
 
   deleteUser(id): Observable<{}> {
-    return this.http.delete<User>(`${environment.baseUrl}/users/${id}`, httpOptions)
+    return this.http.delete<User>(`${environment.baseUrl}/users/delete/${id}`, httpOptions)
       .pipe(
         tap(data => console.log('deleted user\n' + JSON.stringify(data))),
         catchError(this.errorHandler)

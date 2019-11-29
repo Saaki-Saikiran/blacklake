@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, ViewChild } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { UsersService } from './user-entry.service';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
@@ -14,6 +14,7 @@ import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class UserEntryComponent implements OnInit, OnDestroy {
+  @ViewChild('myTabSet', { static: false }) public myTabSet: NgbTabset;
 
   @Input() public data;
   userForm: FormGroup;
@@ -55,6 +56,7 @@ export class UserEntryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // console.log(this.myTabSet, '-------sai----------');
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10
@@ -86,12 +88,13 @@ export class UserEntryComponent implements OnInit, OnDestroy {
           this.usersList = data['result'];
           this.dtTrigger.next();
         } else {
-
+          Swal.fire('', data['error'], 'error');
         }
         this.loading = false;
       },
       error => {
         this.loading = false;
+        Swal.fire('', error, 'error');
       }
     );
   }
@@ -126,17 +129,9 @@ export class UserEntryComponent implements OnInit, OnDestroy {
       address: new FormControl(data.address, [Validators.required]),
       // isActive: new FormControl(this.data.isActive, [Validators.required])
     });
-
-    // const initialState = {
-    //   header: type,
-    //   data: data
-    // };
-    // // const activeModal = this.modalService.open(AddUserComponent, this.modalOptions);
-    // const activeModal = this.modalService.open(AddUserComponent, { size: 'lg', backdrop: 'static', windowClass: 'animated slideInDown' });
-    // activeModal.componentInstance.data = initialState;
   }
 
-  confirmAlert() {
+  confirmAlert(id) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this imaginary file!',
@@ -147,7 +142,18 @@ export class UserEntryComponent implements OnInit, OnDestroy {
       if (willDelete.dismiss) {
         Swal.fire('', 'Your imaginary file is safe!', 'error');
       } else {
-        Swal.fire('', 'Poof! Your imaginary file has been deleted!', 'success');
+        this.userService.deleteUser(id).subscribe(
+          data => {
+            if (data['success'] === true) {
+              Swal.fire('', 'User deleted Successfully!', 'success');
+            } else {
+              Swal.fire('', data['error'], 'error');
+            }
+          },
+          error => {
+            Swal.fire('', error, 'error');
+          }
+        );
       }
     });
   }
@@ -171,34 +177,32 @@ export class UserEntryComponent implements OnInit, OnDestroy {
       this.userService.createUser(user).subscribe(
         data => {
           if (data['success'] === true) {
-            // location.reload();
-            //  this.router.navigate(['/admin/user-entry']);
+            Swal.fire('', 'User Added Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
           } else {
-            alert('Invalid User Creation');
+            Swal.fire('', data['error'], 'error');
             this.loading = false;
           }
         },
         error => {
-          alert(error);
+          Swal.fire('', error, 'error');
           this.loading = false;
         });
     } else {
-
       this.userService.updateUser(user).subscribe(
         data => {
           if (data['success'] === true) {
-            location.reload();
-            // this.router.navigate(['/dashboard/analytics']);
+            Swal.fire('', 'User Updated Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
           } else {
-            alert('Invalid User Creation');
+            Swal.fire('', data['error'], 'error');
             this.loading = false;
           }
         },
         error => {
-          alert(error);
+          Swal.fire('', error, 'error');
           this.loading = false;
         });
-
     }
   }
 

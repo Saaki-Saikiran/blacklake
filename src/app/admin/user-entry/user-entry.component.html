@@ -32,8 +32,8 @@
                         <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
                             class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
                               class="feather icon-edit"></i></a></span>
-                        <a href="javascript:" class="btn btn-icon btn-outline-danger" (click)="confirmAlert()"><i
-                            class="feather icon-trash-2"></i></a>
+                        <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                          (click)="confirmAlert(item._id)"><i class="feather icon-trash-2"></i></a>
                       </td>
                     </tr>
                     <!-- <tr>
