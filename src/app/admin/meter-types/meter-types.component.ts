@@ -58,11 +58,8 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dropdownList = [
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' }
+      { item_id: 1, item_text: 'isBillable' },
+      { item_id: 2, item_text: 'isCommon' },
     ];
 
     this.selectedItems = [
@@ -167,6 +164,7 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
           data => {
             if (data['success'] === true) {
               Swal.fire('', 'Meter Type deleted Successfully!', 'success');
+              this.getMeterTypes();
             } else {
               Swal.fire('', data['error'], 'error');
             }
@@ -197,10 +195,12 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
     }
     if (user._id === undefined) {
       user.role = 'Admin';
-      user.attribute = {
-        isBillable: true,
-        isCommon: true
-      };
+      console.log(user, '----user=----------');
+
+      // user.attribute = {
+      //   isBillable: true,
+      //   isCommon: true
+      // };
       this.metertypeService.createMeterType(user).subscribe(
         data => {
           if (data['success'] === true) {
