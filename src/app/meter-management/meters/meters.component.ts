@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-\import { AddMeterComponent } from './add-meter/add-meter.component';
+import { AddMeterComponent } from './add-meter/add-meter.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
