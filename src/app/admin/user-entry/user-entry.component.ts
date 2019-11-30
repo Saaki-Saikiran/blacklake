@@ -97,9 +97,7 @@ export class UserEntryComponent implements OnInit {
       this.buttonType = 'Add';
       this.submitted = false;
       this.userForm.reset();
-      this.router.navigateByUrl('/admin/user-entry',{skipLocationChange:true}).then(()=>{
-        this.router.navigate(['/admin/user-entry']);
-      });
+      
     }
   
    
