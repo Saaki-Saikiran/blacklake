@@ -19,7 +19,7 @@ export class RolesService {
     constructor(private http: HttpClient) { }
 
     getRoles(): Observable<Role[]> {
-        const match = { isActive: true };
+        const match = {};
         const pagination = { limit: 1000 };
 
         return this.http.post<Role[]>(`${environment.baseUrl}/roles/list`, { match, pagination }, httpOptions)
