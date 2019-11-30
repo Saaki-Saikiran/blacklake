@@ -11,6 +11,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MetersService } from '../meters/meters.service';
 import { UsersService } from 'src/app/admin/user-entry/user-entry.service';
 import { MapMeterTenantsService } from './map-meter-tenants.service';
+import { DeptMetersService } from '../dept-meters/dept-meters.service';
 
 @Component({
   selector: 'app-map-meter-tenants',
@@ -38,7 +39,7 @@ export class MapMeterTenantsComponent implements OnInit {
 
   mySubscription: any;
   metersList: any;
-  deptMeters: { "_id": string; "deptMeterNumber": number; }[];
+  deptMeters: any[];
   FloorList: any[];
   TenantsList: any[];
   mapmetersList: any;
@@ -48,7 +49,8 @@ export class MapMeterTenantsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private meterService: MapMeterTenantsService,
-    private meterService1: MetersService) {
+    private meterService1: MetersService,
+    private deptmeterService: DeptMetersService) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -113,32 +115,20 @@ export class MapMeterTenantsComponent implements OnInit {
   }
 
   getDeptMeters() {
-    this.deptMeters = [{
-      "_id": "UdTRq7vs",
-      "deptMeterNumber": 1234567890
-    }, {
-      "_id": "yOSx5$Sf",
-      "deptMeterNumber": 123456789099999.0
-    },
-    {
-      "_id": "DmnWcP$J",
-      "deptMeterNumber": 123498658595.0
-    }];
-    // this.meterService.getAll().subscribe(
-    //   data => {
-    //     if (data['success'] === true) {
-    //       this.metersList = data['result'];
-    //       this.dtTrigger.next();
-    //     } else {
-    //       Swal.fire('', data['error'], 'error');
-    //     }
-    //     this.loading = false;
-    //   },
-    //   error => {
-    //     this.loading = false;
-    //     Swal.fire('', error, 'error');
-    //   }
-    // );
+    this.deptmeterService.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.deptMeters = data['result'];
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
   }
 
   getMeters() {
