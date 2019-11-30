@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { AddMeterTypeComponent } from 'src/app/admin/meter-types/add-meter-type/add-meter-type.component';
-import { AddMeterComponent } from './add-meter/add-meter.component';
+\import { AddMeterComponent } from './add-meter/add-meter.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -20,10 +19,10 @@ export class MetersComponent implements OnInit {
   buttonType: string;
   tabHeader: any = "Add  Meter";
   isEditing: boolean;
-  Userdata:any;
+  Userdata: any;
   submitted = false;
-  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,
-    private router: Router,private modalService: NgbModal) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
+    private router: Router, private modalService: NgbModal) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -32,12 +31,12 @@ export class MetersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buttonType='Add';
-    this.formHeader="Add Meter Details";
+    this.buttonType = 'Add';
+    this.formHeader = "Add Meter Details";
   }
 
   userModal(type, data) {
-     this.Userdata = data;
+    this.Userdata = data;
     this.formHeader = 'Edit  Meter';
     this.buttonType = 'Update';
     this.tabHeader = 'Edit   Meter';
@@ -60,8 +59,8 @@ export class MetersComponent implements OnInit {
       this.submitted = false;
       //this.userForm.reset();
     }
-  
-   
+
+
   }
   confirmAlert() {
     Swal.fire({

@@ -62,15 +62,19 @@
                     </div>
                   </div>
 
-                  <div class="form-row">
+                  <div class="form-row">{{attribute}}
                     <!-- <div class="form-group form-check col"> -->
-                    <label>Attribute</label>
+                    <!-- <label>Attribute</label>
                     <select formControlName="attribute" class="form-control"
                       [ngClass]="{ 'is-invalid': submitted && f.attribute.errors }">
                       <option value="">Select Attributes</option>
                       <option value="isBillable"><input type="checkbox" />isBillable</option>
                       <option value="isCommon"> <input type="checkbox" />isCommon</option>
-                    </select>
+                    </select> -->
+                    <ng-multiselect-dropdown [placeholder]="'custom placeholder'" [data]="dropdownList"
+                      formControlName="attribute" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                      (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
                     <div *ngIf="submitted && f.attribute.errors" class="invalid-feedback">
                       <div *ngIf="f.attribute.errors.required">attribute is required</div>
                     </div>

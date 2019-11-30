@@ -19,6 +19,7 @@ import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-left/nav-se
 import { NavRightComponent } from './theme/layout/admin/nav-bar/nav-right/nav-right.component';
 import { ConfigurationComponent } from './theme/layout/admin/configuration/configuration.component';
 import { ToggleFullScreenDirective } from './theme/shared/full-screen/toggle-full-screen';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 /* Menu Items */
 import { NavigationItem } from './theme/layout/admin/navigation/navigation';
@@ -54,7 +55,9 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     NgbTooltipModule,
     NgbButtonsModule,
     NgbTabsetModule,
-    HttpClientModule],
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
+  ],
   providers: [NavigationItem,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

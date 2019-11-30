@@ -7,6 +7,7 @@ import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { MeterTypesService } from './meter-types.service';
 import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-meter-types',
@@ -31,6 +32,9 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   mySubscription: any;
+  dropdownList: { item_id: number; item_text: string; }[];
+  selectedItems: { item_id: number; item_text: string; }[];
+  dropdownSettings: { singleSelection: boolean; idField: string; textField: string; selectAllText: string; unSelectAllText: string; itemsShowLimit: number; allowSearchFilter: boolean; };
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -53,6 +57,26 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.dropdownList = [
+      { item_id: 1, item_text: 'Mumbai' },
+      { item_id: 2, item_text: 'Bangaluru' },
+      { item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' },
+      { item_id: 5, item_text: 'New Delhi' }
+    ];
+
+    this.selectedItems = [
+      { item_id: 4, item_text: 'Navsari' }
+    ];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10
@@ -67,6 +91,13 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
       attribute: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required])
     });
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
 
   get f() { return this.userForm.controls; }
@@ -113,6 +144,10 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
       _id: new FormControl(data._id),
       type: new FormControl(data.type, [Validators.required]),
       attribute: new FormControl(data.attribute, [Validators.required]),
+      // attribute: this.formBuilder.group({
+      //   isBillable: new FormControl('', [Validators.required]),
+      //   isCommon: new FormControl('', [Validators.required])
+      // }),
       description: new FormControl(data.description, [Validators.required])
     });
   }
@@ -154,6 +189,7 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const user = { ...this.userForm.value };
+    console.log(user, '----user=----------');
     this.submitted = true;
     // stop here if form is invalid
     if (this.userForm.invalid) {
@@ -161,10 +197,10 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
     }
     if (user._id === undefined) {
       user.role = 'Admin';
-      user.attribute = [{
+      user.attribute = {
         isBillable: true,
         isCommon: true
-      }]
+      };
       this.metertypeService.createMeterType(user).subscribe(
         data => {
           if (data['success'] === true) {
