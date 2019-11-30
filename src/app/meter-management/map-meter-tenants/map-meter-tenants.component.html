@@ -17,7 +17,7 @@
                   <th>Floor</th>
                   <th>Tenants</th>
                   <th>contactNumber</th>
-                  <th>started</th>
+                  <!-- <th>started</th> -->
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -33,7 +33,7 @@
                   <td>{{item?.floorID?.floor}}</td>
                   <td>{{item?.tenantID?.tenantName}}</td>
                   <td>{{item?.contactNumber}}</td>
-                  <td>{{item?.started}}</td>
+                  <!-- <td>{{item?.started}}</td> -->
                   <td class="align-middle">
                     <span *ngIf="item?.active" class="badge badge-success">Active</span>
                     <span *ngIf="!item?.active" class="badge badge-danger">In-Active</span>

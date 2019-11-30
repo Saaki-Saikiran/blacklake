@@ -106,7 +106,7 @@ const NavigationItems = [
           },
           {
             id: 'map-meter-tenants',
-            title: 'Map Meter Tenants',
+            title: 'Map Meters Tenants',
             type: 'item',
             url: '/meter-management/map-meter-tenants',
             hidden: false
