@@ -18,7 +18,7 @@ export class MetersService {
   constructor(private http: HttpClient) { }
 
   getAll() {
-    const match = { active: true };
+    const match = {};
     const pagination = { limit: 1000 };
     return this.http.post(`${environment.baseUrl}/meters/list`, { match, pagination }, httpOptions)
       .pipe(

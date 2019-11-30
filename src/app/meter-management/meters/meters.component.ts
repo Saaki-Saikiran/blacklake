@@ -35,6 +35,7 @@ export class MetersComponent implements OnInit {
 
   mySubscription: any;
   metersList: any;
+  deptMeters: { "_id": string; "deptMeterNumber": number; }[];
 
 
   constructor(
@@ -65,6 +66,7 @@ export class MetersComponent implements OnInit {
     };
 
     this.getUsers();
+    this.getDeptMeters();
     this.formHeader = 'Add Meter Details';
     this.buttonType = 'Add';
     this.isEditing = false;
@@ -102,6 +104,35 @@ export class MetersComponent implements OnInit {
     );
   }
 
+  getDeptMeters() {
+    this.deptMeters = [{
+      "_id": "UdTRq7vs",
+      "deptMeterNumber": 1234567890
+    }, {
+      "_id": "yOSx5$Sf",
+      "deptMeterNumber": 123456789099999.0
+    },
+    {
+      "_id": "DmnWcP$J",
+      "deptMeterNumber": 123498658595.0
+    }];
+    // this.meterService.getAll().subscribe(
+    //   data => {
+    //     if (data['success'] === true) {
+    //       this.metersList = data['result'];
+    //       this.dtTrigger.next();
+    //     } else {
+    //       Swal.fire('', data['error'], 'error');
+    //     }
+    //     this.loading = false;
+    //   },
+    //   error => {
+    //     this.loading = false;
+    //     Swal.fire('', error, 'error');
+    //   }
+    // );
+  }
+
   beforeChange($event: NgbTabChangeEvent) {
     // dont do anything if id matches
     if ($event.activeId === 'AdduserId') {
@@ -128,7 +159,7 @@ export class MetersComponent implements OnInit {
       meterSerialNumber: new FormControl(data.meterSerialNumber, [Validators.required, Validators.minLength(3)]),
       model: new FormControl(data.model, [Validators.required]),
       meterType: new FormControl(data.meterType, [Validators.required]),
-      deptMeterNumberID: new FormControl(data.deptMeterNumberID, [Validators.required]),
+      deptMeterNumberID: new FormControl(data.deptMeterNumberID._id, [Validators.required]),
       sourceType: new FormControl(data.sourceType, [Validators.required]),
       panel: new FormControl(data.panel, [Validators.required]),
       gateway: new FormControl(data.gateway, [Validators.required]),

@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group col">
                       <label>Model</label>
-                      <input type="number" formControlName="model" class="form-control"
+                      <input type="text" formControlName="model" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />
                       <div *ngIf="submitted && f.model.errors" class="invalid-feedback">
                         <div *ngIf="f.model.errors.required">model is required</div>
@@ -84,10 +84,15 @@
                     </div>
                     <div class="form-group col">
                       <label>Dept Meter Number</label>
-                      <input type="text" formControlName="deptMeterNumberID" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumberID.errors }" />
+                      <select formControlName="deptMeterNumberID" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumberID.errors }">
+                        <option value="">Select Dept Meter Number</option>
+                        <option value="{{item._id}}" *ngFor="let item of deptMeters">{{item.deptMeterNumber}}</option>
+                      </select>
+                      <!-- <input type="text" formControlName="deptMeterNumberID" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumberID.errors }" /> -->
                       <div *ngIf="submitted && f.deptMeterNumberID.errors" class="invalid-feedback">
-                        <div *ngIf="f.deptMeterNumberID.errors.required">deptMeterNumberID is required</div>
+                        <div *ngIf="f.deptMeterNumberID.errors.required">dept Meter Number is required</div>
                       </div>
                     </div>
                   </div>
