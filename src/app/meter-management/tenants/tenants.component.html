@@ -15,43 +15,44 @@
               <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
                 <ngb-tab title="Tenants List" id="UserlistId">
                   <ng-template ngbTabContent>
-                      <table datatable id="report-table" class="table table-bordered table-striped mb-0">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>User Name</th>
-                              <th>Login ID</th>
-                              <th>Role</th>
-                              <th>Is Active</th>
-                              <th>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>Sai</td>
-                              <td>459</td>
-                              <td>Admin</td>
-                              <td>Yes</td>
-                              <td>
-                                  <span (click)="myTabSet.select('AdduserId')">
-                                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'Sai')">Edit</a></span>
-                                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>Kiran</td>
-                              <td>999</td>
-                              <td>User</td>
-                              <td>No</td>
-                              <td>
-                                <a href="javascript:" class="btn btn-info btn-sm" (click)="userModal('Edit', 'kiran')">Edit</a>
-                                <button type="button" class="btn btn-danger btn-sm" (click)="confirmAlert()">Delete</button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Tenant Name</th>
+                        <th>contact PersonName</th>
+                        <th>contact Number</th>
+                        <th>email</th>
+                        <th>comments</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of TenantsList;let i = index;">
+                        <td>{{i+1}}</td>
+                        <td>{{item.tenantName}}</td>
+                        <td>
+                          {{item.contactPersonName}}
+                        </td>
+                        <td>{{item.contactNumber}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.comments}}</td>
+                        <td class="align-middle">
+                          <span *ngIf="item.isActive" class="badge badge-success">Active</span>
+                          <span *ngIf="!item.isActive" class="badge badge-danger">In-Active</span>
+                        </td>
+                        <td class="table-action">
+                          <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                              class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                                class="feather icon-edit"></i></a></span>
+                          <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                            (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                   </ng-template>
                 </ngb-tab>
                 <ngb-tab title={{tabHeader}} id="AdduserId">
@@ -63,23 +64,32 @@
                               <div class="form-row">
           
                                 <div class="form-group col">
-                                  <label>Name</label>
-                                  <input type="text" formControlName="name" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-                                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                                    <div *ngIf="f.name.errors.required">Name is required</div>
+                                  <label>Tenant Name</label>
+                                  <input type="text" formControlName="tenantName" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.tenantName.errors }" />
+                                  <div *ngIf="submitted && f.tenantName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.tenantName.errors.required">Tenant Name is required</div>
                                   </div>
                                 </div>
                                 <div class="form-group col">
-                                  <label> Phone</label>
-                                  <input type="number" formControlName="phone" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
-                                  <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-                                    <div *ngIf="f.phone.errors.required">Phone is required</div>
+                                  <label> Contact PersonName</label>
+                                  <input type="text" formControlName="contactPersonName" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.contactPersonName.errors }" />
+                                  <div *ngIf="submitted && f.contactPersonName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.contactPersonName.errors.required">Contact PersonName is required</div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="form-group">
+                              <div class="form-row">
+                                <div class="form-group col">
+                                <label>Contact Number</label>
+                                <input type="text" formControlName="contactNumber" class="form-control"
+                                  [ngClass]="{ 'is-invalid': submitted && f.contactNumber.errors }" />
+                                <div *ngIf="submitted && f.contactNumber.errors" class="invalid-feedback">
+                                  <div *ngIf="f.contactNumber.errors.required">Contact Number is required</div>
+                                </div>
+                              </div>
+                              <div class="form-group col">
                                 <label>Email</label>
                                 <input type="text" formControlName="email" class="form-control"
                                   [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
@@ -88,44 +98,14 @@
                                   <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
                                 </div>
                               </div>
-                              <div class="form-row">
-                                <div class="form-group col">
-                                  <label>Password</label>
-                                  <input type="password" formControlName="password" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                                    <div *ngIf="f.password.errors.required">Password is required</div>
-                                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                                  </div>
-                                </div>
-                                <div class="form-group col">
-                                  <label>Confirm Password</label>
-                                  <input type="password" formControlName="confirmPassword" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
-                                  <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-                                    <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
-                                    <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
-                                  </div>
-                                </div>
                               </div>
-          
                               <div class="form-row">
                                 <div class="form-group col">
-                                  <label>Address</label>
-                                  <input type="text" formControlName="address" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
-                                  <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
-                                    <div *ngIf="f.address.errors.required">address is required</div>
-                                    <div *ngIf="f.address.errors.minlength">address must be at least 6 characters</div>
-                                  </div>
-                                </div>
-                                <div class="form-group col">
-                                  <label>User Name</label>
-                                  <input type="text" formControlName="username" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                                  <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                                    <div *ngIf="f.username.errors.required">Confirm Password is required</div>
-                                    <div *ngIf="f.username.errors.mustMatch">Passwords must match</div>
+                                  <label>Comments</label>
+                                  <input type="text" formControlName="comments" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
+                                  <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
+                                    <div *ngIf="f.comments.errors.required">Comments is required</div>
                                   </div>
                                 </div>
                               </div>

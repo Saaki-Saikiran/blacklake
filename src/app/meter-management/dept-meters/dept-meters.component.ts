@@ -27,7 +27,6 @@ export class DeptMetersComponent implements OnInit {
   DeptMetersList:string;
   loading: boolean;
   mySubscription: any;
-
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   constructor(private modalService: NgbModal,private formBuilder: FormBuilder,private route: ActivatedRoute,

@@ -13,14 +13,14 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class TenantsService {
+export class FloorsService {
 
   constructor(private http: HttpClient) { }
   getAll() {
     debugger
     const match = { active: true };
     const pagination = { limit: 1000 };
-    return this.http.post(`${environment.baseUrl}/tenants/list`, { match, pagination }, httpOptions)
+    return this.http.post(`${environment.baseUrl}/floors/list`, { match, pagination }, httpOptions)
       .pipe(
         map(data => {
           data['result'].map((item, index) => {
@@ -33,16 +33,16 @@ export class TenantsService {
       );
   }
 
-  createTenant(user) {
-    return this.http.post(`${environment.baseUrl}/tenants/create`, user, httpOptions)
+  createFloor(user) {
+    return this.http.post(`${environment.baseUrl}/floors/create`, user, httpOptions)
       .pipe(
         tap(data => console.log('Added user\n', JSON.stringify(data))),
         catchError(this.errorHandler)
       );
   }
 
-  updateTenant(user) {
-    return this.http.put(`${environment.baseUrl}/tenants/update`, user, httpOptions)
+  updateFloor(user) {
+    return this.http.put(`${environment.baseUrl}/floors/update`, user, httpOptions)
       .pipe(
         tap(data => console.log('updateUser: ', JSON.stringify(data))),
         // Return the User on an update
@@ -51,8 +51,8 @@ export class TenantsService {
       );
   }
 
-  deleteTenant(id) {
-    return this.http.delete(`${environment.baseUrl}/tenants/${id}`, httpOptions)
+  deleteFloor(id) {
+    return this.http.delete(`${environment.baseUrl}/floors/${id}`, httpOptions)
       .pipe(
         tap(data => console.log('deleted user\n' + JSON.stringify(data))),
         catchError(this.errorHandler)
@@ -70,3 +70,4 @@ export class TenantsService {
     return throwError(errorMessage);
   }
 }
+
