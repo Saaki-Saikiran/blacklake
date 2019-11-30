@@ -197,7 +197,7 @@ export class FloorsComponent implements OnInit {
           data => {
             if (data['success'] === true) {
               Swal.fire('', 'Floor deleted Successfully!', 'success');
-              this.getTenants();
+              this.getFloors();
             } else {
               Swal.fire('', data['error'], 'error');
             }
