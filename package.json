@@ -51,6 +51,7 @@
     "jszip": "^3.2.2",
     "moment": "^2.24.0",
     "ng-click-outside": "^4.0.0",
+    "ng-multiselect-dropdown": "^0.2.9",
     "ng-number-formatter": "^1.5.0",
     "ng-select": "^1.0.2",
     "ng2-archwizard": "^2.1.0",
