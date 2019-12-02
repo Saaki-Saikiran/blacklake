@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthSigninService } from '../auth-signin/auth-signin.service';
 @Component({
@@ -11,11 +12,11 @@ export class AuthChangePasswordComponent implements OnInit {
   ChangePasswordForm: FormGroup;
   loading = false;
   submitted = false;
-  constructor( private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private ChangePasswordService:AuthSigninService
-    ) { }
+    private ChangePasswordService: AuthSigninService
+  ) { }
 
   ngOnInit() {
     this.ChangePasswordForm = this.formBuilder.group({
@@ -35,26 +36,25 @@ export class AuthChangePasswordComponent implements OnInit {
       return;
     }
     this.loading = true;
-if(this.f.NewPassword.value==this.f.ConfirmPassword.value)
-{
-  this.ChangePasswordService.ChangePassworrd(this.f.CurrentPassword.value, this.f.NewPassword.value).subscribe(
-    data => {
-      if (data['success'] === true) {
-        this.router.navigate(['/dashboard/analytics']);
-      } else {
-        alert('Invalid Credentials');
-        this.loading = false;
-      }
-    },
-    error => {
-      alert(error);
-      this.loading = false;
-    });
-}
-else
-{
-  alert('Please Enter new password & confirm password must be same '); 
-}
-   
+    if (this.f.NewPassword.value == this.f.ConfirmPassword.value) {
+      this.ChangePasswordService.ChangePassworrd(this.f.CurrentPassword.value, this.f.NewPassword.value).subscribe(
+        data => {
+          if (data['success'] === true) {
+            Swal.fire('', 'Password Updated Successfully !', 'success');
+            localStorage.clear();
+            this.router.navigate(['/auth/signin']);
+          } else {
+            Swal.fire('', data['error'], 'error');
+            this.loading = false;
+          }
+        },
+        error => {
+          Swal.fire('', error, 'error');
+          this.loading = false;
+        });
+    }
+    else {
+      Swal.fire('', 'Please Enter new password & confirm password must be same', 'warning');
+    }
   }
 }

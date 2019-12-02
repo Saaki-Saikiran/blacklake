@@ -31,7 +31,7 @@ export class AuthSigninService {
       );
   }
   ChangePassworrd(currentPassword: string, newPassword: string) {
-    return this.httpClient.post<any>(`${environment.baseUrl}/users/changePassword`, { currentPassword, newPassword }, httpOptions)
+    return this.httpClient.put<any>(`${environment.baseUrl}/users/changePassword`, { currentPassword, newPassword }, httpOptions)
       .pipe(map
         (user => {
           // login successful if there's a jwt token in the response
