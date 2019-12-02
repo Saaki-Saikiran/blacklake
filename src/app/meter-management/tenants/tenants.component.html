@@ -1,129 +1,129 @@
 <div class="row btn-page">
-    <div class="col-sm-12">
-      <!-- <app-card cardTitle="Dept Meters List" cardClass="card-datatable" [options]="false"> -->
-        <!-- <div class="row align-items-center m-l-0">
+  <div class="col-sm-12">
+    <!-- <app-card cardTitle="Dept Meters List" cardClass="card-datatable" [options]="false"> -->
+    <!-- <div class="row align-items-center m-l-0">
           <div class="col-sm-6"></div>
           <div class="col-sm-6 text-right">
             <button class="btn btn-success btn-sm btn-round has-ripple" (click)="userModal('Add', '')"><i
                 class="feather icon-plus"></i> Add Dept Meter</button>
           </div>
         </div> -->
-  
-        <div class="col-sm-12">
-            <app-card [hidHeader]="true">
-        
-              <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
-                <ngb-tab title="Tenants List" id="UserlistId">
-                  <ng-template ngbTabContent>
-                    <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                    class="table table-bordered table-striped mb-0">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Tenant Name</th>
-                        <th>contact PersonName</th>
-                        <th>contact Number</th>
-                        <th>email</th>
-                        <th>comments</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of TenantsList;let i = index;">
-                        <td>{{i+1}}</td>
-                        <td>{{item.tenantName}}</td>
-                        <td>
-                          {{item.contactPersonName}}
-                        </td>
-                        <td>{{item.contactNumber}}</td>
-                        <td>{{item.email}}</td>
-                        <td>{{item.comments}}</td>
-                        <td class="align-middle">
-                          <span *ngIf="item.isActive" class="badge badge-success">Active</span>
-                          <span *ngIf="!item.isActive" class="badge badge-danger">In-Active</span>
-                        </td>
-                        <td class="table-action">
-                          <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                              class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                                class="feather icon-edit"></i></a></span>
-                          <a href="javascript:" class="btn btn-icon btn-outline-danger"
-                            (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  </ng-template>
-                </ngb-tab>
-                <ngb-tab title={{tabHeader}} id="AdduserId">
-                  <ng-template ngbTabContent>
-                      <div class="card m-3">
-                          <h5 class="card-header">{{formHeader}}</h5>
-                          <div class="card-body">
-                            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                              <div class="form-row">
-          
-                                <div class="form-group col">
-                                  <label>Tenant Name</label>
-                                  <input type="text" formControlName="tenantName" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.tenantName.errors }" />
-                                  <div *ngIf="submitted && f.tenantName.errors" class="invalid-feedback">
-                                    <div *ngIf="f.tenantName.errors.required">Tenant Name is required</div>
-                                  </div>
-                                </div>
-                                <div class="form-group col">
-                                  <label> Contact PersonName</label>
-                                  <input type="text" formControlName="contactPersonName" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.contactPersonName.errors }" />
-                                  <div *ngIf="submitted && f.contactPersonName.errors" class="invalid-feedback">
-                                    <div *ngIf="f.contactPersonName.errors.required">Contact PersonName is required</div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-row">
-                                <div class="form-group col">
-                                <label>Contact Number</label>
-                                <input type="text" formControlName="contactNumber" class="form-control"
-                                  [ngClass]="{ 'is-invalid': submitted && f.contactNumber.errors }" />
-                                <div *ngIf="submitted && f.contactNumber.errors" class="invalid-feedback">
-                                  <div *ngIf="f.contactNumber.errors.required">Contact Number is required</div>
-                                </div>
-                              </div>
-                              <div class="form-group col">
-                                <label>Email</label>
-                                <input type="text" formControlName="email" class="form-control"
-                                  [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                                  <div *ngIf="f.email.errors.required">Email is required</div>
-                                  <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                                </div>
-                              </div>
-                              </div>
-                              <div class="form-row">
-                                <div class="form-group col">
-                                  <label>Comments</label>
-                                  <input type="text" formControlName="comments" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
-                                  <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
-                                    <div *ngIf="f.comments.errors.required">Comments is required</div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="text-center">
-                                <button class="btn btn-primary mr-1">{{buttonType}}</button>
-                                <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-                              </div>
-                            </form>
-                          </div>
+
+    <div class="col-sm-12">
+      <app-card [hidHeader]="true">
+
+        <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
+          <ngb-tab title="Tenants List" id="UserlistId">
+            <ng-template ngbTabContent>
+              <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                class="table table-bordered table-striped mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tenant Name</th>
+                    <th>contact PersonName</th>
+                    <th>contact Number</th>
+                    <th>email</th>
+                    <th>comments</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of TenantsList;let i = index;">
+                    <td>{{i+1}}</td>
+                    <td>{{item.tenantName}}</td>
+                    <td>
+                      {{item.contactPersonName}}
+                    </td>
+                    <td>{{item.contactNumber}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.comments}}</td>
+                    <td class="align-middle">
+                      <span *ngIf="item.active" class="badge badge-success">Active</span>
+                      <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                    </td>
+                    <td class="table-action">
+                      <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                          class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                            class="feather icon-edit"></i></a></span>
+                      <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                        (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title={{tabHeader}} id="AdduserId">
+            <ng-template ngbTabContent>
+              <div class="card m-3">
+                <h5 class="card-header">{{formHeader}}</h5>
+                <div class="card-body">
+                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                    <div class="form-row">
+
+                      <div class="form-group col">
+                        <label>Tenant Name</label>
+                        <input type="text" formControlName="tenantName" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.tenantName.errors }" />
+                        <div *ngIf="submitted && f.tenantName.errors" class="invalid-feedback">
+                          <div *ngIf="f.tenantName.errors.required">Tenant Name is required</div>
                         </div>
-        
-                  </ng-template>
-                </ngb-tab>
-              </ngb-tabset>
-            </app-card>
-          </div>
-  
-        <!-- <div class="table-responsive">
+                      </div>
+                      <div class="form-group col">
+                        <label> Contact PersonName</label>
+                        <input type="text" formControlName="contactPersonName" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.contactPersonName.errors }" />
+                        <div *ngIf="submitted && f.contactPersonName.errors" class="invalid-feedback">
+                          <div *ngIf="f.contactPersonName.errors.required">Contact PersonName is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col">
+                        <label>Contact Number</label>
+                        <input type="text" formControlName="contactNumber" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.contactNumber.errors }" />
+                        <div *ngIf="submitted && f.contactNumber.errors" class="invalid-feedback">
+                          <div *ngIf="f.contactNumber.errors.required">Contact Number is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group col">
+                        <label>Email</label>
+                        <input type="text" formControlName="email" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                          <div *ngIf="f.email.errors.required">Email is required</div>
+                          <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col">
+                        <label>Comments</label>
+                        <input type="text" formControlName="comments" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
+                        <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
+                          <div *ngIf="f.comments.errors.required">Comments is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </app-card>
+    </div>
+
+    <!-- <div class="table-responsive">
           <table datatable id="report-table" class="table table-bordered table-striped mb-0">
             <thead>
               <tr>
@@ -161,7 +161,6 @@
             </tbody>
           </table>
         </div> -->
-      <!-- </app-card> -->
-    </div>
+    <!-- </app-card> -->
   </div>
-  
+</div>
