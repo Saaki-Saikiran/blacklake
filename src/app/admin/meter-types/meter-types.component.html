@@ -48,8 +48,8 @@
                 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                   <div class="form-row">
                     <div class="form-group col">
-                      <label>Type</label>
-                      <input type="text" formControlName="type" class="form-control"
+                      <label >Type</label>
+                      <input type="text"  formControlName="type" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.type.errors }" />
                       <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
                         <div *ngIf="f.type.errors.required">TYpe is required</div>
@@ -64,9 +64,21 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="form-row">{{attribute}}
-                    <div class="form-group form-check col">
+                      <div class="form-group col">
+                          <ng-multiselect-dropdown [placeholder]="'Select Attributes'" [data]="dropdownList"
+                          formControlName="attribute" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                          (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submitted && f.attribute.errors" class="invalid-feedback">
+                          <div *ngIf="f.attribute.errors.required">attribute is required</div>
+                        </div>
+                        </div>
+                        <div class="form-group col">
+                        </div>
+                  </div>
+                  <!-- <div class="form-row">{{attribute}}
+                    <div class="form-group form-check col"> -->
                       <!-- <label>Attribute</label> -->
                       <!--  <select formControlName="attribute" class="form-control"
                       [ngClass]="{ 'is-invalid': submitted && f.attribute.errors }">
@@ -74,13 +86,13 @@
                       <option value="isBillable"><input type="checkbox" />isBillable</option>
                       <option value="isCommon"> <input type="checkbox" />isCommon</option>
                     </select> -->
-                      <ng-multiselect-dropdown [placeholder]="'Select Attributes'" [data]="dropdownList"
+                      <!-- <ng-multiselect-dropdown [placeholder]="'Select Attributes'" [data]="dropdownList"
                         formControlName="attribute" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
                         (onSelectAll)="onSelectAll($event)">
                       </ng-multiselect-dropdown>
                       <div *ngIf="submitted && f.attribute.errors" class="invalid-feedback">
                         <div *ngIf="f.attribute.errors.required">attribute is required</div>
-                      </div>
+                      </div> -->
 
                       <!-- <input type="checkbox" formControlName="isBillable" id="isBillable" class="form-check-input"
                           [ngClass]="{ 'is-invalid': submitted && f.isBillable.errors }" />
@@ -88,7 +100,7 @@
                         <div *ngIf="submitted && f.isBillable.errors" class="invalid-feedback">Accept Ts & Cs is
                           required
                         </div> -->
-                    </div>
+                    <!-- </div> -->
                     <!-- <div class="form-group form-check col">
                         <input type="checkbox" formControlName="isCommon" id="isCommon" class="form-check-input"
                           [ngClass]="{ 'is-invalid': submitted && f.isCommon.errors }" />
@@ -96,7 +108,7 @@
                         <div *ngIf="submitted && f.isCommon.errors" class="invalid-feedback">Accept Ts & Cs is required
                         </div>
                       </div> -->
-                  </div>
+                  <!-- </div> -->
 
 
                   <div class="text-center">
