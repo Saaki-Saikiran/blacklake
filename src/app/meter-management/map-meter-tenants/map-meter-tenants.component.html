@@ -1,6 +1,6 @@
 
 <div class="row btn-page">
-    <div class="col-sm-12" >
+    <!-- <div class="col-sm-12" >
         <app-card [hidHeader]="true" style="background-color: #ff4500 !important;">
     <div class="row" >
         <div class="col-4"> 
@@ -27,7 +27,7 @@
         </div>
       </div>
     </app-card>
-    </div>
+    </div>  -->
   <div class="col-sm-12">
     <app-card [hidHeader]="true">
       <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
@@ -84,6 +84,59 @@
             <div class="card m-3">
               <h5 class="card-header">{{formHeader}}</h5>
               <div class="card-body">
+                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                      <div class="form-row">
+                          <div class="form-group col">
+                            <label>Select Meter Type to Assign</label>
+                            <select formControlName="deptMeterNumberID" class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumberID.errors }">
+                              <option value="">Select Meter Type to Assign</option>
+                              <option value="{{item._id}}" *ngFor="let item of deptMeters">{{item.deptMeterNumber}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.deptMeterNumberID.errors" class="invalid-feedback">
+                              <div *ngIf="f.deptMeterNumberID.errors.required">Meter Type to Assign is required</div>
+                            </div>
+                          </div>
+                          <div class="form-group col">
+                            </div>
+                      </div>
+                      <div class="form-row">
+                          <div class="form-group col">
+                            Is it is a tenant?
+                          </div>
+                          <div class="form-group col">
+                              <input type="checkbox" name="vehicle1" value="Bike"> Yes<br>
+                            </div>
+                            <div class="form-group col">
+                                <input type="checkbox" name="vehicle1" value="Bike">No<br>
+                              </div>
+                              <div class="form-group col">
+                                </div>
+                                <div class="form-group col">
+                                  </div>
+                      </div>
+                      <div class="form-row">
+                          <div class="form-group col">
+                            <label>Select Common Meter Category</label>
+                            <select formControlName="deptMeterNumberID" class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumberID.errors }">
+                              <option value="">Select Common Meter Category</option>
+                              <option value="{{item._id}}" *ngFor="let item of deptMeters">{{item.deptMeterNumber}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.deptMeterNumberID.errors" class="invalid-feedback">
+                              <div *ngIf="f.deptMeterNumberID.errors.required">Meter Type to Assign is required</div>
+                            </div>
+                          </div>
+                          <div class="form-group col">
+                            </div>
+                      </div>
+                      <div class="text-center">
+                          <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                          <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                        </div>
+                  </form>
+              </div>
+              <!-- <div class="card-body">
                 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                   <div class="form-row">
                     <div class="form-group col">
@@ -93,8 +146,6 @@
                         <option value="">Select Dept Meter Number</option>
                         <option value="{{item._id}}" *ngFor="let item of deptMeters">{{item.deptMeterNumber}}</option>
                       </select>
-                      <!-- <input type="text" formControlName="deptMeterNumberID" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumberID.errors }" /> -->
                       <div *ngIf="submitted && f.deptMeterNumberID.errors" class="invalid-feedback">
                         <div *ngIf="f.deptMeterNumberID.errors.required">dept Meter Number is required</div>
                       </div>
@@ -107,8 +158,6 @@
                         <option value="">Select Meter Serial Number</option>
                         <option value="{{item._id}}" *ngFor="let item of metersList">{{item.meterSerialNumber}}</option>
                       </select>
-                      <!-- <input type="text" formControlName="meterSerialNumberID" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.meterSerialNumberID.errors }" /> -->
                       <div *ngIf="submitted && f.meterSerialNumberID.errors" class="invalid-feedback">
                         <div *ngIf="f.meterSerialNumberID.errors.required">Meter Serial Number is required</div>
                       </div>
@@ -151,8 +200,6 @@
                         <option value="">Select Dept Meter Number</option>
                         <option value="{{item._id}}" *ngFor="let item of FloorList">{{item.floor}}</option>
                       </select>
-                      <!-- <input type="text" formControlName="floorID" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.floorID.errors }" /> -->
                       <div *ngIf="submitted && f.floorID.errors" class="invalid-feedback">
                         <div *ngIf="f.floorID.errors.required">Floor is required</div>
                       </div>
@@ -166,8 +213,6 @@
                         <option value="">Select Dept Meter Number</option>
                         <option value="{{item._id}}" *ngFor="let item of TenantsList">{{item.tenantName}}</option>
                       </select>
-                      <!-- <input type="text" formControlName="tenantID" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.tenantID.errors }" /> -->
                       <div *ngIf="submitted && f.tenantID.errors" class="invalid-feedback">
                         <div *ngIf="f.tenantID.errors.required">Tenant is required</div>
                       </div>
@@ -192,21 +237,13 @@
                           characters</div>
                       </div>
                     </div>
-                    <!-- <div class="form-group col">
-                      <label>Comments</label>
-                      <input type="text" formControlName="comments" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
-                      <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
-                        <div *ngIf="f.comments.errors.required">comments is required</div>
-                      </div>
-                    </div> -->
                   </div>
                   <div class="text-center">
                     <button class="btn btn-primary mr-1">{{buttonType}}</button>
                     <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
                   </div>
                 </form>
-              </div>
+              </div> -->
             </div>
 
           </ng-template>

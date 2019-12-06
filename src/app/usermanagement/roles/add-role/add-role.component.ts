@@ -50,7 +50,9 @@ export class AddRoleComponent implements OnInit {
             "Meter Readings of a Bill",
             "Periodic Tenant Bills",
             "Meter Occupancy",
-            "Roles"
+            "Roles",
+            
+
         ];
         this.menuNameItems = [];
 

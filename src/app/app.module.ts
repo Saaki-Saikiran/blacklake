@@ -30,6 +30,8 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +47,9 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     NavSearchComponent,
     NavRightComponent,
     ConfigurationComponent,
-    ToggleFullScreenDirective],
+    ToggleFullScreenDirective,
+    
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

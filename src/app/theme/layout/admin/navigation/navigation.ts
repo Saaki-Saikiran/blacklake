@@ -249,7 +249,53 @@ const NavigationItems = [
           }
         ]
       },
-
+      {
+        id: 'masters',
+        title: 'Masters',
+        type: 'collapse',
+        icon: 'feather icon-layers',
+        badge: {
+          title: '100+',
+          type: 'badge-success'
+        },
+        children: [
+          {
+            id: 'meter-model',
+            title: 'Meter Model',
+            type: 'item',
+            url: '/masters/meter-model',
+            hidden: false
+          },
+          {
+            id: 'meter-parameters',
+            title: 'Meter Parameters',
+            type: 'item',
+            url: '/masters/meter-parameters',
+            hidden: false
+          },
+          {
+            id: 'source-type',
+            title: 'Source Type',
+            type: 'item',
+            url: '/masters/source-type',
+            hidden: false
+          },
+          {
+            id: 'gateway',
+            title: 'Gateway',
+            type: 'item',
+            url: '/masters/gateway',
+            hidden: false
+          },
+          {
+            id: 'panel',
+            title: 'Panel',
+            type: 'item',
+            url: '/masters/panel',
+            hidden: false
+          }
+        ]
+      },
 
 
       // {

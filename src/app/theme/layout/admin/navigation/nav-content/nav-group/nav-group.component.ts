@@ -9,6 +9,7 @@ import {NextConfig} from '../../../../../../app-config';
   styleUrls: ['./nav-group.component.scss']
 })
 export class NavGroupComponent implements OnInit {
+  debugger
   @Input() item: NavigationItem;
   @Input() layout1: boolean = false;
   @Input() activeId: any;

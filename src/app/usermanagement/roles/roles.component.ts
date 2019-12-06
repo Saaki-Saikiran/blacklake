@@ -84,7 +84,13 @@ export class RolesComponent implements OnInit {
       "Meter Readings of a Bill",
       "Periodic Tenant Bills",
       "Meter Occupancy",
-      "Roles"
+      "Roles",
+      "Meter Model",
+      "Meter Parameters",
+      "Source Type",
+      "Gateway",
+      "Panel"
+
     ];
     this.menuNameItems = [];
 
