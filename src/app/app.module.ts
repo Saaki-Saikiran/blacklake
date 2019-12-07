@@ -29,6 +29,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+// import { MastersComponent } from './masters/masters.component';
 
 
 
@@ -48,6 +49,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     NavRightComponent,
     ConfigurationComponent,
     ToggleFullScreenDirective,
+    // MastersComponent,
     
     ],
   imports: [

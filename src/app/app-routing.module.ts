@@ -41,6 +41,10 @@ const routes: Routes = [
         loadChildren: () => import('./meter-management/meter-management.module').then(module => module.MeterManagementModule)
       },
       {
+        path: 'masters',
+        loadChildren: () => import('./masters/masters.module').then(module => module.MastersModule)
+      },
+      {
         path: 'bill-creation',
         loadChildren: () => import('./bill-creation/bill-creation.module').then(module => module.BillCreationModule)
       },

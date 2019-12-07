@@ -277,7 +277,7 @@ const NavigationItems = [
             id: 'source-type',
             title: 'Source Type',
             type: 'item',
-            url: '/masters/source-type',
+            url: '/masters/source-meter',
             hidden: false
           },
           {
