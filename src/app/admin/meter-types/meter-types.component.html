@@ -14,6 +14,7 @@
                       <th>Meter Type</th>
                       <th>Attributes</th>
                       <th>Description</th>
+                      <th>Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -26,6 +27,10 @@
                           *ngFor="let item1 of item.attribute">{{item1.item_text}}</span>
                       </td>
                       <td>{{item.description}}</td>
+                      <td class="align-middle">
+                          <span *ngIf="item.isActive" class="badge badge-success">Active</span>
+                          <span *ngIf="!item.isActive" class="badge badge-danger">In-Active</span>
+                        </td>
                       <td class="table-action">
                         <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
                             class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i

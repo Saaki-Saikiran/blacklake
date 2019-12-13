@@ -1,1 +1,220 @@
-<p>gateway works!</p>
+<div class="row btn-page">
+    <div class="col-sm-12">
+        <div class="col-sm-12">
+            <app-card [hidHeader]="true">
+
+                <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
+                    <ngb-tab title="Gateway " id="UserlistId">
+                        <ng-template ngbTabContent>
+                            <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                                class="table table-bordered table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>name</th>
+                                        <th>gatewayModel</th>
+                                        <th>location</th>
+                                        <th>tcp_COM_Type</th>
+                                        <th>ip</th>
+                                        <th>tcp_COM_PortNo</th>
+                                        <th>baudRate</th>
+                                        <th>parity</th>
+                                        <th>stopBits</th>
+                                        <th>dataSize</th>
+                                        <th>comments</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of DeptMetersList;let i = index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.name}}</td>
+                                        <td>
+                                            {{item.gatewayModel}}
+                                        </td>
+                                        <td>{{item.location}}</td>
+                                        <td>{{item.tcp_COM_Type}}</td>
+                                        <td>{{item.ip}}</td>
+                                        <td>{{item.tcp_COM_PortNo}}</td>
+                                        <td>{{item.baudRate}}</td>
+                                        <td>{{item.parity}}</td>
+                                        <td>{{item.stopBits}}</td>
+                                        <td>{{item.dataSize}}</td>
+                                        <td>{{item.comments}}</td>
+                                        <td class="align-middle">
+                                            <span *ngIf="item.active" class="badge badge-success">Active</span>
+                                            <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                                        </td>
+                                        <td class="table-action">
+                                            <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                                                    class="btn btn-icon btn-outline-success"
+                                                    (click)="userModal('Edit', item)"><i
+                                                        class="feather icon-edit"></i></a></span>
+                                            <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                                                (click)="confirmAlertDelete(item._id)"><i
+                                                    class="feather icon-trash-2"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title={{tabHeader}} id="AdduserId">
+                        <ng-template ngbTabContent>
+                            <div class="card m-3">
+                                <h5 class="card-header">{{formHeader}}</h5>
+                                <div class="card-body">
+                                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                                        <div class="form-row">
+                                            <div class="form-group col">
+                                                <input type="text" placeholder="Name"
+                                                    formControlName="name" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                                <div *ngIf="submitted && f.name.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f.name.errors.required">Name is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col">
+                                                <input type="text" placeholder="Gateway Model"
+                                                    formControlName="gatewayModel" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.gatewayModel.errors }" />
+                                                <div *ngIf="submitted && f.gatewayModel.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f.gatewayModel.errors.required">Gateway Model is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col">
+                                                <input type="text" placeholder="Location"
+                                                    formControlName="location" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
+                                                <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.location.errors.required">Location is required
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col">
+                                                    <select formControlName="tcp_COM_Type" class="form-control"
+                                                      [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_Type.errors }">
+                                                      <option value="">Select TCP/COM Type</option>
+                                                      <option value="TCP" >TCP</option>
+                                                      <option value="COM" >COM</option>
+                                                    </select>
+                                                    <div *ngIf="submitted && f.tcp_COM_Type.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.tcp_COM_Type.errors.required">TCP/COM Type is required</div>
+                                                    </div>
+                                                  </div>
+
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col">
+                                                <input type="text" placeholder="IP"  formControlName="ip"
+                                                    class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.ip.errors }" />
+                                                <div *ngIf="submitted && f.ip.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.ip.errors.required">IP is required</div>
+                                                    <div *ngIf="f.ip.errors?.pattern">Please enter valid IP address!</div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col">
+                                                <input type="number" placeholder="TCP COM PortNo" formControlName="tcp_COM_PortNo"
+                                                    class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_PortNo.errors }" />
+                                                <div *ngIf="submitted && f.tcp_COM_PortNo.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.tcp_COM_PortNo.errors.required">TCP COM PortNo is required</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="form-group col">
+                                                <input type="number" placeholder="Baud Rate"
+                                                    formControlName="baudRate" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.baudRate.errors }" />
+                                                <div *ngIf="submitted && f.baudRate.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.baudRate.errors.required">Baud Rate is required
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col">
+                                                <input type="text" placeholder="Parity"
+                                                    formControlName="parity" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.parity.errors }" />
+                                                <div *ngIf="submitted && f.parity.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f.parity.errors.required">Parity is
+                                                        required</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="form-group col">
+                                                <input type="number" placeholder="Stop Bits"
+                                                    formControlName="stopBits" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.stopBits.errors }" />
+                                                <div *ngIf="submitted && f.stopBits.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.stopBits.errors.required">Stop Bits is required
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col">
+                                                <input type="number" placeholder="Data Size"
+                                                    formControlName="dataSize" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.dataSize.errors }" />
+                                                <div *ngIf="submitted && f.dataSize.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.dataSize.errors.required">Data Size is required
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="form-group col">
+                                                <input type="text" placeholder="comments"
+                                                    formControlName="comments" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
+                                                <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.comments.errors.required">Comments is required
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col">
+                                               
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                                            <button class="btn btn-secondary" type="reset"
+                                                (click)="onReset()">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </app-card>
+        </div>
+
+
+    </div>
+</div>

@@ -24,7 +24,9 @@
                         <th>Location</th>
                         <th>Provider</th>
                         <th>Description</th>
+                        <th>Status</th>
                         <th>Actions</th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -36,6 +38,10 @@
                         </td>
                         <td>{{item.provider}}</td>
                         <td>{{item.description}}</td>
+                        <td class="align-middle">
+                            <span *ngIf="item.active" class="badge badge-success">Active</span>
+                            <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                          </td>
                         <td class="table-action">
                           <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
                               class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i

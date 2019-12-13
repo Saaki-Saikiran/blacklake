@@ -1,1 +1,155 @@
-<p>meter-model works!</p>
+<div class="row btn-page">
+    <div class="col-sm-12">
+        <div class="col-sm-12">
+            <app-card [hidHeader]="true">
+        
+              <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
+                <ngb-tab title="Meter Model" id="UserlistId">
+                  <ng-template ngbTabContent>
+                      <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                      class="table table-bordered table-striped mb-0">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Meter Model Name</th>
+                          <th>Manufacturer</th>
+                          <th>Starting Register</th>
+                          <th>length</th>
+                          <th>DataType</th>
+                          <th>Is Supported</th>
+                          <th>Comments</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of DeptMetersList;let i = index;">
+                          <td>{{i+1}}</td>
+                          <td>{{item.meterModelName}}</td>
+                          <td>
+                            {{item.manufacturer}}
+                          </td>
+                          <td>{{item.startingRegister}}</td>
+                          <td>{{item.length}}</td>
+                          <td>{{item.dataType}}</td>
+                          <td>{{item.isSupported}}</td>
+                          <td>{{item.comments}}</td>
+                          <td class="align-middle">
+                              <span *ngIf="item.active" class="badge badge-success">Active</span>
+                              <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                            </td>
+                          <td class="table-action">
+                            <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                                class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                                  class="feather icon-edit"></i></a></span>
+                            <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                              (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title={{tabHeader}} id="AdduserId">
+                  <ng-template ngbTabContent>
+                      <div class="card m-3">
+                          <h5 class="card-header">{{formHeader}}</h5>
+                          <div class="card-body">
+                            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                              <div class="form-row">
+          
+                                <div class="form-group col">
+                                  <input type="text" placeholder="Meter Model Name" formControlName="meterModelName" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.meterModelName.errors }" />
+                                  <div *ngIf="submitted && f.meterModelName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.meterModelName.errors.required">Meter Model Name is required</div>
+                                  </div>
+                                </div>
+                                <div class="form-group col">
+                                  <input type="text" placeholder="Manufacturer" formControlName="manufacturer" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.manufacturer.errors }" />
+                                  <div *ngIf="submitted && f.manufacturer.errors" class="invalid-feedback">
+                                    <div *ngIf="f.manufacturer.errors.required">Manufacturer is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                              <div class="form-group col">
+                                <input type="number" placeholder="Starting Register" formControlName="startingRegister" class="form-control"
+                                  [ngClass]="{ 'is-invalid': submitted && f.startingRegister.errors }" />
+                                <div *ngIf="submitted && f.startingRegister.errors" class="invalid-feedback">
+                                  <div *ngIf="f.startingRegister.errors.required">Starting Register is required</div>
+                                 
+                                </div>
+                              </div>
+                                <div class="form-group col">
+                                  <input type="number" placeholder="Length"  formControlName="length" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.length.errors }" />
+                                  <div *ngIf="submitted && f.length.errors" class="invalid-feedback">
+                                    <div *ngIf="f.length.errors.required">Length is required</div>
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="form-group col">
+                                    <input type="text" placeholder="Data Type" formControlName="dataType" class="form-control"
+                                      [ngClass]="{ 'is-invalid': submitted && f.dataType.errors }" />
+                                    <div *ngIf="submitted && f.dataType.errors" class="invalid-feedback">
+                                      <div *ngIf="f.dataType.errors.required">Data Type is required</div>
+                                     
+                                    </div>
+                                  </div>
+                                  <div class="form-group col">
+                                      <select formControlName="isSupported" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }">
+                                        <option value="">Select Supported</option>
+                                        <option value="true" >true</option>
+                                        <option value="false">false</option>
+                                      </select>
+                                      <div *ngIf="submitted && f.isSupported.errors" class="invalid-feedback">
+                                        <div *ngIf="f.isSupported.errors.required">Supported is required</div>
+                                      </div>
+                                    </div>
+                                  <!-- <div class="form-group col">
+                                      <input type="text" placeholder="Is Supported" formControlName="isSupported" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }" />
+                                      <div *ngIf="submitted && f.isSupported.errors" class="invalid-feedback">
+                                        <div *ngIf="f.isSupported.errors.required">Is Supported is required</div>
+                                       
+                                      </div>
+                                    </div> -->
+                                  </div>
+                              <div class="form-row">
+                                
+                                    <div class="form-group col">
+                                      <input type="text" placeholder="Comments"  formControlName="comments" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
+                                      <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
+                                        <div *ngIf="f.comments.errors.required">Comments is required</div>
+                                      </div>
+                                      
+                                    </div>
+                                    <div class="form-group col">
+                                      </div>
+                                  </div>
+                             
+                                
+                              <div class="text-center">
+                                <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                                <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+        
+                  </ng-template>
+                </ngb-tab>
+              </ngb-tabset>
+            </app-card>
+          </div>
+  
+      
+    </div>
+  </div>
+  

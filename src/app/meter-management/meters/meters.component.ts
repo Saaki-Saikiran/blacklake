@@ -10,6 +10,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MetersService } from './meters.service';
 import { UsersService } from 'src/app/admin/user-entry/user-entry.service';
 import { DeptMetersService } from '../dept-meters/dept-meters.service';
+import{MastersService} from '../../masters/masters.service';
 @Component({
   selector: 'app-meters',
   templateUrl: './meters.component.html',
@@ -30,20 +31,21 @@ export class MetersComponent implements OnInit {
   modalOptions: NgbModalOptions;
   loading: boolean;
   usersList: any;
-
+  SourceType:any;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
   mySubscription: any;
   metersList: any;
   deptMeters: any[];
-
-
+  PanelList:any;
+GatewayList:any;
+MetersList:any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private meterService: MetersService,
-    private deptmeterService: DeptMetersService) {
+    private deptmeterService: DeptMetersService,private MasterService: MastersService) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -69,6 +71,10 @@ export class MetersComponent implements OnInit {
 
     this.getUsers();
     this.getDeptMeters();
+    this.getSourceType();
+    this.getPanel();
+    this.getGateway();
+    this.getMeterList();
     this.formHeader = 'Add Meter Details';
     this.buttonType = 'Add';
     this.isEditing = false;
@@ -122,7 +128,78 @@ export class MetersComponent implements OnInit {
       }
     );
   }
-
+  getSourceType(): void {
+    debugger
+    this.MasterService.getAllSource().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.SourceType = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+  getPanel(): void {
+    debugger
+    this.MasterService.getAllPanel().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.PanelList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+  getGateway(): void {
+    debugger
+    this.MasterService.getAllGateway().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.GatewayList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+  getMeterList(): void {
+    debugger
+    this.MasterService.getAllMeterModelMaster().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.MetersList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
   beforeChange($event: NgbTabChangeEvent) {
     // dont do anything if id matches
     if ($event.activeId === 'AdduserId') {
