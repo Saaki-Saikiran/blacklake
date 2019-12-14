@@ -57,6 +57,7 @@ export class GatewayComponent implements OnInit {
     var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     
     this.userForm = this.formBuilder.group({
+      gatewayId: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       gatewayModel: new FormControl('', [Validators.required]),
       location: new FormControl('', [Validators.required]),
@@ -80,6 +81,7 @@ export class GatewayComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
+      gatewayId: new FormControl(data.gateway, [Validators.required]),
       name: new FormControl(data.name, [Validators.required, Validators.minLength(3)]),
       gatewayModel: new FormControl(data.gatewayModel, [Validators.required]),
       location: new FormControl(data.location, [Validators.required]),

@@ -1,190 +1,183 @@
 <div class="row btn-page">
-        <div class="col-sm-12">
-            <div class="col-sm-12">
-                <app-card [hidHeader]="true">
-            
-                  <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
-                    <ngb-tab title="Meter Parameters" id="UserlistId">
-                      <ng-template ngbTabContent>
-                          <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                          class="table table-bordered table-striped mb-0">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Meter Model Id</th>
-                              <th>Parameter Name</th>
-                              <th>Description</th>
-                              <th>Units</th>
-                              <th>DataType</th>
-                              <th>Scaling</th>
-                              <th>ModRegister</th>
-                              <th>RegisterLength</th>
-                              <th>IsSupported</th>
-                              <th>Status</th>
-                              <th>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let item of DeptMetersList;let i = index;">
-                              <td>{{i+1}}</td>
-                              <td>{{item.meterModelId}}</td>
-                              <td>
-                                {{item.parameterName}}
-                              </td>
-                              <td>{{item.description}}</td>
-                              <td>{{item.units}}</td>
-                              <td>{{item.dataType}}</td>
-                              <td>{{item.scaling}}</td>
-                              <td>{{item.modRegister}}</td>
-                              <td>{{item.registerLength}}</td>
-                              <td>{{item.isSupported}}</td>
-                              <td class="align-middle">
-                                <span *ngIf="item.active" class="badge badge-success">Active</span>
-                                <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
-                              </td>
-                              <td class="table-action">
-                                <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                                    class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                                      class="feather icon-edit"></i></a></span>
-                                <a href="javascript:" class="btn btn-icon btn-outline-danger"
-                                  (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </ng-template>
-                    </ngb-tab>
-                    <ngb-tab title={{tabHeader}} id="AdduserId">
-                      <ng-template ngbTabContent>
-                          <div class="card m-3">
-                              <h5 class="card-header">{{formHeader}}</h5>
-                              <div class="card-body">
-                                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                                  <div class="form-row">
-                                      <div class="form-group col">
-                                         
-                                          <select formControlName="meterModelId" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.meterModelId.errors }">
-                                            <option value="">Select Meter ModelId</option>
-                                            <option value="{{item._id}}" *ngFor="let item of MeterModelList">{{item.meterModelName}}</option>
-                                          </select>
-                                          <div *ngIf="submitted && f.meterModelId.errors" class="invalid-feedback">
-                                            <div *ngIf="f.meterModelId.errors.required">Meter ModelId  is required</div>
-                                          </div>
-                                        </div>
+  <div class="col-sm-12">
+    <div class="col-sm-12">
+      <app-card [hidHeader]="true">
 
-                                    <!-- <div class="form-group col">
-                                      <input type="number" placeholder="Meter ModelId" formControlName="meterModelId" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.meterModelId.errors }" />
-                                      <div *ngIf="submitted && f.meterModelId.errors" class="invalid-feedback">
-                                        <div *ngIf="f.meterModelId.errors.required">Meter ModelId is required</div>
-                                      </div>
-                                    </div> -->
-                                    <div class="form-group col">
-                                      <input type="text" placeholder="Parameter Name" formControlName="parameterName" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.parameterName.errors }" />
-                                      <div *ngIf="submitted && f.parameterName.errors" class="invalid-feedback">
-                                        <div *ngIf="f.parameterName.errors.required">Parameter Name is required</div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="form-row">
-                                  <div class="form-group col">
-                                    <input type="text" placeholder="Description" formControlName="description" class="form-control"
-                                      [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
-                                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                                      <div *ngIf="f.description.errors.required">Description is required</div>
-                                     
-                                    </div>
-                                  </div>
-                                    <div class="form-group col">
-                                      <input type="text" placeholder="units"  formControlName="units" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.units.errors }" />
-                                      <div *ngIf="submitted && f.units.errors" class="invalid-feedback">
-                                        <div *ngIf="f.units.errors.required">Units is required</div>
-                                        
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="form-row">
-                                      <div class="form-group col">
-                                        <input type="text" placeholder="Data Type" formControlName="dataType" class="form-control"
-                                          [ngClass]="{ 'is-invalid': submitted && f.dataType.errors }" />
-                                        <div *ngIf="submitted && f.dataType.errors" class="invalid-feedback">
-                                          <div *ngIf="f.dataType.errors.required">Data Type is required</div>
-                                         
-                                        </div>
-                                      </div>
-                                      <div class="form-group col">
-                                          <input type="number" placeholder="Scaling" formControlName="scaling" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.scaling.errors }" />
-                                          <div *ngIf="submitted && f.scaling.errors" class="invalid-feedback">
-                                            <div *ngIf="f.scaling.errors.required">Scaling is required</div>
-                                           
-                                          </div>
-                                        </div>
-                                      </div>
-                                  <div class="form-row">
-                                    
-                                        <div class="form-group col">
-                                          <input type="number" placeholder="Mod Register"  formControlName="modRegister" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.modRegister.errors }" />
-                                          <div *ngIf="submitted && f.modRegister.errors" class="invalid-feedback">
-                                            <div *ngIf="f.modRegister.errors.required">Mod Register is required</div>
-                                            
-                                          </div>
-                                        </div>
-                                        <div class="form-group col">
-                                          <input type="number" placeholder="Register Length"  formControlName="registerLength" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.registerLength.errors }" />
-                                          <div *ngIf="submitted && f.registerLength.errors" class="invalid-feedback">
-                                            <div *ngIf="f.registerLength.errors.required">Register Length is required</div>
-                                            
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="form-row">
-                                          <div class="form-group col">
-                                              <select formControlName="isSupported" class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }">
-                                                <option value="">Select Supported</option>
-                                                <option value="true" >true</option>
-                                                <option value="false" >false</option>
-                                              </select>
-                                              <div *ngIf="submitted && f.isSupported.errors" class="invalid-feedback">
-                                                <div *ngIf="f.isSupported.errors.required">Supported is required</div>
-                                              </div>
-                                            </div>
-
-                                        <!-- <div class="form-group col">
-                                          <input type="text" placeholder="Is Supported" formControlName="isSupported" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }" />
-                                          <div *ngIf="submitted && f.isSupported.errors" class="invalid-feedback">
-                                            <div *ngIf="f.isSupported.errors.required">Is Supported is required</div>
-                                           
-                                          </div>
-                                        </div> -->
-                                      
-                                        <div class="form-group col">
-                                          
-                                        </div>
-                                      </div>
-                                    
-                                  <div class="text-center">
-                                    <button class="btn btn-primary mr-1">{{buttonType}}</button>
-                                    <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-                                  </div>
-                                </form>
-                              </div>
+        <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
+          <ngb-tab title="Meter Parameters" id="UserlistId">
+            <ng-template ngbTabContent>
+              <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                class="table table-bordered table-striped mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Meter Params Id</th>
+                    <th>Meter Model Id</th>
+                    <th>Parameter Name</th>
+                    <th>Desc </th>
+                    <th>Units</th>
+                    <th>DataType</th>
+                    <th>Scaling</th>
+                    <th>Mod Reg</th>
+                    <th>Reg Length</th>
+                    <th>Supported</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of DeptMetersList;let i = index;">
+                    <td>{{i+1}}</td>
+                    <td>{{item.meterParamsId}}</td>
+                    <td>{{item.meterModelId}}</td>
+                    <td>
+                      {{item.parameterName}}
+                    </td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.units}}</td>
+                    <td>{{item.dataType}}</td>
+                    <td>{{item.scaling}}</td>
+                    <td>{{item.modRegister}}</td>
+                    <td>{{item.registerLength}}</td>
+                    <td>{{item.isSupported}}</td>
+                    <td class="align-middle">
+                      <span *ngIf="item.active" class="badge badge-success">Active</span>
+                      <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                    </td>
+                    <td class="table-action">
+                      <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                          class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                            class="feather icon-edit"></i></a></span>
+                      <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                        (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title={{tabHeader}} id="AdduserId">
+            <ng-template ngbTabContent>
+              <div class="card m-3">
+                <h5 class="card-header">{{formHeader}}</h5>
+                <div class="card-body">
+                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <input type="number" placeholder="Meter Params Id" formControlName="meterParamsId"
+                              class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meterParamsId.errors }" />
+                            <div *ngIf="submitted && f.meterParamsId.errors" class="invalid-feedback">
+                              <div *ngIf="f.meterParamsId.errors.required">Meter Params Id is required</div>
+    
                             </div>
-            
-                      </ng-template>
-                    </ngb-tab>
-                  </ngb-tabset>
-                </app-card>
+                          </div>
+                      <div class="form-group col">
+                        <select formControlName="meterModelId" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.meterModelId.errors }">
+                          <option value="">Select Meter ModelId</option>
+                          <option value="{{item.meterModelId}}" *ngFor="let item of MeterModelList">{{item.meterModelName}}
+                          </option>
+                        </select>
+                        <div *ngIf="submitted && f.meterModelId.errors" class="invalid-feedback">
+                          <div *ngIf="f.meterModelId.errors.required">Meter ModelId is required</div>
+                        </div>
+                      </div>
+
+
+                     
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <input type="text" placeholder="Parameter Name" formControlName="parameterName"
+                              class="form-control" [ngClass]="{ 'is-invalid': submitted && f.parameterName.errors }" />
+                            <div *ngIf="submitted && f.parameterName.errors" class="invalid-feedback">
+                              <div *ngIf="f.parameterName.errors.required">Parameter Name is required</div>
+                            </div>
+                          </div>
+                      <div class="form-group col">
+                        <input type="text" placeholder="Description" formControlName="description" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                          <div *ngIf="f.description.errors.required">Description is required</div>
+
+                        </div>
+                      </div>
+                    
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <input type="text" placeholder="units" formControlName="units" class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.units.errors }" />
+                            <div *ngIf="submitted && f.units.errors" class="invalid-feedback">
+                              <div *ngIf="f.units.errors.required">Units is required</div>
+    
+                            </div>
+                          </div>
+                      <div class="form-group col">
+                        <input type="text" placeholder="Data Type" formControlName="dataType" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.dataType.errors }" />
+                        <div *ngIf="submitted && f.dataType.errors" class="invalid-feedback">
+                          <div *ngIf="f.dataType.errors.required">Data Type is required</div>
+
+                        </div>
+                      </div>
+                    
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <input type="number" placeholder="Scaling" formControlName="scaling" class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.scaling.errors }" />
+                            <div *ngIf="submitted && f.scaling.errors" class="invalid-feedback">
+                              <div *ngIf="f.scaling.errors.required">Scaling is required</div>
+    
+                            </div>
+                          </div>
+                      <div class="form-group col">
+                        <input type="number" placeholder="Mod Register" formControlName="modRegister"
+                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modRegister.errors }" />
+                        <div *ngIf="submitted && f.modRegister.errors" class="invalid-feedback">
+                          <div *ngIf="f.modRegister.errors.required">Mod Register is required</div>
+
+                        </div>
+                      </div>
+                     
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <input type="number" placeholder="Register Length" formControlName="registerLength"
+                              class="form-control" [ngClass]="{ 'is-invalid': submitted && f.registerLength.errors }" />
+                            <div *ngIf="submitted && f.registerLength.errors" class="invalid-feedback">
+                              <div *ngIf="f.registerLength.errors.required">Register Length is required</div>
+    
+                            </div>
+                          </div>
+                      <div class="form-group col">
+                        <select formControlName="isSupported" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }">
+                          <option value="">Select Supported</option>
+                          <option value="true">true</option>
+                          <option value="false">false</option>
+                        </select>
+                        <div *ngIf="submitted && f.isSupported.errors" class="invalid-feedback">
+                          <div *ngIf="f.isSupported.errors.required">Supported is required</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                    </div>
+                  </form>
+                </div>
               </div>
-      
-          
-        </div>
-      </div>
-      
+
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </app-card>
+    </div>
+
+
+  </div>
+</div>
