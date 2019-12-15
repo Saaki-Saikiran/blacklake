@@ -70,7 +70,8 @@
                                     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                                         <div class="form-row">
                                                 <div class="form-group col">
-                                                        <input type="text" placeholder="Gateway Id"
+                                                    <label>Gateway</label>
+                                                        <input type="text" placeholder="Enter Gateway Id"
                                                             formControlName="gatewayId" class="form-control"
                                                             [ngClass]="{ 'is-invalid': submitted && f.gatewayId.errors }" />
                                                         <div *ngIf="submitted && f.gatewayId.errors"
@@ -79,8 +80,10 @@
                                                                 required</div>
                                                         </div>
                                                     </div>
+                                                    
                                             <div class="form-group col">
-                                                <input type="text" placeholder="Name"
+                                                <label>Name</label>
+                                                <input type="text" placeholder="Enter Name"
                                                     formControlName="name" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
                                                 <div *ngIf="submitted && f.name.errors"
@@ -90,7 +93,8 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col">
-                                                <input type="text" placeholder="Gateway Model"
+                                                <label>Gateway Model</label>
+                                                <input type="text" placeholder="Enter Gateway Model"
                                                     formControlName="gatewayModel" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.gatewayModel.errors }" />
                                                 <div *ngIf="submitted && f.gatewayModel.errors"
@@ -102,7 +106,8 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col">
-                                                <input type="text" placeholder="Location"
+                                                <label>Location</label>
+                                                <input type="text" placeholder="Enter Location"
                                                     formControlName="location" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
                                                 <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
@@ -111,6 +116,8 @@
 
                                                 </div>
                                             </div>
+                                            <div class="form-group col-1">
+                                                </div>
                                             <div class="form-group col">
                                                     <select formControlName="tcp_COM_Type" class="form-control"
                                                       [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_Type.errors }">
@@ -126,7 +133,8 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col">
-                                                <input type="text" placeholder="IP"  formControlName="ip"
+                                                <label>IP</label>
+                                                <input type="text" placeholder="Enter IP"  formControlName="ip"
                                                     class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.ip.errors }" />
                                                 <div *ngIf="submitted && f.ip.errors" class="invalid-feedback">
@@ -135,8 +143,11 @@
 
                                                 </div>
                                             </div>
+                                            <div class="form-group col-1">
+                                                </div>
                                             <div class="form-group col">
-                                                <input type="number" placeholder="TCP COM PortNo" formControlName="tcp_COM_PortNo"
+                                                <label>TCP COM PortNo </label>
+                                                <input type="number" placeholder="Enter TCP COM PortNo" formControlName="tcp_COM_PortNo"
                                                     class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_PortNo.errors }" />
                                                 <div *ngIf="submitted && f.tcp_COM_PortNo.errors" class="invalid-feedback">
@@ -148,7 +159,8 @@
                                         <div class="form-row">
 
                                             <div class="form-group col">
-                                                <input type="number" placeholder="Baud Rate"
+                                                <label>Baud Rate</label>
+                                                <input type="number" placeholder="Enter Baud Rate"
                                                     formControlName="baudRate" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.baudRate.errors }" />
                                                 <div *ngIf="submitted && f.baudRate.errors" class="invalid-feedback">
@@ -157,8 +169,11 @@
 
                                                 </div>
                                             </div>
+                                            <div class="form-group col-1">
+                                                </div>
                                             <div class="form-group col">
-                                                <input type="text" placeholder="Parity"
+                                                <label>Parity</label>
+                                                <input type="text" placeholder="Enter Parity"
                                                     formControlName="parity" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.parity.errors }" />
                                                 <div *ngIf="submitted && f.parity.errors"
@@ -172,7 +187,8 @@
                                         <div class="form-row">
 
                                             <div class="form-group col">
-                                                <input type="number" placeholder="Stop Bits"
+                                                <label>Stop Bits</label>
+                                                <input type="number" placeholder="Enter Stop Bits"
                                                     formControlName="stopBits" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.stopBits.errors }" />
                                                 <div *ngIf="submitted && f.stopBits.errors" class="invalid-feedback">
@@ -181,9 +197,11 @@
 
                                                 </div>
                                             </div>
-
+                                            <div class="form-group col-1">
+                                                </div>
                                             <div class="form-group col">
-                                                <input type="number" placeholder="Data Size"
+                                                <label>Data Size</label>
+                                                <input type="number" placeholder="Enter Data Size"
                                                     formControlName="dataSize" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.dataSize.errors }" />
                                                 <div *ngIf="submitted && f.dataSize.errors" class="invalid-feedback">
@@ -197,7 +215,8 @@
                                         <div class="form-row">
 
                                             <div class="form-group col">
-                                                <input type="text" placeholder="comments"
+                                                <label>Comments</label>
+                                                <input type="text" placeholder="Enter Comments"
                                                     formControlName="comments" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
                                                 <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
@@ -206,7 +225,8 @@
 
                                                 </div>
                                             </div>
-
+                                            <div class="form-group col-1">
+                                                </div>
                                             <div class="form-group col">
                                                
                                                 

@@ -107,3 +107,22 @@ File: style.css
 .bold {
   font-weight: bold;
 }
+
+.multiselect-dropdown .dropdown-btn {
+    display: inline-block;
+    border-right: none !important;
+    border-left: none !important;
+    border-top: none !important;
+    border-bottom: 1px solid #adadad;
+    width: 100%;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.1;
+    text-align: left;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border-radius: 4px;
+}

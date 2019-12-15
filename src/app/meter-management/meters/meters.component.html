@@ -57,7 +57,7 @@
                   <div class="form-row">
                     <div class="form-group col">
                       <label>Meter Serial Number</label>
-                      <input type="text" formControlName="meterSerialNumber" class="form-control"
+                      <input type="text" placeholder="Enter Meter Serial Number" formControlName="meterSerialNumber" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.meterSerialNumber.errors }" />
                       <div *ngIf="submitted && f.meterSerialNumber.errors" class="invalid-feedback">
                         <div *ngIf="f.meterSerialNumber.errors.required">Meter SerialNumber is required</div>
@@ -67,7 +67,7 @@
                       </div>
                     <div class="form-group col">
                       <label>Model</label>
-                      <input type="text" formControlName="model" class="form-control"
+                      <input type="text" placeholder="Enter Model" formControlName="model" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />
                       <div *ngIf="submitted && f.model.errors" class="invalid-feedback">
                         <div *ngIf="f.model.errors.required">Model is required</div>
@@ -179,7 +179,7 @@
                     </div> -->
                     <div class="form-group col">
                       <label>Provider</label>
-                      <input type="text" formControlName="provider" class="form-control"
+                      <input type="text" placeholder="Enter Provider" formControlName="provider" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.provider.errors }" />
                       <div *ngIf="submitted && f.provider.errors" class="invalid-feedback">
                         <div *ngIf="f.provider.errors.required">Provider is required</div>
@@ -189,7 +189,7 @@
                   <div class="form-row">
                     <div class="form-group col">
                       <label>Multifying Factor</label>
-                      <input type="number" formControlName="multifyingFactor" class="form-control"
+                      <input type="number" placeholder="Enter Multifying Factor" formControlName="multifyingFactor" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.multifyingFactor.errors }" />
                       <div *ngIf="submitted && f.multifyingFactor.errors" class="invalid-feedback">
                         <div *ngIf="f.multifyingFactor.errors.required">Multifying Factor is required</div>
@@ -201,7 +201,7 @@
                       </div>
                     <div class="form-group col">
                       <label>Comments</label>
-                      <input type="text" formControlName="comments" class="form-control"
+                      <input type="text" placeholder="Enter Comments" formControlName="comments" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
                       <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
                         <div *ngIf="f.comments.errors.required">Comments is required</div>

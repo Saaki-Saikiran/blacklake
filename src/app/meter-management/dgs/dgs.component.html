@@ -62,19 +62,21 @@
                     <div class="form-row">
 
                       <div class="form-group col">
-                        <label>dgSerialNumber</label>
-                        <input type="text" formControlName="dgSerialNumber" class="form-control"
+                        <label>DG Serial Number</label>
+                        <input type="text" placeholder="Enter DG Serial Number" formControlName="dgSerialNumber" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.dgSerialNumber.errors }" />
                         <div *ngIf="submitted && f.dgSerialNumber.errors" class="invalid-feedback">
-                          <div *ngIf="f.dgSerialNumber.errors.required">dgSerialNumber is required</div>
+                          <div *ngIf="f.dgSerialNumber.errors.required">DG SerialNumber is required</div>
                         </div>
                       </div>
+                      <div class="form-group col-1">
+                        </div>
                       <div class="form-group col">
-                        <label> model</label>
-                        <input type="text" formControlName="model" class="form-control"
+                        <label> Model</label>
+                        <input type="text" placeholder="Enter Model" formControlName="model" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />
                         <div *ngIf="submitted && f.model.errors" class="invalid-feedback">
-                          <div *ngIf="f.model.errors.required">model is required</div>
+                          <div *ngIf="f.model.errors.required">Model is required</div>
                         </div>
                       </div>
                     </div>
@@ -86,24 +88,26 @@
                         <option value="{{item._id}}" *ngFor="let item of metersList">{{item.meterSerialNumber}}</option>
                       </select>
                       <div *ngIf="submitted && f.meterSerialNumberID.errors" class="invalid-feedback">
-                        <div *ngIf="f.meterSerialNumberID.errors.required">dept Meter Number is required</div>
+                        <div *ngIf="f.meterSerialNumberID.errors.required">Dept Meter Number is required</div>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="form-group col">
-                        <label>yearMake</label>
-                        <input type="number" formControlName="yearMake" class="form-control"
+                        <label>year Make</label>
+                        <input type="number" placeholder="Year Make" formControlName="yearMake" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.yearMake.errors }" />
                         <div *ngIf="submitted && f.yearMake.errors" class="invalid-feedback">
-                          <div *ngIf="f.yearMake.errors.required">yearMake is required</div>
+                          <div *ngIf="f.yearMake.errors.required">Year Make is required</div>
                         </div>
                       </div>
+                      <div class="form-group col-1">
+                        </div>
                       <div class="form-group col">
                         <label>description</label>
-                        <input type="text" formControlName="description" class="form-control"
+                        <input type="text" placeholder="Enter Description" formControlName="description" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
                         <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                          <div *ngIf="f.description.errors.required"> description is required</div>
+                          <div *ngIf="f.description.errors.required"> Description is required</div>
                         </div>
                       </div>
                     </div>

@@ -58,17 +58,21 @@
                             <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                                 <div class="form-row">
                                     <div class="form-group col">
+                                      <label>Source Type Id</label>
                                         <input type="number" placeholder="Source TypeId" formControlName="sourceTypeId" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.sourceTypeId.errors }" />
                                       <div *ngIf="submitted && f.sourceTypeId.errors" class="invalid-feedback">
                                         <div *ngIf="f.sourceTypeId.errors.required">Source TypeId is required</div>
                                       </div>
                                     </div>
+                                    <div class="form-group col-1">
+                                      </div>
                                     <div class="form-group col">
                                     </div>
                                 </div>
                               <div class="form-row">
                                   <div class="form-group col">
+                                    <label>Automated</label>
                                       <select formControlName="isAutomated" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.isAutomated.errors }">
                                         <option value="">Select Automated</option>
@@ -79,7 +83,8 @@
                                         <div *ngIf="f.isAutomated.errors.required">Automated is required</div>
                                       </div>
                                     </div>
-
+                                    <div class="form-group col-1">
+                                      </div>
                                 <!-- <div class="form-group col">
                                   <input type="text" placeholder="Automated" formControlName="isAutomated" class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.isAutomated.errors }" />
@@ -88,6 +93,7 @@
                                   </div>
                                 </div> -->
                                 <div class="form-group col">
+                                  <label>Utility Supported</label>
                                     <select formControlName="isUtilitySupported" class="form-control"
                                       [ngClass]="{ 'is-invalid': submitted && f.isUtilitySupported.errors }">
                                       <option value="">Select Utility Supported</option>
@@ -101,6 +107,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="form-group col">
+                                    <label>Generator Supported</label>
                                       <select formControlName="isGeneratorSupported" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.isGeneratorSupported.errors }">
                                         <option value="">Select Generator Supported</option>
@@ -111,7 +118,10 @@
                                         <div *ngIf="f.isGeneratorSupported.errors.required">Generator Supported is required</div>
                                       </div>
                                     </div>
+                                    <div class="form-group col-1">
+                                      </div>
                                 <div class="form-group col">
+                                  <label>Source Type</label>
                                   <input type="text" placeholder="Source Type" formControlName="sourceType" class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.sourceType.errors }" />
                                   <div *ngIf="submitted && f.sourceType.errors" class="invalid-feedback">

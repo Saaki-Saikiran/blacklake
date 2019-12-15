@@ -51,14 +51,17 @@
                               <div class="form-row">
           
                                 <div class="form-group col">
-                                  <input type="text" placeholder="Panel Name" formControlName="panelName" class="form-control"
+                                  <label>Panel Name</label>
+                                  <input type="text" placeholder="Enter Panel Name" formControlName="panelName" class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.panelName.errors }" />
                                   <div *ngIf="submitted && f.panelName.errors" class="invalid-feedback">
                                     <div *ngIf="f.panelName.errors.required">Panel Name  is required</div>
                                   </div>
                                 </div>
+                                <div class="form-group col-1">
+                                  </div>
                                 <div class="form-group col">
-                                         
+                                         <label>Building Name</label>
                                     <select formControlName="buildingName" class="form-control"
                                       [ngClass]="{ 'is-invalid': submitted && f.buildingName.errors }">
                                       <option value="">Select Building Id</option>

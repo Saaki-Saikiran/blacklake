@@ -65,6 +65,7 @@ export class MapMeterTenantsComponent implements OnInit {
         this.router.navigated = false;
       }
     });
+  
   }
 
   ngOnInit() {
