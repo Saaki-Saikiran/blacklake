@@ -55,14 +55,14 @@ export class GatewayComponent implements OnInit {
     this.formHeader = "Add Gateway  Details";
     this.getDeptMeter();
     var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    
+
     this.userForm = this.formBuilder.group({
       gatewayId: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       gatewayModel: new FormControl('', [Validators.required]),
       location: new FormControl('', [Validators.required]),
       tcp_COM_Type: new FormControl('', [Validators.required]),
-      ip: new FormControl('', [Validators.required,Validators.pattern(ipformat)]),
+      ip: new FormControl('', [Validators.required, Validators.pattern(ipformat)]),
       tcp_COM_PortNo: new FormControl('', [Validators.required]),
       baudRate: new FormControl('', [Validators.required]),
       parity: new FormControl('', [Validators.required]),
@@ -81,7 +81,7 @@ export class GatewayComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
-      gatewayId: new FormControl(data.gateway, [Validators.required]),
+      gatewayId: new FormControl(data.gatewayId, [Validators.required]),
       name: new FormControl(data.name, [Validators.required, Validators.minLength(3)]),
       gatewayModel: new FormControl(data.gatewayModel, [Validators.required]),
       location: new FormControl(data.location, [Validators.required]),
@@ -97,7 +97,6 @@ export class GatewayComponent implements OnInit {
 
   }
   beforeChange($event: NgbTabChangeEvent) {
-    debugger;
     // dont do anything if id matches
     if ($event.activeId === 'AdduserId') {
       this.tabHeader = 'Add Gateway ';
@@ -110,9 +109,8 @@ export class GatewayComponent implements OnInit {
       });
     }
   }
- 
+
   getDeptMeter(): void {
-    debugger
     this.MasterService.getAllGateway().subscribe(
       data => {
         if (data['success'] === true) {
@@ -130,7 +128,6 @@ export class GatewayComponent implements OnInit {
     );
   }
   onSubmit() {
-    debugger
     const user = { ...this.userForm.value };
     this.submitted = true;
     if (this.userForm.invalid) {
