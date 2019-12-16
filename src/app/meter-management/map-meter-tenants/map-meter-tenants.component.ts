@@ -65,12 +65,13 @@ export class MapMeterTenantsComponent implements OnInit {
         this.router.navigated = false;
       }
     });
-  
+
   }
 
   ngOnInit() {
     // console.log(this.myTabSet, '-------sai----------');
     this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };

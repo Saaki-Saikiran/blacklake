@@ -74,7 +74,8 @@ export class MeterTypesComponent implements OnInit, OnDestroy {
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
-    this.dtOptions = {
+      this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };

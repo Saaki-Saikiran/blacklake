@@ -46,7 +46,8 @@ export class TenantsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dtOptions = {
+      this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };

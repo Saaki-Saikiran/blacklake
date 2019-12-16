@@ -56,6 +56,7 @@ export class RolesComponent implements OnInit {
 
   ngOnInit() {
     this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };

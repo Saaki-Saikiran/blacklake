@@ -61,7 +61,8 @@ export class DgsComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.myTabSet, '-------sai----------');
-    this.dtOptions = {
+      this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };

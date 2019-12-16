@@ -1,12 +1,12 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
-import { NgbModal, NgbModalOptions ,NgbTabset} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
-import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
-import{MastersService} from '../masters.service'
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { MastersService } from '../masters.service'
 
 @Component({
   selector: 'app-panel',
@@ -19,47 +19,48 @@ export class PanelComponent implements OnInit {
   modalOptions: NgbModalOptions;
   userForm: FormGroup;
   formHeader: string;
-  buttonType: string='Add';
+  buttonType: string = 'Add';
   tabHeader: any = "Add Panel";
   isEditing: boolean;
-  Userdata:any;
+  Userdata: any;
   submitted = false;
-  DeptMetersList:string;
+  DeptMetersList: string;
   loading: boolean;
   mySubscription: any;
-  FloorsList:any;
+  FloorsList: any;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-  constructor(private modalService: NgbModal,private formBuilder: FormBuilder,private route: ActivatedRoute,
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private route: ActivatedRoute,
     private router: Router, private MasterService: MastersService) {
-      this.modalOptions = {
-        backdrop: 'static',
-        // backdropClass: 'customBackdrop',
-        size: "lg"
-      };
-      this.router.routeReuseStrategy.shouldReuseRoute = function () {
-        return false;
-      };
-      this.mySubscription = this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          // Trick the Router into believing it's last link wasn't previously loaded
-          this.router.navigated = false;
-        }
-      });
+    this.modalOptions = {
+      backdrop: 'static',
+      // backdropClass: 'customBackdrop',
+      size: "lg"
+    };
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
   }
   get f() { return this.userForm.controls; }
   ngOnInit() {
     this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.formHeader="Add Panel Details";
+    this.formHeader = "Add Panel Details";
     this.getDeptMeter();
     this.getFloors();
     this.userForm = this.formBuilder.group({
       panelName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       buildingName: new FormControl('', [Validators.required]),
-         });
+    });
   }
 
   userModal(type, data) {
@@ -74,7 +75,7 @@ export class PanelComponent implements OnInit {
       panelName: new FormControl(data.panelName, [Validators.required, Validators.minLength(3)]),
       buildingName: new FormControl(data.buildingName._id, [Validators.required])
     });
-  
+
   }
   beforeChange($event: NgbTabChangeEvent) {
     debugger;
@@ -90,87 +91,87 @@ export class PanelComponent implements OnInit {
       });
     }
   }
-    getDeptMeter(): void {
-      debugger
-      this.MasterService.getAllPanel().subscribe(
+  getDeptMeter(): void {
+    debugger
+    this.MasterService.getAllPanel().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.DeptMetersList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+  getFloors(): void {
+    debugger
+    this.MasterService.getAllFloors().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.FloorsList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+  onSubmit() {
+    debugger
+    const user = { ...this.userForm.value };
+    this.submitted = true;
+    if (this.userForm.invalid) {
+      return;
+    }
+    if (user._id === undefined) {
+      user.role = 'Admin';
+      this.MasterService.createPanel(user).subscribe(
         data => {
           if (data['success'] === true) {
-            this.DeptMetersList = data['result'];
-            this.dtTrigger.next();
+            Swal.fire('', 'Panel  Added Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
           } else {
             Swal.fire('', data['error'], 'error');
+            this.loading = false;
           }
-          this.loading = false;
         },
         error => {
-          this.loading = false;
           Swal.fire('', error, 'error');
-        }
-      );
-    }
-    getFloors(): void {
-      debugger
-      this.MasterService.getAllFloors().subscribe(
+          this.loading = false;
+        });
+    } else {
+      this.MasterService.updatePanel(user).subscribe(
         data => {
           if (data['success'] === true) {
-            this.FloorsList = data['result'];
-            this.dtTrigger.next();
+            Swal.fire('', 'Panel  Updated Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
           } else {
             Swal.fire('', data['error'], 'error');
+            this.loading = false;
           }
-          this.loading = false;
         },
         error => {
-          this.loading = false;
           Swal.fire('', error, 'error');
-        }
-      );
+          this.loading = false;
+        });
     }
-    onSubmit() {
-      debugger
-      const user = { ...this.userForm.value };
-      this.submitted = true;
-      if (this.userForm.invalid) {
-        return;
-      }
-      if (user._id === undefined) {
-        user.role = 'Admin';
-        this.MasterService.createPanel(user).subscribe(
-          data => {
-            if (data['success'] === true) {
-              Swal.fire('', 'Panel  Added Successfully !', 'success');
-              this.myTabSet.select('UserlistId');
-            } else {
-              Swal.fire('', data['error'], 'error');
-              this.loading = false;
-            }
-          },
-          error => {
-            Swal.fire('', error, 'error');
-            this.loading = false;
-          });
-      } else {
-        this.MasterService.updatePanel(user).subscribe(
-          data => {
-            if (data['success'] === true) {
-              Swal.fire('', 'Panel  Updated Successfully !', 'success');
-              this.myTabSet.select('UserlistId');
-            } else {
-              Swal.fire('', data['error'], 'error');
-              this.loading = false;
-            }
-          },
-          error => {
-            Swal.fire('', error, 'error');
-            this.loading = false;
-          });
-      }
-    }
-    ngOnDestroy(): void {
-      // Do not forget to unsubscribe the event
-      if (this.dtTrigger)
-        this.dtTrigger.unsubscribe();
-    }
+  }
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    if (this.dtTrigger)
+      this.dtTrigger.unsubscribe();
+  }
   confirmAlert() {
     Swal.fire({
       title: 'Are you sure?',

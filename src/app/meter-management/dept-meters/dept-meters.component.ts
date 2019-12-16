@@ -48,7 +48,8 @@ export class DeptMetersComponent implements OnInit {
   }
   get f() { return this.userForm.controls; }
   ngOnInit() {
-    this.dtOptions = {
+      this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };
