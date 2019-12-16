@@ -1,12 +1,12 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
-import { NgbModal, NgbModalOptions ,NgbTabset} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
-import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
-import{MastersService} from '../masters.service'
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { MastersService } from '../masters.service'
 
 @Component({
   selector: 'app-meter-parameters',
@@ -19,33 +19,33 @@ export class MeterParametersComponent implements OnInit {
   modalOptions: NgbModalOptions;
   userForm: FormGroup;
   formHeader: string;
-  buttonType: string='Add';
+  buttonType: string = 'Add';
   tabHeader: any = "Add Meter Parameters ";
   isEditing: boolean;
-  Userdata:any;
-  MeterModelList:any;
+  Userdata: any;
+  MeterModelList: any;
   submitted = false;
-  DeptMetersList:string;
+  DeptMetersList: string;
   loading: boolean;
   mySubscription: any;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-  constructor(private modalService: NgbModal,private formBuilder: FormBuilder,private route: ActivatedRoute,
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private route: ActivatedRoute,
     private router: Router, private MasterService: MastersService) {
-      this.modalOptions = {
-        backdrop: 'static',
-        // backdropClass: 'customBackdrop',
-        size: "lg"
-      };
-      this.router.routeReuseStrategy.shouldReuseRoute = function () {
-        return false;
-      };
-      this.mySubscription = this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          // Trick the Router into believing it's last link wasn't previously loaded
-          this.router.navigated = false;
-        }
-      });
+    this.modalOptions = {
+      backdrop: 'static',
+      // backdropClass: 'customBackdrop',
+      size: "lg"
+    };
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
   }
   get f() { return this.userForm.controls; }
   ngOnInit() {
@@ -53,7 +53,7 @@ export class MeterParametersComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.formHeader="Add Meter Parameters Details";
+    this.formHeader = "Add Meter Parameters Details";
     this.getDeptMeter();
     this.getMeterModel();
     this.userForm = this.formBuilder.group({
@@ -80,7 +80,7 @@ export class MeterParametersComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
       meterParamsId: new FormControl(data.meterParamsId, [Validators.required]),
-      meterModelId: new FormControl(data.meterModelId, [Validators.required, Validators.minLength(3)]),
+      meterModelId: new FormControl(data.meterModelId._id, [Validators.required, Validators.minLength(3)]),
       parameterName: new FormControl(data.parameterName, [Validators.required]),
       description: new FormControl(data.description, [Validators.required]),
       units: new FormControl(data.units, [Validators.required]),
@@ -90,7 +90,7 @@ export class MeterParametersComponent implements OnInit {
       registerLength: new FormControl(data.registerLength, [Validators.required]),
       isSupported: new FormControl(data.isSupported, [Validators.required]),
     });
-  
+
   }
   beforeChange($event: NgbTabChangeEvent) {
     debugger;
@@ -106,90 +106,90 @@ export class MeterParametersComponent implements OnInit {
       });
     }
   }
-    getDeptMeter(): void {
-      debugger
-      this.MasterService.getAllMeterParameters().subscribe(
+  getDeptMeter(): void {
+    debugger
+    this.MasterService.getAllMeterParameters().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.DeptMetersList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+  getMeterModel(): void {
+    debugger
+    this.MasterService.getAllMeterModelMaster().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.MeterModelList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+  onSubmit() {
+    debugger
+    const user = { ...this.userForm.value };
+    var stringValue = user.isSupported;;
+    var boolValue = (stringValue == "true");
+    user.isSupported = boolValue;
+    this.submitted = true;
+    if (this.userForm.invalid) {
+      return;
+    }
+    if (user._id === undefined) {
+      user.role = 'Admin';
+      this.MasterService.createMeterParameters(user).subscribe(
         data => {
           if (data['success'] === true) {
-            this.DeptMetersList = data['result'];
-            this.dtTrigger.next();
+            Swal.fire('', 'Meter Parameters Added Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
           } else {
             Swal.fire('', data['error'], 'error');
+            this.loading = false;
           }
-          this.loading = false;
         },
         error => {
-          this.loading = false;
           Swal.fire('', error, 'error');
-        }
-      );
-    }
-    getMeterModel(): void {
-      debugger
-      this.MasterService.getAllMeterModelMaster().subscribe(
+          this.loading = false;
+        });
+    } else {
+      this.MasterService.updateMeterParameters(user).subscribe(
         data => {
           if (data['success'] === true) {
-            this.MeterModelList = data['result'];
-            this.dtTrigger.next();
+            Swal.fire('', 'Meter Parameters Updated Successfully !', 'success');
+            this.myTabSet.select('UserlistId');
           } else {
             Swal.fire('', data['error'], 'error');
+            this.loading = false;
           }
-          this.loading = false;
         },
         error => {
-          this.loading = false;
           Swal.fire('', error, 'error');
-        }
-      );
+          this.loading = false;
+        });
     }
-    onSubmit() {
-      debugger
-      const user = { ...this.userForm.value };
-      var stringValue = user.isSupported;;
-      var boolValue = (stringValue =="true"); 
-      user.isSupported=boolValue;
-      this.submitted = true;
-      if (this.userForm.invalid) {
-        return;
-      }
-      if (user._id === undefined) {
-        user.role = 'Admin';
-        this.MasterService.createMeterParameters(user).subscribe(
-          data => {
-            if (data['success'] === true) {
-              Swal.fire('', 'Meter Parameters Added Successfully !', 'success');
-              this.myTabSet.select('UserlistId');
-            } else {
-              Swal.fire('', data['error'], 'error');
-              this.loading = false;
-            }
-          },
-          error => {
-            Swal.fire('', error, 'error');
-            this.loading = false;
-          });
-      } else {
-        this.MasterService.updateMeterParameters(user).subscribe(
-          data => {
-            if (data['success'] === true) {
-              Swal.fire('', 'Meter Parameters Updated Successfully !', 'success');
-              this.myTabSet.select('UserlistId');
-            } else {
-              Swal.fire('', data['error'], 'error');
-              this.loading = false;
-            }
-          },
-          error => {
-            Swal.fire('', error, 'error');
-            this.loading = false;
-          });
-      }
-    }
-    ngOnDestroy(): void {
-      // Do not forget to unsubscribe the event
-      if (this.dtTrigger)
-        this.dtTrigger.unsubscribe();
-    }
+  }
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    if (this.dtTrigger)
+      this.dtTrigger.unsubscribe();
+  }
   confirmAlert() {
     Swal.fire({
       title: 'Are you sure?',
