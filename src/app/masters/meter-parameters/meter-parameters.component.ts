@@ -57,6 +57,7 @@ export class MeterParametersComponent implements OnInit {
     this.formHeader = "Add Meter Parameters Details";
     this.getDeptMeter();
     this.getMeterModel();
+    var decimalformat=/^\d*\.?\d{4,5}$/g;
     this.userForm = this.formBuilder.group({
       meterParamsId: new FormControl('', [Validators.required]),
       meterModelId: new FormControl('', [Validators.required, Validators.minLength(3)]),

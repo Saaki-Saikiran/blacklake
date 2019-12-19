@@ -73,6 +73,7 @@
                   </div>
                   <div class="form-row">{{attribute}}
                       <div class="form-group col">
+                          <label> Attributes</label>
                           <ng-multiselect-dropdown [placeholder]="'Select Attributes'" [data]="dropdownList"
                           formControlName="attribute" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
                           (onSelectAll)="onSelectAll($event)">

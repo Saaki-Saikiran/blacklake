@@ -13,14 +13,14 @@
           <app-card [hidHeader]="true">
       
             <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
-              <ngb-tab title="Dept Meters List" id="UserlistId">
+              <ngb-tab title="Department  Meters List" id="UserlistId">
                 <ng-template ngbTabContent>
                     <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-striped mb-0">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Dept Meter Number</th>
+                        <th>Department  Meter Number</th>
                         <th>Location</th>
                         <th>Provider</th>
                         <th>Description</th>
@@ -63,11 +63,11 @@
                             <div class="form-row">
         
                               <div class="form-group col">
-                                <label>Dept Meter Number </label>
-                                <input type="text" placeholder="Enter Dept Meter Number" formControlName="deptMeterNumber" class="form-control"
+                                <label>Department  Meter Number <span style="color:red">*</span> </label>
+                                <input type="number" placeholder="Enter Department  Meter Number" formControlName="deptMeterNumber" class="form-control"
                                   [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumber.errors }" />
                                 <div *ngIf="submitted && f.deptMeterNumber.errors" class="invalid-feedback">
-                                  <div *ngIf="f.deptMeterNumber.errors.required">Dept Meter number is required</div>
+                                  <div *ngIf="f.deptMeterNumber.errors.required">Department  Meter number is required</div>
                                 </div>
                               </div>
                               <div class="form-group col">

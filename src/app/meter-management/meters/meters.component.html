@@ -57,7 +57,7 @@
                   <div class="form-row">
                     <div class="form-group col">
                       <label>Meter Serial Number</label>
-                      <input type="text" placeholder="Enter Meter Serial Number" formControlName="meterSerialNumber" class="form-control"
+                      <input type="number" placeholder="Enter Meter Serial Number" formControlName="meterSerialNumber" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.meterSerialNumber.errors }" />
                       <div *ngIf="submitted && f.meterSerialNumber.errors" class="invalid-feedback">
                         <div *ngIf="f.meterSerialNumber.errors.required">Meter SerialNumber is required</div>

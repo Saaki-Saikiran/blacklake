@@ -58,8 +58,8 @@ export class FloorsComponent implements OnInit {
       building: new FormControl('', [Validators.required, Validators.minLength(3)]),
       block: new FormControl('', [Validators.required]),
       floor: new FormControl('', [Validators.required]),
-      occupantNumber: new FormControl('', [Validators.required]),
-      sqFts: new FormControl('', [Validators.required])
+      occupantNumber: new FormControl('', []),
+      sqFts: new FormControl('', [])
       // isActive: new FormControl(true, [Validators.required])
     });
   }
@@ -77,8 +77,8 @@ export class FloorsComponent implements OnInit {
       building: new FormControl(data.building, [Validators.required, Validators.minLength(3)]),
       block: new FormControl(data.block, [Validators.required]),
       floor: new FormControl(data.floor, [Validators.required]),
-      occupantNumber: new FormControl(data.occupantNumber, [Validators.required]),
-      sqFts: new FormControl(data.sqFts, [Validators.required]),
+      occupantNumber: new FormControl(data.occupantNumber, []),
+      sqFts: new FormControl(data.sqFts, []),
       // isActive: new FormControl(this.data.isActive, [Validators.required])
     });
     // const initialState = {

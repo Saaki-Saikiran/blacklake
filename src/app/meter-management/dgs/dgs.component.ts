@@ -73,10 +73,10 @@ export class DgsComponent implements OnInit {
     this.isEditing = false;
     this.userForm = this.formBuilder.group({
       dgSerialNumber: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      model: new FormControl('', [Validators.required]),
+      model: new FormControl('', []),
       meterSerialNumberID: new FormControl('', [Validators.required]),
-      yearMake: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      yearMake: new FormControl('', []),
+      description: new FormControl('', [])
     });
   }
 
@@ -141,10 +141,10 @@ export class DgsComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
       dgSerialNumber: new FormControl(data.dgSerialNumber, [Validators.required, Validators.minLength(3)]),
-      model: new FormControl(data.model, [Validators.required]),
+      model: new FormControl(data.model, []),
       meterSerialNumberID: new FormControl(data.meterSerialNumberID._id, [Validators.required]),
-      yearMake: new FormControl(data.yearMake, [Validators.required]),
-      description: new FormControl(data.description, [Validators.required])
+      yearMake: new FormControl(data.yearMake, []),
+      description: new FormControl(data.description, [])
     });
   }
 

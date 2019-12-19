@@ -11,7 +11,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>gatewayId</th>
+                                        <th>gateway</th>
                                         <th>name</th>
                                         <th>gatewayModel</th>
                                         <th>location</th>
@@ -71,16 +71,17 @@
                                         <div class="form-row">
                                                 <div class="form-group col">
                                                     <label>Gateway</label>
-                                                        <input type="text" placeholder="Enter Gateway Id"
+                                                        <input type="text" placeholder="Enter Gateway "
                                                             formControlName="gatewayId" class="form-control"
                                                             [ngClass]="{ 'is-invalid': submitted && f.gatewayId.errors }" />
                                                         <div *ngIf="submitted && f.gatewayId.errors"
                                                             class="invalid-feedback">
-                                                            <div *ngIf="f.gatewayId.errors.required">Gateway Id is
+                                                            <div *ngIf="f.gatewayId.errors.required">Gateway  is
                                                                 required</div>
                                                         </div>
                                                     </div>
-                                                    
+                                                    <div class="form-group col-1">
+                                                    </div>
                                             <div class="form-group col">
                                                 <label>Name</label>
                                                 <input type="text" placeholder="Enter Name"
@@ -92,6 +93,9 @@
                                                         required</div>
                                                 </div>
                                             </div>
+                                           
+                                        </div>
+                                        <div class="form-row">
                                             <div class="form-group col">
                                                 <label>Gateway Model</label>
                                                 <input type="text" placeholder="Enter Gateway Model"
@@ -103,8 +107,8 @@
                                                         required</div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-row">
+                                            <div class="form-group col-1">
+                                            </div>
                                             <div class="form-group col">
                                                 <label>Location</label>
                                                 <input type="text" placeholder="Enter Location"
@@ -116,19 +120,8 @@
 
                                                 </div>
                                             </div>
-                                            <div class="form-group col-1">
-                                                </div>
-                                            <div class="form-group col">
-                                                    <select formControlName="tcp_COM_Type" class="form-control"
-                                                      [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_Type.errors }">
-                                                      <option value="">Select TCP/COM Type</option>
-                                                      <option value="TCP" >TCP</option>
-                                                      <option value="COM" >COM</option>
-                                                    </select>
-                                                    <div *ngIf="submitted && f.tcp_COM_Type.errors" class="invalid-feedback">
-                                                      <div *ngIf="f.tcp_COM_Type.errors.required">TCP/COM Type is required</div>
-                                                    </div>
-                                                  </div>
+                                           
+                                           
 
                                         </div>
                                         <div class="form-row">
@@ -213,7 +206,20 @@
                                         </div>
 
                                         <div class="form-row">
-
+                                            <div class="form-group col">
+                                                <label>Select TCP/COM Type</label>
+                                                <select formControlName="tcp_COM_Type" class="form-control"
+                                                  [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_Type.errors }">
+                                                  <option value="">Select TCP/COM Type</option>
+                                                  <option value="TCP" >TCP</option>
+                                                  <option value="COM" >COM</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.tcp_COM_Type.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.tcp_COM_Type.errors.required">TCP/COM Type is required</div>
+                                                </div>
+                                              </div>
+                                              <div class="form-group col-1">
+                                            </div>
                                             <div class="form-group col">
                                                 <label>Comments</label>
                                                 <input type="text" placeholder="Enter Comments"
@@ -225,12 +231,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="form-group col-1">
-                                                </div>
-                                            <div class="form-group col">
-                                               
-                                                
-                                            </div>
+                                           
                                         </div>
                                         <div class="text-center">
                                             <button class="btn btn-primary mr-1">{{buttonType}}</button>

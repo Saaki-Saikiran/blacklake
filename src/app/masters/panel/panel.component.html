@@ -12,7 +12,7 @@
                         <tr>
                           <th>#</th>
                           <th>Panel name</th>
-                          <th>Building ID</th>
+                          <th>Building </th>
                           <th>Status</th>
                           <th>Actions</th>
                         </tr>
@@ -64,11 +64,11 @@
                                          <label>Building Name</label>
                                     <select formControlName="buildingName" class="form-control"
                                       [ngClass]="{ 'is-invalid': submitted && f.buildingName.errors }">
-                                      <option value="">Select Building Id</option>
+                                      <option value="">Select Building </option>
                                       <option value="{{item._id}}" *ngFor="let item of FloorsList">{{item.building}}</option>
                                     </select>
                                     <div *ngIf="submitted && f.buildingName.errors" class="invalid-feedback">
-                                      <div *ngIf="f.buildingName.errors.required">Building Id  is required</div>
+                                      <div *ngIf="f.buildingName.errors.required">Building   is required</div>
                                     </div>
                                   </div>
 

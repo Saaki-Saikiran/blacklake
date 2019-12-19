@@ -57,9 +57,9 @@ export class TenantsComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       tenantName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       contactPersonName: new FormControl('', [Validators.required]),
-      contactNumber: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      comments: new FormControl('', [Validators.required])
+      contactNumber: new FormControl('', []),
+      email: new FormControl('', [, Validators.email]),
+      comments: new FormControl('', [])
       // isActive: new FormControl(true, [Validators.required])
     });
   }
@@ -74,9 +74,9 @@ export class TenantsComponent implements OnInit {
       _id: new FormControl(data._id),
       tenantName: new FormControl(data.tenantName, [Validators.required, Validators.minLength(3)]),
       contactPersonName: new FormControl(data.contactPersonName, [Validators.required]),
-      contactNumber: new FormControl(data.contactNumber, [Validators.required]),
-      email: new FormControl(data.email, [Validators.required]),
-      comments: new FormControl(data.comments, [Validators.required]),
+      contactNumber: new FormControl(data.contactNumber, []),
+      email: new FormControl(data.email, []),
+      comments: new FormControl(data.comments, []),
       // isActive: new FormControl(this.data.isActive, [Validators.required])
     });
     // const initialState = {

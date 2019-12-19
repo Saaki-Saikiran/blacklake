@@ -11,7 +11,7 @@
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Meter Model Id</th>
+                          <th>Meter Model </th>
                           <th>Meter Model Name</th>
                           <th>Manufacturer</th>
                           <th>Starting Register</th>
@@ -60,11 +60,11 @@
                             <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                               <div class="form-row">
                                   <div class="form-group col">
-                                    <label>Meter Model Id</label>
-                                      <input type="number" placeholder="Enter Meter ModelId" formControlName="meterModelId" class="form-control"
+                                    <label>Meter Model </label>
+                                      <input type="number" placeholder="Enter Meter Model" formControlName="meterModelId" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.meterModelId.errors }" />
                                       <div *ngIf="submitted && f.meterModelId.errors" class="invalid-feedback">
-                                        <div *ngIf="f.meterModelId.errors.required">Meter ModelId is required</div>
+                                        <div *ngIf="f.meterModelId.errors.required">Meter Model is required</div>
                                       </div>
                                     </div>
                                     <div class="form-group col-1">

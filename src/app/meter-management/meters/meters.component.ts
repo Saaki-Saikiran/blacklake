@@ -85,11 +85,11 @@ MetersList:any;
       meterType: new FormControl('', [Validators.required]),
       deptMeterNumberID: new FormControl('', [Validators.required]),
       sourceType: new FormControl('', [Validators.required]),
-      panel: new FormControl('', [Validators.required]),
+      panel: new FormControl('', []),
       gateway: new FormControl('', [Validators.required]),
-      provider: new FormControl('', [Validators.required]),
+      provider: new FormControl('', []),
       multifyingFactor: new FormControl('', [Validators.required]),
-      comments: new FormControl('', [Validators.required]),
+      comments: new FormControl('', []),
     });
   }
 
@@ -229,11 +229,11 @@ MetersList:any;
       meterType: new FormControl(data.meterType, [Validators.required]),
       deptMeterNumberID: new FormControl(data.deptMeterNumberID._id, [Validators.required]),
       sourceType: new FormControl(data.sourceType, [Validators.required]),
-      panel: new FormControl(data.panel, [Validators.required]),
+      panel: new FormControl(data.panel, []),
       gateway: new FormControl(data.gateway, [Validators.required]),
-      provider: new FormControl(data.provider, [Validators.required]),
+      provider: new FormControl(data.provider, []),
       multifyingFactor: new FormControl(data.multifyingFactor, [Validators.required]),
-      comments: new FormControl(data.comments, [Validators.required]),
+      comments: new FormControl(data.comments, []),
     });
   }
 

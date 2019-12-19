@@ -20,7 +20,7 @@ export class DeptMetersComponent implements OnInit {
   userForm: FormGroup;
   formHeader: string;
   buttonType: string='Add';
-  tabHeader: any = "Add Dept Meter";
+  tabHeader: any = "Add Department  Meter";
   isEditing: boolean;
   Userdata:any;
   submitted = false;
@@ -53,30 +53,30 @@ export class DeptMetersComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.formHeader="Add Dept Meter Details";
+    this.formHeader="Add Department  Meter Details";
     this.getDeptMeter();
     this.userForm = this.formBuilder.group({
       deptMeterNumber: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      location: new FormControl('', [Validators.required]),
-      provider: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
+      location: new FormControl('', []),
+      provider: new FormControl('', []),
+      description: new FormControl('', []),
       // isActive: new FormControl(true, [Validators.required])
     });
   }
 
   userModal(type, data) {
     this.Userdata = data;
-    this.formHeader = 'Edit Dept Meter';
+    this.formHeader = 'Edit Department  Meter';
     this.buttonType = 'Update';
-    this.tabHeader = 'Edit  Dept Meter';
+    this.tabHeader = 'Edit  Department  Meter';
     this.isEditing = true;
 
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
       deptMeterNumber: new FormControl(data.deptMeterNumber, [Validators.required, Validators.minLength(3)]),
-      location: new FormControl(data.location, [Validators.required]),
-      provider: new FormControl(data.provider, [Validators.required]),
-      description: new FormControl(data.description, [Validators.required]),
+      location: new FormControl(data.location, []),
+      provider: new FormControl(data.provider, []),
+      description: new FormControl(data.description, []),
       // isActive: new FormControl(this.data.isActive, [Validators.required])
     });
     // const initialState = {
@@ -91,8 +91,8 @@ export class DeptMetersComponent implements OnInit {
     debugger;
     // dont do anything if id matches
     if ($event.activeId === 'AdduserId') {
-      this.tabHeader = 'Add Dept Meter';
-      this.formHeader = 'Add Dept Meter Details';
+      this.tabHeader = 'Add Department  Meter';
+      this.formHeader = 'Add Department  Meter Details';
       this.buttonType = 'Add';
       this.submitted = false;
       this.userForm.reset();
@@ -131,7 +131,7 @@ export class DeptMetersComponent implements OnInit {
         this.DeptMeterService.createDeptMeter(user).subscribe(
           data => {
             if (data['success'] === true) {
-              Swal.fire('', 'Dept Meter Added Successfully !', 'success');
+              Swal.fire('', 'Department  Meter Added Successfully !', 'success');
               this.myTabSet.select('UserlistId');
             } else {
               Swal.fire('', data['error'], 'error');
@@ -146,7 +146,7 @@ export class DeptMetersComponent implements OnInit {
         this.DeptMeterService.updateDeptMeter(user).subscribe(
           data => {
             if (data['success'] === true) {
-              Swal.fire('', 'Dept Meter Updated Successfully !', 'success');
+              Swal.fire('', 'Department  Meter Updated Successfully !', 'success');
               this.myTabSet.select('UserlistId');
             } else {
               Swal.fire('', data['error'], 'error');
@@ -193,7 +193,7 @@ export class DeptMetersComponent implements OnInit {
         this.DeptMeterService.deleteMeter(id).subscribe(
           data => {
             if (data['success'] === true) {
-              Swal.fire('', 'Dept Meter deleted Successfully!', 'success');
+              Swal.fire('', 'Department  Meter deleted Successfully!', 'success');
               this.getDeptMeter();
             } else {
               Swal.fire('', data['error'], 'error');
