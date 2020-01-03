@@ -12,6 +12,7 @@ import { MetersService } from '../meters/meters.service';
 import { UsersService } from 'src/app/admin/user-entry/user-entry.service';
 import { MapMeterTenantsService } from './map-meter-tenants.service';
 import { DeptMetersService } from '../dept-meters/dept-meters.service';
+import { TenantsService } from '../tenants/tenants.service';
 
 @Component({
   selector: 'app-map-meter-tenants',
@@ -43,6 +44,8 @@ export class MapMeterTenantsComponent implements OnInit {
   FloorList: any[];
   TenantsList: any[];
   mapmetersList: any;
+  tenantdata: any[];
+  mappedMeterTenantsList: any;
 
 
   constructor(
@@ -50,7 +53,8 @@ export class MapMeterTenantsComponent implements OnInit {
     private router: Router,
     private meterService: MapMeterTenantsService,
     private meterService1: MetersService,
-    private deptmeterService: DeptMetersService) {
+    private deptmeterService: DeptMetersService,
+    private TenantService: TenantsService) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -75,24 +79,26 @@ export class MapMeterTenantsComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.getUsers();
-    this.getDeptMeters();
+    // this.getUsers();
+    // this.getDeptMeters();
     this.getMeters();
-    this.getFloors();
+    // this.getFloors();
     this.getTenants();
-    this.formHeader = 'Add Map Meter Tenant Details';
-    this.buttonType = 'Add';
+    this.formHeader = 'Map Meter Tenant Details';
+    this.buttonType = 'Map';
     this.isEditing = false;
+    this.getmappedMeterTenants();
     this.userForm = this.formBuilder.group({
-      deptMeterNumberID: new FormControl('', [Validators.required]),
+      // deptMeterNumberID: new FormControl('', [Validators.required]),
       meterSerialNumberID: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      meterType: new FormControl('', [Validators.required]),
-      gatewayName: new FormControl('', [Validators.required]),
-      block: new FormControl('', [Validators.required]),
-      floorID: new FormControl('', [Validators.required]),
+      // meterType: new FormControl('', [Validators.required]),
+      // gatewayName: new FormControl('', [Validators.required]),
+      // block: new FormControl('', [Validators.required]),
+      // floorID: new FormControl('', [Validators.required]),
+      assignTenant: new FormControl('yes', [Validators.required]),
       tenantID: new FormControl('', [Validators.required]),
-      contactNumber: new FormControl('', [Validators.required]),
-      started: new FormControl('', [Validators.required])
+      // contactNumber: new FormControl('', [Validators.required]),
+      // started: new FormControl('', [Validators.required])
     });
   }
 
@@ -121,6 +127,24 @@ export class MapMeterTenantsComponent implements OnInit {
       data => {
         if (data['success'] === true) {
           this.deptMeters = data['result'];
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+
+  getmappedMeterTenants() {
+    this.meterService.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.mappedMeterTenantsList = data['result'];
+          console.log('mappedMeterTenantsList----', this.mappedMeterTenantsList);
         } else {
           Swal.fire('', data['error'], 'error');
         }
@@ -171,16 +195,22 @@ export class MapMeterTenantsComponent implements OnInit {
   }
 
   getTenants() {
-    this.TenantsList = [
-      {
-        "_id": "M0fpfKjM",
-        "tenantName": "saikiran11 666",
+    this.TenantsList = [];
+    this.TenantService.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.TenantsList = data['result'];
+          this.tenantdata = this.TenantsList;
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
       },
-      {
-        "_id": "Is5Ie67g",
-        "tenantName": "saikiran11",
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
       }
-    ];
+    );
   }
 
   beforeChange($event: NgbTabChangeEvent) {
@@ -252,8 +282,26 @@ export class MapMeterTenantsComponent implements OnInit {
       this.dtTrigger.unsubscribe();
   }
 
-  //vijay added
+  handleChange(evt) {
+    // this.TenantsList = [];
+    let target = evt.target;
+    alert(target.value);
+    if (target.value === 'yes') {
+      this.tenantdata = this.TenantsList;
+    }
+    if (target.value === 'no') {
+      this.tenantdata = [{
+        _id: "common",
+        tenantName: "Common"
+      }, {
+        _id: "chiller",
+        tenantName: "Chiller"
+      }];
+    }
+  }
+
   onSubmit() {
+    console.log(this.userForm.value);
     const user = { ...this.userForm.value };
     this.submitted = true;
     // stop here if form is invalid
