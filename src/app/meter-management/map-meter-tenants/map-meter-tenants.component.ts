@@ -285,7 +285,6 @@ export class MapMeterTenantsComponent implements OnInit {
   handleChange(evt) {
     // this.TenantsList = [];
     let target = evt.target;
-    alert(target.value);
     if (target.value === 'yes') {
       this.tenantdata = this.TenantsList;
     }
