@@ -1,12 +1,12 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
-import { NgbModal, NgbModalOptions ,NgbTabset} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
-import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
-import {FloorsService} from '../floors/floors.service';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { FloorsService } from '../floors/floors.service';
 @Component({
   selector: 'app-floors',
   templateUrl: './floors.component.html',
@@ -17,18 +17,18 @@ export class FloorsComponent implements OnInit {
   modalOptions: NgbModalOptions;
   userForm: FormGroup;
   formHeader: string;
-  buttonType: string='Add';
+  buttonType: string = 'Add';
   tabHeader: any = "Add Floor";
   isEditing: boolean;
-  Userdata:any;
+  Userdata: any;
   submitted = false;
-  FloorsList:string;
+  FloorsList: string;
   loading: boolean;
   mySubscription: any;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-  constructor(private modalService: NgbModal,private formBuilder: FormBuilder,private route: ActivatedRoute,
-    private router: Router, private floorService: FloorsService){
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private route: ActivatedRoute,
+    private router: Router, private floorService: FloorsService) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -46,13 +46,13 @@ export class FloorsComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.dtOptions = {
+    this.dtOptions = {
       retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.buttonType='Add';
-    this.formHeader="Add Floor Details";
+    this.buttonType = 'Add';
+    this.formHeader = "Add Floor Details";
     this.getFloors();
     this.userForm = this.formBuilder.group({
       building: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -97,13 +97,13 @@ export class FloorsComponent implements OnInit {
       this.formHeader = 'Add Floor Details';
       this.buttonType = 'Add';
       this.submitted = false;
-     this.userForm.reset();
-     this.router.navigateByUrl('/meter-management/floors', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/meter-management/floors']);
-    });
+      this.userForm.reset();
+      this.router.navigateByUrl('/meter-management/floors', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/meter-management/floors']);
+      });
     }
-  
-   
+
+
   }
   getFloors(): void {
     debugger
@@ -138,7 +138,11 @@ export class FloorsComponent implements OnInit {
             Swal.fire('', 'Floor Added Successfully !', 'success');
             this.myTabSet.select('UserlistId');
           } else {
-            Swal.fire('', data['error'], 'error');
+            if (data['error'] = 'E11000 duplicate key error collection: black-lake.floors index: building_1_block_1_floor_1_occupantNumber_1 dup key: { : "building", : "block", : "floor", : "wing" }') {
+              Swal.fire('', 'Duplicates are not Allowed.', 'error');
+            } else {
+              Swal.fire('', data['error'], 'error');
+            }
             this.loading = false;
           }
         },
@@ -153,7 +157,11 @@ export class FloorsComponent implements OnInit {
             Swal.fire('', 'Floor Updated Successfully !', 'success');
             this.myTabSet.select('UserlistId');
           } else {
-            Swal.fire('', data['error'], 'error');
+            if (data['error'] = 'E11000 duplicate key error collection: black-lake.floors index: building_1_block_1_floor_1_occupantNumber_1 dup key: { : "building", : "block", : "floor", : "wing" }') {
+              Swal.fire('', 'Duplicates are not Allowed.', 'error');
+            } else {
+              Swal.fire('', data['error'], 'error');
+            }
             this.loading = false;
           }
         },

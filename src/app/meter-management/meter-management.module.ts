@@ -12,6 +12,7 @@ import { SharedModule } from '../theme/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FilterPipeModule } from '../_pipes/filter-pipe.module';
 
 @NgModule({
   declarations: [DeptMetersComponent, DgsComponent, FloorsComponent, TenantsComponent, MetersComponent, MapMeterTenantsComponent],
@@ -21,7 +22,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     FormsModule,
     DataTablesModule,
-    NgbModule
+    NgbModule,
+    FilterPipeModule
   ],
   entryComponents: []
 

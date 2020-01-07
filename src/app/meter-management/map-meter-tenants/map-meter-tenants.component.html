@@ -134,12 +134,45 @@
                     <div class="form-group col">
                     </div>
                   </div>
+
                   <div class="form-row">
-                   
-                      <div class="form-group col">
-                        Do you want to assign to a Tenant?
+
+                    <div class="form-group col">
+                      <label>Select Building & Block</label>
+                      <select formControlName="buildingBlock" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.buildingBlock.errors }">
+                        <option value="">Select Building & Block</option>
+                        <option [ngValue]="item" *ngFor="let item of FloorList">{{item.building}} & {{item.block}}
+                        </option>
+                      </select>
+                      <div *ngIf="submitted && f.buildingBlock.errors" class="invalid-feedback">
+                        <div *ngIf="f.buildingBlock.errors.required">Meter Type to Assign is required</div>
                       </div>
-                      <!-- <div class="form-group col">
+                    </div>
+
+                    <div class="form-group col">
+                      <label>Select Floor & Wing</label>
+                      <select formControlName="floorID" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.floorID.errors }">
+                        <option value="">Select Meter</option>
+                        <option value="{{item._id}}" *ngFor="let item of FloorList | filter: {building: userForm.value.buildingBlock?.building ,
+                          block: userForm.value.buildingBlock?.block }">
+                          {{item.floor}} & {{item.occupantNumber}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.floorID.errors" class="invalid-feedback">
+                        <div *ngIf="f.floorID.errors.required">Meter Type to Assign is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-row">
+
+                    <div class="form-group col">
+                      Do you want to assign to a Tenant?
+                    </div>
+                    <!-- <div class="form-group col">
                         <div class="form-check">
 
                           <input class="form-check-input" formControlName="assignTenant" style="color: orangered;"
@@ -154,16 +187,16 @@
                           <label class="form-check-label" for="gridRadios">No</label>
                         </div>
                       </div> -->
-                      <div class="form-group col">
-                        <fieldset class="form-group">
-                        <input type="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;" name="assignTenant" value="yes"
-                        (change)="handleChange($event)">Yes
-                      <input type="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;" name="assignTenant" value="no"
-                        (change)="handleChange($event)">No
+                    <div class="form-group col">
+                      <fieldset class="form-group">
+                        <input type="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
+                          name="assignTenant" value="yes" (change)="handleChange($event)">Yes
+                        <input type="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
+                          name="assignTenant" value="no" (change)="handleChange($event)">No
                       </fieldset>
-                      </div>
+                    </div>
 
-                   
+
                   </div>
                   <div class="form-row">
                     <div class="form-group col">

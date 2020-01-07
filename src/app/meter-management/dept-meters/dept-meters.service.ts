@@ -18,7 +18,7 @@ export class DeptMetersService {
 
   constructor(private http: HttpClient) { }
   getAll() {
-    const match = { active: true };
+    const match = {};
     const pagination = { limit: 1000 };
     return this.http.post(`${environment.baseUrl}/deptmeters/list`, { match, pagination }, httpOptions)
       .pipe(

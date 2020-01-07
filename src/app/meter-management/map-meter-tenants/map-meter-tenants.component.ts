@@ -13,6 +13,7 @@ import { UsersService } from 'src/app/admin/user-entry/user-entry.service';
 import { MapMeterTenantsService } from './map-meter-tenants.service';
 import { DeptMetersService } from '../dept-meters/dept-meters.service';
 import { TenantsService } from '../tenants/tenants.service';
+import { FloorsService } from '../floors/floors.service';
 
 @Component({
   selector: 'app-map-meter-tenants',
@@ -54,7 +55,8 @@ export class MapMeterTenantsComponent implements OnInit {
     private meterService: MapMeterTenantsService,
     private meterService1: MetersService,
     private deptmeterService: DeptMetersService,
-    private TenantService: TenantsService) {
+    private TenantService: TenantsService,
+    private floorService: FloorsService) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -82,7 +84,7 @@ export class MapMeterTenantsComponent implements OnInit {
     // this.getUsers();
     // this.getDeptMeters();
     this.getMeters();
-    // this.getFloors();
+    this.getFloors();
     this.getTenants();
     this.formHeader = 'Map Meter Tenant Details';
     this.buttonType = 'Map';
@@ -91,10 +93,10 @@ export class MapMeterTenantsComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       // deptMeterNumberID: new FormControl('', [Validators.required]),
       meterSerialNumberID: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      // meterType: new FormControl('', [Validators.required]),
+      buildingBlock: new FormControl('', [Validators.required]),
       // gatewayName: new FormControl('', [Validators.required]),
       // block: new FormControl('', [Validators.required]),
-      // floorID: new FormControl('', [Validators.required]),
+      floorID: new FormControl('', [Validators.required]),
       assignTenant: new FormControl('yes', [Validators.required]),
       tenantID: new FormControl('', [Validators.required]),
       // contactNumber: new FormControl('', [Validators.required]),
@@ -175,23 +177,20 @@ export class MapMeterTenantsComponent implements OnInit {
   }
 
   getFloors() {
-    this.FloorList = [
-      {
-        "_id": "zPuMYQgr",
-        "block": "block",
-        "floor": "floor"
+    this.floorService.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.FloorList = data['result'];
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
       },
-      {
-        "_id": "0jw8JZ7I",
-        "block": "block11",
-        "floor": "floor111",
-      },
-      {
-        "_id": "SFLtxNDk",
-        "block": "block11 555",
-        "floor": "floor111 555",
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
       }
-    ];
+    );
   }
 
   getTenants() {
