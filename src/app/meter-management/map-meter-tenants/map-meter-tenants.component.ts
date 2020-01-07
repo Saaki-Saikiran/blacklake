@@ -47,6 +47,7 @@ export class MapMeterTenantsComponent implements OnInit {
   mapmetersList: any;
   tenantdata: any[];
   mappedMeterTenantsList: any;
+  tenant: any;
 
 
   constructor(
@@ -146,7 +147,7 @@ export class MapMeterTenantsComponent implements OnInit {
       data => {
         if (data['success'] === true) {
           this.mappedMeterTenantsList = data['result'];
-          console.log('mappedMeterTenantsList----', this.mappedMeterTenantsList);
+          this.tenant = this.mappedMeterTenantsList[0].tenantID.tenantName;
         } else {
           Swal.fire('', data['error'], 'error');
         }
@@ -343,5 +344,9 @@ export class MapMeterTenantsComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.userForm.reset();
+  }
+
+  tenantSelected(value) {
+    this.tenant = value;
   }
 }

@@ -32,7 +32,92 @@
       <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
         <ngb-tab title="Tenant Mapped Meters List" id="UserlistId">
           <ng-template ngbTabContent>
-            <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+
+            <div class="row btn-page">
+              <div class="col-xl-2 col-lg-12 task-detail-right">
+
+                <app-card cardTitle="Tenants List" blockClass="task-details" [options]="false">
+                  <!-- <table class="table"> -->
+                  <!-- <tbody> -->
+                  <!-- <tr *ngFor="let item of mappedMeterTenantsList"> -->
+                  <!-- <td><i class="fas fa-user m-r-5"></i> {{item?.tenantID?.tenantName}}</td> -->
+                  <!-- <td><i class="fas fa-adjust m-r-5"></i> Project:</td>
+                        <td class="text-right"><span class="float-right"><a class="text-secondary" href="javascript:">
+                              Singular app</a></span></td> -->
+                  <!-- </tr>
+                    </tbody>
+                  </table> -->
+
+                  <ul class="mb-2 nav nav-tab flex-column nav-pills" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <li class="nav-item mail-section" *ngFor="let item of mappedMeterTenantsList | filterUnique">
+                      <a class="nav-link text-left" [ngClass]="{'active': isMail === 'trash'}"
+                        (click)="tenantSelected(item?.tenantID?.tenantName);" id="v-pills-Trash-tab" data-toggle="pill"
+                        href="javascript:" role="tab">
+                        <span><i class="feather icon-users"></i> {{item?.tenantID?.tenantName}}</span>
+                        <hr>
+                      </a>
+                    </li>
+                  </ul>
+
+
+                </app-card>
+              </div>
+              <div class="col-xl-10 col-lg-12">
+                <app-card [customHeader]="true" [options]="false">
+                  <div class="app-card-header">
+                    <!-- <h5 class="mb-3"><i class="fas fa-ticket-alt m-r-5"></i> Ticket List Doesn't Support Commas</h5> -->
+                  </div>
+                  <div class="m-b-20">
+                    <h6>Meter Details</h6>
+                    <hr>
+                    <div class="table-responsive m-t-20">
+                      <table class="table m-b-0 f-14 b-solid requid-table">
+                        <thead>
+                          <tr class="text-uppercase">
+                            <th class="text-center">meterSerialNumber</th>
+                            <th class="text-center">meterType</th>
+                            <th class="text-center">gateway</th>
+                            <th class="text-center">deptMeterNumberID</th>
+
+                            <th class="text-center">block</th>
+                            <th class="text-center">floor</th>
+                            <th class="text-center">Wing</th>
+
+                            <th class="text-center">Start Date</th>
+                            <th class="text-center">End Date</th>
+                            <th class="text-center">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center text-muted">
+                          <tr *ngFor="let item of mappedMeterTenantsList | filter: {tenantName: tenant} ">
+                            <td>{{item?.meterSerialNumberID?.meterSerialNumber }}</td>
+                            <td>{{item?.meterSerialNumberID?.meterType }}</td>
+                            <td>{{item?.meterSerialNumberID?.gateway }}</td>
+                            <td>{{item?.meterSerialNumberID?.deptMeterNumberID }}</td>
+
+                            <td>{{item?.floorID?.block }}</td>
+                            <td>{{item?.floorID?.floor }}</td>
+                            <td>{{item?.floorID?.occupantNumber }}</td>
+
+                            <td>{{item?.createdOn }}</td>
+                            <td>{{item?.removedOn }}</td>
+                            <td>
+                              <span *ngIf="item.active" class="badge badge-success">Active</span>
+                              <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </app-card>
+
+              </div>
+            </div>
+
+
+            <!-- <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
               class="table table-bordered table-striped mb-0">
               <thead>
                 <tr>
@@ -66,7 +151,7 @@
                   <th>Actions</th>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
             <!-- <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
               class="table table-bordered table-striped mb-0">
               <thead>

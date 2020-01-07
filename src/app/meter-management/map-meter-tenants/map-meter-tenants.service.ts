@@ -25,6 +25,7 @@ export class MapMeterTenantsService {
         map(data => {
           data['result'].map((item, index) => {
             item.sno = index + 1;
+            if (item.tenantID) item.tenantName = item.tenantID.tenantName;
           });
           return data;
         }),
@@ -34,7 +35,6 @@ export class MapMeterTenantsService {
   }
 
   getMeterById(id) {
-    debugger
     return this.http.get(`${environment.baseUrl}/mapmetertenant/${id}`)
       .pipe(
         tap(data =>
@@ -72,7 +72,6 @@ export class MapMeterTenantsService {
 
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
-    debugger
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
