@@ -33,13 +33,18 @@ export class MetersService {
       );
   }
 
-  getMeterById(id) {
-    debugger
-    return this.http.get(`${environment.baseUrl}/meters/${id}`)
+  getMetersForMapMeterTenant() {
+    const match = { "assignedToTenant": false };
+    const pagination = { limit: 1000 };
+    return this.http.post(`${environment.baseUrl}/meters/list`, { match, pagination }, httpOptions)
       .pipe(
-        tap(data =>
-
-          console.log('Get a meter called\n', JSON.stringify(data))),
+        map(data => {
+          data['result'].map((item, index) => {
+            item.sno = index + 1;
+          });
+          return data;
+        }),
+        // tap(data => console.log('Get meters called\n', JSON.stringify(data))),
         catchError(this.errorHandler)
       );
   }

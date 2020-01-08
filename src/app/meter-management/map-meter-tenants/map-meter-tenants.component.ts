@@ -49,6 +49,7 @@ export class MapMeterTenantsComponent implements OnInit {
   mappedMeterTenantsList: any;
   tenant: any;
   tenantID123: string;
+  model;
 
 
   constructor(
@@ -88,10 +89,10 @@ export class MapMeterTenantsComponent implements OnInit {
     this.getMeters();
     this.getFloors();
     this.getTenants();
+    this.getmappedMeterTenants();
     this.formHeader = 'Map Meter Tenant Details';
     this.buttonType = 'Map';
     this.isEditing = false;
-    this.getmappedMeterTenants();
     this.tenantID123 = "tenantID";
     this.userForm = this.formBuilder.group({
       // deptMeterNumberID: new FormControl('', [Validators.required]),
@@ -150,7 +151,7 @@ export class MapMeterTenantsComponent implements OnInit {
       data => {
         if (data['success'] === true) {
           this.mappedMeterTenantsList = data['result'];
-          this.tenant = this.mappedMeterTenantsList[0].tenantID.tenantName;
+          this.tenant = this.mappedMeterTenantsList[0].tenantName;
         } else {
           Swal.fire('', data['error'], 'error');
         }
@@ -164,7 +165,7 @@ export class MapMeterTenantsComponent implements OnInit {
   }
 
   getMeters() {
-    this.meterService1.getAll().subscribe(
+    this.meterService1.getMetersForMapMeterTenant().subscribe(
       data => {
         if (data['success'] === true) {
           this.metersList = data['result'];
@@ -237,47 +238,47 @@ export class MapMeterTenantsComponent implements OnInit {
     this.tabHeader = 'Edit Map Meter Tenant';
     this.isEditing = true;
 
-    this.userForm = this.formBuilder.group({
-      _id: new FormControl(data._id),
-      deptMeterNumberID: new FormControl(data.deptMeterNumberID._id, [Validators.required]),
-      meterSerialNumberID: new FormControl(data.meterSerialNumberID._id, [Validators.required, Validators.minLength(3)]),
-      meterType: new FormControl(data.meterType, [Validators.required]),
-      gatewayName: new FormControl(data.gatewayName, [Validators.required]),
-      block: new FormControl(data.block, [Validators.required]),
-      floorID: new FormControl(data.floorID._id, [Validators.required]),
-      tenantID: new FormControl(data.tenantID._id, [Validators.required]),
-      contactNumber: new FormControl(data.contactNumber, [Validators.required]),
-      started: new FormControl(data.started, [Validators.required])
-    });
+    // this.userForm = this.formBuilder.group({
+    //   _id: new FormControl(data._id),
+    //   deptMeterNumberID: new FormControl(data.deptMeterNumberID._id, [Validators.required]),
+    //   meterSerialNumberID: new FormControl(data.meterSerialNumberID._id, [Validators.required, Validators.minLength(3)]),
+    //   meterType: new FormControl(data.meterType, [Validators.required]),
+    //   gatewayName: new FormControl(data.gatewayName, [Validators.required]),
+    //   block: new FormControl(data.block, [Validators.required]),
+    //   floorID: new FormControl(data.floorID._id, [Validators.required]),
+    //   tenantID: new FormControl(data.tenantID._id, [Validators.required]),
+    //   contactNumber: new FormControl(data.contactNumber, [Validators.required]),
+    //   started: new FormControl(data.started, [Validators.required])
+    // });
   }
 
-  confirmAlert(id) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this imaginary file!',
-      type: 'warning',
-      showCloseButton: true,
-      showCancelButton: true
-    }).then((willDelete) => {
-      if (willDelete.dismiss) {
-        Swal.fire('', 'Your imaginary file is safe!', 'error');
-      } else {
-        this.meterService.deleteMeter(id).subscribe(
-          data => {
-            if (data['success'] === true) {
-              Swal.fire('', 'Map Meter Tenant deleted Successfully!', 'success');
-              this.getUsers();
-            } else {
-              Swal.fire('', data['error'], 'error');
-            }
-          },
-          error => {
-            Swal.fire('', error, 'error');
-          }
-        );
-      }
-    });
-  }
+  // confirmAlert(id) {
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: 'Once deleted, you will not be able to recover this imaginary file!',
+  //     type: 'warning',
+  //     showCloseButton: true,
+  //     showCancelButton: true
+  //   }).then((willDelete) => {
+  //     if (willDelete.dismiss) {
+  //       Swal.fire('', 'Your imaginary file is safe!', 'error');
+  //     } else {
+  //       this.meterService.deleteMeter(id).subscribe(
+  //         data => {
+  //           if (data['success'] === true) {
+  //             Swal.fire('', 'Map Meter Tenant deleted Successfully!', 'success');
+
+  //           } else {
+  //             Swal.fire('', data['error'], 'error');
+  //           }
+  //         },
+  //         error => {
+  //           Swal.fire('', error, 'error');
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
@@ -313,38 +314,61 @@ export class MapMeterTenantsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    if (user._id === undefined) {
-      user.role = 'Admin';
-      this.meterService.createMeter(user).subscribe(
-        data => {
-          if (data['success'] === true) {
-            Swal.fire('', 'Map Meter Tenant Added Successfully !', 'success');
-            this.myTabSet.select('UserlistId');
-          } else {
-            Swal.fire('', data['error'], 'error');
-            this.loading = false;
-          }
-        },
-        error => {
-          Swal.fire('', error, 'error');
+
+    user.role = 'Admin';
+    this.meterService.createMeter(user).subscribe(
+      data => {
+        if (data['success'] === true) {
+
+          this.meterService1.updateMeter({ "_id": user.meterSerialNumberID, "assignedToTenant": true }).subscribe(
+            data => {
+              if (data['success'] === true) {
+                Swal.fire('', 'Map Meter Tenant Added Successfully !', 'success');
+                this.myTabSet.select('UserlistId');
+              } else {
+                Swal.fire('', data['error'], 'error');
+                this.loading = false;
+              }
+            },
+            error => {
+              Swal.fire('', error, 'error');
+              this.loading = false;
+            });
+
+
+        } else {
+          Swal.fire('', data['error'], 'error');
           this.loading = false;
-        });
-    } else {
-      this.meterService.updateMeter(user).subscribe(
-        data => {
-          if (data['success'] === true) {
-            Swal.fire('', 'Map Meter Tenant Updated Successfully !', 'success');
-            this.myTabSet.select('UserlistId');
-          } else {
-            Swal.fire('', data['error'], 'error');
-            this.loading = false;
-          }
-        },
-        error => {
-          Swal.fire('', error, 'error');
+        }
+      },
+      error => {
+        Swal.fire('', error, 'error');
+        this.loading = false;
+      });
+  }
+
+  changeVacateTime(data, date) {
+    console.log(data);
+    console.log(date, new Date(date.year, date.month, date.day));
+    let user = data;
+    user.vacatedOn = new Date(date.year, date.month, date.day);
+    this.meterService.updateMeter(user).subscribe(
+      data => {
+        if (data['success'] === true) {
+          Swal.fire('', 'Map Meter Tenant Updated Successfully !', 'success');
+          this.myTabSet.select('UserlistId');
+        } else {
+          Swal.fire('', data['error'], 'error');
           this.loading = false;
-        });
-    }
+        }
+      },
+      error => {
+        Swal.fire('', error, 'error');
+        this.loading = false;
+      });
+  }
+  Cancel() {
+    this.myTabSet.select('UserlistId');
   }
 
   onReset() {
@@ -353,10 +377,13 @@ export class MapMeterTenantsComponent implements OnInit {
   }
 
   tenantSelected(value) {
+    console.log(value, '--value--')
     this.tenant = value;
   }
 
-  confirmAlertDelete(id) {
+  confirmAlertDelete(data) {
+    let meterId = data.meterSerialNumberID._id;
+
     Swal.fire({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this imaginary file!',
@@ -367,11 +394,28 @@ export class MapMeterTenantsComponent implements OnInit {
       if (willDelete.dismiss) {
         Swal.fire('', 'Your imaginary file is safe!', 'error');
       } else {
-        this.meterService.deleteMeter(id).subscribe(
+        this.meterService.deleteMeter(data._id).subscribe(
           data => {
             if (data['success'] === true) {
-              Swal.fire('', 'Map Deleted Successfully!', 'success');
-              this.getFloors();
+
+              this.meterService1.updateMeter({ "_id": meterId, "assignedToTenant": false }).subscribe(
+                data => {
+                  if (data['success'] === true) {
+                    Swal.fire('', 'Map Meter Tenant Updated Successfully !', 'success');
+                    this.getMeters();
+                    this.getFloors();
+                    this.getTenants();
+                    this.getmappedMeterTenants();
+                  } else {
+                    Swal.fire('', data['error'], 'error');
+                    this.loading = false;
+                  }
+                },
+                error => {
+                  Swal.fire('', error, 'error');
+                  this.loading = false;
+                });
+
             } else {
               Swal.fire('', data['error'], 'error');
             }

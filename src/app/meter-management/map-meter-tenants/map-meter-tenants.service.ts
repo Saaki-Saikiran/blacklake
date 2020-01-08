@@ -62,6 +62,7 @@ export class MapMeterTenantsService {
   }
 
   updateMeter(user) {
+    console.log(user, '===================');
     return this.http.put(`${environment.baseUrl}/mapmetertenant/update`, user, httpOptions)
       .pipe(
         tap(data => console.log('updateMeter: ', JSON.stringify(data))),

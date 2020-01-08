@@ -52,7 +52,7 @@
                     aria-orientation="vertical">
                     <li class="nav-item mail-section" *ngFor="let item of mappedMeterTenantsList | filterUnique">
                       <a class="nav-link text-left" [ngClass]="{'active': isMail === 'trash'}"
-                        (click)="tenantSelected(item?.tenantID?.tenantName);" id="v-pills-Trash-tab" data-toggle="pill"
+                        (click)="tenantSelected(item?.tenantName);" id="v-pills-Trash-tab" data-toggle="pill"
                         href="javascript:" role="tab">
                         <span><i class="feather icon-users"></i> {{item?.tenantName}}</span>
                         <hr>
@@ -103,7 +103,7 @@
                             <td>{{item?.floorID?.occupantNumber }}</td>
 
                             <td>{{item?.createdOn }}</td>
-                            <td>{{item?.removedOn }}</td>
+                            <td>{{item?.vacatedOn }}</td>
                             <td>
                               <span *ngIf="item.active" class="badge badge-success">Active</span>
                               <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
@@ -113,7 +113,7 @@
                                   class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
                                     class="feather icon-edit"></i></a></span>
                               <a href="javascript:" class="btn btn-icon btn-outline-danger"
-                                (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
+                                (click)="confirmAlertDelete(item)"><i class="feather icon-trash-2"></i></a>
                             </td>
                           </tr>
                         </tbody>
@@ -296,12 +296,20 @@
                   <div class="form-row">
                     <div class="form-group col">
                       <label>Common Meter Category</label>
-                      <select formControlName="{{tenantID123}}" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.tenantID.errors }">
+                      <select *ngIf="userForm.value.assignTenant == 'yes'" formControlName="tenantID"
+                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tenantID.errors }">
                         <option value="">Select Meter Category</option>
                         <option value="{{item._id}}" *ngFor="let item of tenantdata">{{item.tenantName}}
                         </option>
                       </select>
+
+                      <select *ngIf="userForm.value.assignTenant == 'no'" formControlName="inactiveTenant"
+                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tenantID.errors }">
+                        <option value="">Select Meter Category</option>
+                        <option value="{{item._id}}" *ngFor="let item of tenantdata">{{item.tenantName}}
+                        </option>
+                      </select>
+
                       <div *ngIf="submitted && f.tenantID.errors" class="invalid-feedback">
                         <div *ngIf="f.tenantID.errors.required">Meter Type to Assign is required</div>
                       </div>
@@ -317,10 +325,25 @@
               </div>
               <div *ngIf="buttonType == 'Update'">
 
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>Select Vacate Meter Date</label>
+                    <input class="form-control" #statustime="ngModel" placeholder="yyyy-mm-dd" name="dp"
+                      [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" required>
+                    <div class="input-group-append">
+                      <button (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group col">
+                  </div>
+                </div>
 
+                <hr />
+                <!-- <pre>Model: {{ model | json }}</pre> -->
                 <div class="text-center">
-                  <button class="btn btn-primary mr-1">{{buttonType}}</button>
-                  <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                  <button class="btn btn-primary mr-1" [disabled]="!statustime.valid"
+                    (click)="changeVacateTime(Userdata,model);">{{buttonType}}</button>
+                  <button class="btn btn-secondary" type="reset" (click)="Cancel()">Cancel</button>
                 </div>
               </div>
 
