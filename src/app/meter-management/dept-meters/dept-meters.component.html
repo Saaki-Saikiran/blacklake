@@ -1,20 +1,12 @@
 <div class="row btn-page">
   <div class="col-sm-12">
-    <!-- <app-card cardTitle="Dept Meters List" cardClass="card-datatable" [options]="false"> -->
-      <!-- <div class="row align-items-center m-l-0">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6 text-right">
-          <button class="btn btn-success btn-sm btn-round has-ripple" (click)="userModal('Add', '')"><i
-              class="feather icon-plus"></i> Add Dept Meter</button>
-        </div>
-      </div> -->
-
-      <div class="col-sm-12">
+     
           <app-card [hidHeader]="true">
-      
             <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
               <ngb-tab title="Department  Meters List" id="UserlistId">
                 <ng-template ngbTabContent>
+                  <div class="table-responsive p-t-20">
+                    <div class="table-responsive">
                     <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-striped mb-0">
                     <thead>
@@ -52,6 +44,8 @@
                       </tr>
                     </tbody>
                   </table>
+                </div>
+              </div>
                 </ng-template>
               </ngb-tab>
               <ngb-tab title={{tabHeader}} id="AdduserId">
@@ -111,7 +105,7 @@
               </ngb-tab>
             </ngb-tabset>
           </app-card>
-        </div>
+       
 
       <!-- <div class="table-responsive">
         <table datatable id="report-table" class="table table-bordered table-striped mb-0">
