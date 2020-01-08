@@ -29,8 +29,6 @@
     </div>  -->
   <div class="col-sm-12">
     <app-card [hidHeader]="true">
-
-      tenantID123 : {{tenantID123}}
       <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
         <ngb-tab title="Tenant Mapped Meters List" id="UserlistId">
           <ng-template ngbTabContent>
@@ -213,8 +211,9 @@
           <ng-template ngbTabContent>
             <div class="card m-3">
               <h5 class="card-header">{{formHeader}}</h5>
-              <div class="card-body">
+              <div class="card-body" *ngIf="buttonType != 'Update'">
                 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
                   <div class="form-row">
                     <div class="form-group col">
                       <label>Select Meter Type to Assign</label>
@@ -316,6 +315,15 @@
                   </div>
                 </form>
               </div>
+              <div *ngIf="buttonType == 'Update'">
+
+
+                <div class="text-center">
+                  <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                  <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                </div>
+              </div>
+
             </div>
           </ng-template>
         </ngb-tab>

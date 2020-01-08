@@ -1562,7 +1562,8 @@ export class NavigationItem {
   roles: any;
   public get() {
     let count = 0;
-    this.roles = JSON.parse(localStorage.getItem('loggedUser')).roles.menus.options;
+    if (JSON.parse(localStorage.getItem('loggedUser')).roles)
+      this.roles = JSON.parse(localStorage.getItem('loggedUser')).roles.menus.options;
     // console.log(this.roles, '-----nav---------');
     NavigationItems[0].children.map((item, index) => {
       item.children.map((item1, index1) => {
