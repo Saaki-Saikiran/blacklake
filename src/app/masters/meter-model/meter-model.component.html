@@ -6,6 +6,8 @@
               <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
                 <ngb-tab title="Meter Model" id="UserlistId">
                   <ng-template ngbTabContent>
+                    <div class="table-responsive p-t-20">
+                      <div class="table-responsive">
                       <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
                       class="table table-bordered table-striped mb-0">
                       <thead>
@@ -50,6 +52,8 @@
                         </tr>
                       </tbody>
                     </table>
+                      </div>
+                    </div>
                   </ng-template>
                 </ngb-tab>
                 <ngb-tab title={{tabHeader}} id="AdduserId">
