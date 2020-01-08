@@ -48,6 +48,7 @@ export class MapMeterTenantsComponent implements OnInit {
   tenantdata: any[];
   mappedMeterTenantsList: any;
   tenant: any;
+  tenantID123: string;
 
 
   constructor(
@@ -91,6 +92,7 @@ export class MapMeterTenantsComponent implements OnInit {
     this.buttonType = 'Map';
     this.isEditing = false;
     this.getmappedMeterTenants();
+    this.tenantID123 = "tenantID";
     this.userForm = this.formBuilder.group({
       // deptMeterNumberID: new FormControl('', [Validators.required]),
       meterSerialNumberID: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -99,7 +101,8 @@ export class MapMeterTenantsComponent implements OnInit {
       // block: new FormControl('', [Validators.required]),
       floorID: new FormControl('', [Validators.required]),
       assignTenant: new FormControl('yes', [Validators.required]),
-      tenantID: new FormControl('', [Validators.required]),
+      tenantID: new FormControl(''),
+      inactiveTenant: new FormControl(''),
       // contactNumber: new FormControl('', [Validators.required]),
       // started: new FormControl('', [Validators.required])
     });
@@ -286,9 +289,12 @@ export class MapMeterTenantsComponent implements OnInit {
     // this.TenantsList = [];
     let target = evt.target;
     if (target.value === 'yes') {
+      this.tenantID123 = "tenantID";
       this.tenantdata = this.TenantsList;
     }
     if (target.value === 'no') {
+      this.tenantID123 = "inactiveTenant";
+
       this.tenantdata = [{
         _id: "common",
         tenantName: "Common"
@@ -348,5 +354,33 @@ export class MapMeterTenantsComponent implements OnInit {
 
   tenantSelected(value) {
     this.tenant = value;
+  }
+
+  confirmAlertDelete(id) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this imaginary file!',
+      type: 'warning',
+      showCloseButton: true,
+      showCancelButton: true
+    }).then((willDelete) => {
+      if (willDelete.dismiss) {
+        Swal.fire('', 'Your imaginary file is safe!', 'error');
+      } else {
+        this.meterService.deleteMeter(id).subscribe(
+          data => {
+            if (data['success'] === true) {
+              Swal.fire('', 'Map Deleted Successfully!', 'success');
+              this.getFloors();
+            } else {
+              Swal.fire('', data['error'], 'error');
+            }
+          },
+          error => {
+            Swal.fire('', error, 'error');
+          }
+        );
+      }
+    });
   }
 }

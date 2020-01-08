@@ -26,6 +26,7 @@ export class MapMeterTenantsService {
           data['result'].map((item, index) => {
             item.sno = index + 1;
             if (item.tenantID) item.tenantName = item.tenantID.tenantName;
+            if (item.inactiveTenant) item.tenantName = item.inactiveTenant;
           });
           return data;
         }),
