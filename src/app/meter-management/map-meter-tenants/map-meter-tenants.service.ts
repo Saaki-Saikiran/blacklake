@@ -24,10 +24,18 @@ export class MapMeterTenantsService {
       .pipe(
         map(data => {
           data['result'].map((item, index) => {
+            // console.log(item.tenantID);
             item.sno = index + 1;
-            if (item.tenantID) item.tenantName = item.tenantID.tenantName;
-            if (item.inactiveTenant) item.tenantName = item.inactiveTenant;
+            if (item.tenantID != null) {
+              console.log(item.tenantID);
+              item.tenantName = item.tenantID.tenantName;
+            }
+            if ((item.inactiveTenant != '') && (item.inactiveTenant != undefined)) {
+              console.log(item.inactiveTenant, '--------inactiveTenant--------');
+              item.tenantName = item.inactiveTenant;
+            }
           });
+          console.log(data);
           return data;
         }),
         // tap(data => console.log('Get mapmetertenant called\n', JSON.stringify(data))),
