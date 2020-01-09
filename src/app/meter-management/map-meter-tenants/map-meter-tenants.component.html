@@ -283,12 +283,22 @@
                         </div>
                       </div> -->
                     <div class="form-group col">
-                      <fieldset class="form-group">
-                        <input type="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
-                          name="assignTenant" value="yes" (change)="handleChange($event)">Yes
-                        <input type="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
-                          name="assignTenant" value="no" (change)="handleChange($event)">No
-                      </fieldset>
+                      <label class="container">Yes
+                        <input type="radio" name="radio"  formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
+                        name="assignTenant" value="yes" (change)="handleChange($event)">
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="container">No
+                        <input type="radio" name="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 30px;"
+                        name="assignTenant" value="no" (change)="handleChange($event)">
+                        <span class="checkmark"></span>
+                      </label>
+                      <!-- <fieldset class="form-group"  >
+                        <input type="radio" class="checkmark" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
+                          name="assignTenant" value="yes" (change)="handleChange($event)"><span >Yes</span>
+                        <input type="radio" class="checkmark" formControlName="assignTenant" style="margin: 0px 15px 0px 30px;"
+                          name="assignTenant" value="no" (change)="handleChange($event)"><span >No</span>
+                      </fieldset> -->
                     </div>
 
 
