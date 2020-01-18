@@ -51,7 +51,7 @@
                   <ul class="mb-2 nav nav-tab flex-column nav-pills" id="v-pills-tab" role="tablist"
                     aria-orientation="vertical">
                     <li class="nav-item mail-section" *ngFor="let item of mappedMeterTenantsList | filterUnique">
-                      <a class="nav-link text-left" [ngClass]="{'active': isMail === 'trash'}"
+                      <a class="nav-link text-left" [ngClass]="{'active': tenant === item?.tenantName }"
                         (click)="tenantSelected(item?.tenantName);" id="v-pills-Trash-tab" data-toggle="pill"
                         href="javascript:" role="tab">
                         <span><i class="feather icon-users"></i> {{item?.tenantName}}</span>
@@ -75,10 +75,10 @@
                       <table class="table m-b-0 f-14 b-solid requid-table">
                         <thead>
                           <tr class="text-uppercase">
-                            <th class="text-center">meterSerialNumber</th>
-                            <th class="text-center">meterType</th>
+                            <th class="text-center">meter Serial Number</th>
+                            <th class="text-center">meter Type</th>
                             <th class="text-center">gateway</th>
-                            <th class="text-center">deptMeterNumberID</th>
+                            <!-- <th class="text-center">dept Meter Number</th> -->
 
                             <th class="text-center">block</th>
                             <th class="text-center">floor</th>
@@ -96,24 +96,26 @@
                             <td>{{item?.meterSerialNumberID?.meterSerialNumber }}</td>
                             <td>{{item?.meterSerialNumberID?.meterType }}</td>
                             <td>{{item?.meterSerialNumberID?.gateway }}</td>
-                            <td>{{item?.meterSerialNumberID?.deptMeterNumberID }}</td>
+                            <!-- <td>{{item?.meterSerialNumberID?.deptMeterNumberID }}</td> -->
 
                             <td>{{item?.floorID?.block }}</td>
                             <td>{{item?.floorID?.floor }}</td>
                             <td>{{item?.floorID?.occupantNumber }}</td>
 
-                            <td>{{item?.createdOn }}</td>
-                            <td>{{item?.vacatedOn }}</td>
+                            <td>{{item?.createdOn | date :'MMM dd yyyy, hh:mm a' }}</td>
+                            <td>{{item?.vacatedOn | date :'MMM dd yyyy, hh:mm a' }}</td>
                             <td>
                               <span *ngIf="item.active" class="badge badge-success">Active</span>
                               <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
                             </td>
-                            <td class="table-action">
+                            <td class="table-action" *ngIf="item.active">
                               <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
                                   class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
                                     class="feather icon-edit"></i></a></span>
                               <a href="javascript:" class="btn btn-icon btn-outline-danger"
                                 (click)="confirmAlertDelete(item)"><i class="feather icon-trash-2"></i></a>
+                            </td>
+                            <td *ngIf="!item.active"> NA
                             </td>
                           </tr>
                         </tbody>
@@ -284,13 +286,15 @@
                       </div> -->
                     <div class="form-group col">
                       <label class="container">Yes
-                        <input type="radio" name="radio"  formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
-                        name="assignTenant" value="yes" (change)="handleChange($event)">
+                        <input type="radio" name="radio" formControlName="assignTenant"
+                          style="margin: 0px 15px 0px 15px;" name="assignTenant" value="yes"
+                          (change)="handleChange($event)">
                         <span class="checkmark"></span>
                       </label>
                       <label class="container">No
-                        <input type="radio" name="radio" formControlName="assignTenant" style="margin: 0px 15px 0px 30px;"
-                        name="assignTenant" value="no" (change)="handleChange($event)">
+                        <input type="radio" name="radio" formControlName="assignTenant"
+                          style="margin: 0px 15px 0px 30px;" name="assignTenant" value="no"
+                          (change)="handleChange($event)">
                         <span class="checkmark"></span>
                       </label>
                       <!-- <fieldset class="form-group"  >
