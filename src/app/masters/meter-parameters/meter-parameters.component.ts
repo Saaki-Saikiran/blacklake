@@ -59,7 +59,7 @@ export class MeterParametersComponent implements OnInit {
     this.getMeterModel();
     var decimalformat=/^\d*\.?\d{4,5}$/g;
     this.userForm = this.formBuilder.group({
-      meterParamsId: new FormControl('', [Validators.required]),
+     // meterParamsId: new FormControl('', [Validators.required]),
       meterModelId: new FormControl('', [Validators.required, Validators.minLength(3)]),
       parameterName: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -81,7 +81,7 @@ export class MeterParametersComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
-      meterParamsId: new FormControl(data.meterParamsId, [Validators.required]),
+     // meterParamsId: new FormControl(data.meterParamsId, [Validators.required]),
       meterModelId: new FormControl(data.meterModelId._id, [Validators.required, Validators.minLength(3)]),
       parameterName: new FormControl(data.parameterName, [Validators.required]),
       description: new FormControl(data.description, [Validators.required]),

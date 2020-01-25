@@ -56,7 +56,7 @@ export class MeterModelComponent implements OnInit {
     this.formHeader="Add Meter Model Details";
     this.getDeptMeter();
     this.userForm = this.formBuilder.group({
-      meterModelId: new FormControl('', [Validators.required]),
+     // meterModelId: new FormControl('', [Validators.required]),
       meterModelName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       manufacturer: new FormControl('', [Validators.required]),
       startingRegister: new FormControl('', [Validators.required]),
@@ -76,7 +76,7 @@ export class MeterModelComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
-      meterModelId: new FormControl(data.meterModelId, [Validators.required]),
+      //meterModelId: new FormControl(data.meterModelId, [Validators.required]),
       meterModelName: new FormControl(data.meterModelName, [Validators.required, Validators.minLength(3)]),
       manufacturer: new FormControl(data.manufacturer, [Validators.required]),
       startingRegister: new FormControl(data.startingRegister, [Validators.required]),

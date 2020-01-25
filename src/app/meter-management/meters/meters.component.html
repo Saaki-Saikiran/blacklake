@@ -70,12 +70,17 @@
                     <div class="form-group col-1">
                       </div>
                     <div class="form-group col">
-                      <label>Model</label>
-                      <input type="text" placeholder="Enter Model" formControlName="model" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />
+                     <label>Meter Model</label>
+                     <select formControlName="model" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.model.errors }">
+                     <option value="">Select Meter Model</option>
+                     <option value="{{item._id}}" *ngFor="let item of MeterModelList">{{item.meterModelName}}</option>
+                   </select>
+                      <!--  <input type="text" placeholder="Enter Model" formControlName="model" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />-->
                       <div *ngIf="submitted && f.model.errors" class="invalid-feedback">
                         <div *ngIf="f.model.errors.required">Model is required</div>
-                      </div>
+                      </div> 
                     </div>
                   </div>
                   <div class="form-row">

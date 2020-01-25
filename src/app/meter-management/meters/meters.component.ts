@@ -41,6 +41,7 @@ export class MetersComponent implements OnInit {
   PanelList:any;
 GatewayList:any;
 MetersList:any;
+MeterModelList:any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -76,6 +77,7 @@ MetersList:any;
     this.getPanel();
     this.getGateway();
     this.getMeterList();
+    this.getMeterModel();
     this.formHeader = 'Add Meter Details';
     this.buttonType = 'Add';
     this.isEditing = false;
@@ -112,7 +114,22 @@ MetersList:any;
       }
     );
   }
-
+  getMeterModel() {
+    this.MeterModelList.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.MeterModelList = data['result'];
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
   getDeptMeters() {
     this.deptmeterService.getAll().subscribe(
       data => {

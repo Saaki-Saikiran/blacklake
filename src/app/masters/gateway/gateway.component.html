@@ -13,8 +13,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>gateway</th>
-                                        <th>name</th>
+                                        <!-- <th>gateway</th> -->
+                                        <th>gateway name</th>
                                         <th>gatewayModel</th>
                                         <th>location</th>
                                         <th>tcp_COM_Type</th>
@@ -32,7 +32,7 @@
                                 <tbody>
                                     <tr *ngFor="let item of DeptMetersList;let i = index;">
                                         <td>{{i+1}}</td>
-                                        <td>{{item.gatewayId}}</td>
+                                        <!-- <td>{{item.gatewayId}}</td> -->
                                         <td>{{item.name}}</td>
                                         <td>
                                             {{item.gatewayModel}}
@@ -73,7 +73,7 @@
                                 <div class="card-body">
                                     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                                         <div class="form-row">
-                                                <div class="form-group col">
+                                                <!-- <div class="form-group col">
                                                     <label>Gateway</label>
                                                         <input type="text" placeholder="Enter Gateway "
                                                             formControlName="gatewayId" class="form-control"
@@ -85,19 +85,20 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-1">
-                                                    </div>
+                                                    </div> -->
                                             <div class="form-group col">
-                                                <label>Name</label>
-                                                <input type="text" placeholder="Enter Name"
+                                                <label>Gateway Name</label>
+                                                <input type="text" placeholder="Enter Gateway Name"
                                                     formControlName="name" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
                                                 <div *ngIf="submitted && f.name.errors"
                                                     class="invalid-feedback">
-                                                    <div *ngIf="f.name.errors.required">Name is
+                                                    <div *ngIf="f.name.errors.required">Gateway Name is
                                                         required</div>
                                                 </div>
                                             </div>
-                                           
+                                            <div class="form-group col">
+                                            </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col">
