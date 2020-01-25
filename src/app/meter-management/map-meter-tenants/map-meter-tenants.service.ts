@@ -29,6 +29,7 @@ export class MapMeterTenantsService {
             if (item.tenantID != null) {
               console.log(item.tenantID);
               item.tenantName = item.tenantID.tenantName;
+              item.tenantStatus = item.tenantID.active;
             }
             if ((item.inactiveTenant != '') && (item.inactiveTenant != undefined)) {
               console.log(item.inactiveTenant, '--------inactiveTenant--------');

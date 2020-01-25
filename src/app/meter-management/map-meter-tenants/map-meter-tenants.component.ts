@@ -14,11 +14,13 @@ import { MapMeterTenantsService } from './map-meter-tenants.service';
 import { DeptMetersService } from '../dept-meters/dept-meters.service';
 import { TenantsService } from '../tenants/tenants.service';
 import { FloorsService } from '../floors/floors.service';
+import { OrderByPipe } from '../../_pipes/orderby-pipe';
 
 @Component({
   selector: 'app-map-meter-tenants',
   templateUrl: './map-meter-tenants.component.html',
-  styleUrls: ['./map-meter-tenants.component.scss']
+  styleUrls: ['./map-meter-tenants.component.scss'],
+  providers: [OrderByPipe]
 })
 export class MapMeterTenantsComponent implements OnInit {
   @ViewChild('myTabSet', { static: false }) public myTabSet: NgbTabset;
@@ -51,10 +53,10 @@ export class MapMeterTenantsComponent implements OnInit {
   tenantID123: string;
   model;
   searchText;
-  Allbtn:boolean=false;
-  Activebtn:boolean=false;
-  InActivebtn:boolean=false;
-  mappedMeterTenantsListOriginal:any;
+  Allbtn: boolean = false;
+  Activebtn: boolean = false;
+  InActivebtn: boolean = false;
+  mappedMeterTenantsListOriginal: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -62,7 +64,8 @@ export class MapMeterTenantsComponent implements OnInit {
     private meterService1: MetersService,
     private deptmeterService: DeptMetersService,
     private TenantService: TenantsService,
-    private floorService: FloorsService) {
+    private floorService: FloorsService,
+    private capitalize: OrderByPipe) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -149,22 +152,21 @@ export class MapMeterTenantsComponent implements OnInit {
       }
     );
   }
-  Search(searchText)
-  {
+  Search(searchText) {
     debugger
     const val = searchText;
-    
-  if (val == '') {
+
+    if (val == '') {
       this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
-  }
-  else {
+    }
+    else {
       this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
       if (val && val.trim() != '') {
-          this.mappedMeterTenantsList = this.mappedMeterTenantsList.filter((item) => {
-              return (item.tenantName.toString().toLowerCase().indexOf(val.toLowerCase()) > -1 );
-          })
+        this.mappedMeterTenantsList = this.mappedMeterTenantsList.filter((item) => {
+          return (item.tenantName.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
       }
-  }
+    }
     // if(searchText.length==0)
     // {
     //   this.mappedMeterTenantsList=this.mappedMeterTenantsListOriginal;
@@ -180,7 +182,8 @@ export class MapMeterTenantsComponent implements OnInit {
       data => {
         if (data['success'] === true) {
           this.mappedMeterTenantsList = data['result'];
-          this.mappedMeterTenantsListOriginal=data['result'];
+          this.mappedMeterTenantsListOriginal = data['result'];
+          this.data = this.capitalize.transform(this.mappedMeterTenantsList, 'tenantName');
           this.tenant = this.mappedMeterTenantsList[0].tenantName;
         } else {
           Swal.fire('', data['error'], 'error');
@@ -315,8 +318,7 @@ export class MapMeterTenantsComponent implements OnInit {
     if (this.dtTrigger)
       this.dtTrigger.unsubscribe();
   }
-  handleChangeActive(evt)
-  {
+  handleChangeActive(evt) {
     debugger
     let target = evt.target;
     if (target.value === 'All') {
@@ -333,10 +335,10 @@ export class MapMeterTenantsComponent implements OnInit {
       //   // this.Activebtn=true;
       //   this.mappedMeterTenantsList ="";
       // }
-      
+
     }
     if (target.value === 'Active') {
-      this.mappedMeterTenantsList =  this.mappedMeterTenantsListOriginal.filter(one => one.active === true);
+      this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal.filter(one => one.tenantStatus === true);
       // if(target.checked === true)
       // {
       //   // this.Allbtn=true;
@@ -349,10 +351,10 @@ export class MapMeterTenantsComponent implements OnInit {
       //   // this.InActivebtn=false;
       //   this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
       // }
-      }
-    
+    }
+
     if (target.value === 'InActive') {
-      this.mappedMeterTenantsList =this.mappedMeterTenantsListOriginal.filter(one => one.active === false);
+      this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal.filter(one => one.tenantStatus === false);
       // if(target.checked === true)
       // {
       //   // this.Allbtn=true;

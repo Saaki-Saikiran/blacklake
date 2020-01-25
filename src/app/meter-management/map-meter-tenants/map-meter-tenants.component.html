@@ -33,14 +33,14 @@
         <ngb-tab title="Tenant Mapped Meters List" id="UserlistId">
           <ng-template ngbTabContent>
             <div class="row btn-page">
-              <div class="col-xl-3 col-lg-12 task-detail-right" style="padding: 0px;">
+              <div class="col-xl-2 col-lg-12 task-detail-right" style="padding: 0px;">
                 <app-card cardTitle="Tenants List" blockClass="task-details" [options]="false">
                   <ul>
                     <div class="form-group" style="margin-left: -40px;">
-                      <select class="form-control"  (change)="handleChangeActive($event)">
+                      <select class="form-control" (change)="handleChangeActive($event)">
                         <option value="All">All</option>
-                        <option value="Active" >Active</option>
-                        <option value="InActive" >In Active</option>
+                        <option value="Active">Active</option>
+                        <option value="InActive">In Active</option>
                       </select>
                     </div>
                     <!-- <div class="row" style="margin-left: -74px;">
@@ -83,13 +83,13 @@
                         <span class="slider round" ></span>
                       </label>
                       </div> -->
-                      <!-- <label class="container">All
+                    <!-- <label class="container">All
                         <input type="radio" name="radio" formControlName="assignTenantActive"
                            name="assignTenantActive" value="All"
                           (change)="handleChangeActive($event)">
                         <span class="checkmark" ></span>
                       </label> -->
-                      <!-- <label class="container"><span>Active</span>
+                    <!-- <label class="container"><span>Active</span>
                         <input type="radio" name="radio" formControlName="assignTenantActive"
                            name="assignTenantActive" value="Active"
                           (change)="handleChangeActive($event)">
@@ -103,17 +103,18 @@
                       </label> -->
                     <!-- </div> -->
 
-                   </ul>
-                  <ul class="mb-2 nav nav-tab flex-column nav-pills" >
-                    <li  class="nav-item mail-section">
-                      <input class="form-control" type="text" name="search" [(ngModel)]="searchText" (input)="Search(searchText)" autocomplete="off"
-                        placeholder="Search by Tenant">
+                  </ul>
+                  <ul class="mb-2 nav nav-tab flex-column nav-pills">
+                    <li class="nav-item mail-section">
+                      <input class="form-control" type="text" name="search" [(ngModel)]="searchText"
+                        (input)="Search(searchText)" autocomplete="off" placeholder="Search by Tenant">
                     </li>
                   </ul>
-                  <ul style="margin-top: 19px;margin: -20px;padding-top: 26px;"class="mb-2 nav nav-tab flex-column nav-pills" id="v-pills-tab" role="tablist"
+                  <ul style="margin-top: 19px;margin: -20px;padding-top: 26px;"
+                    class="mb-2 nav nav-tab flex-column nav-pills" id="v-pills-tab" role="tablist"
                     aria-orientation="vertical">
                     <li style="margin-top: -10px;" class="nav-item mail-section"
-                      *ngFor="let item of mappedMeterTenantsList | filterUnique">
+                      *ngFor="let item of mappedMeterTenantsList | filterUnique | orderby: 'tenantName'">
                       <a class="nav-link text-left" [ngClass]="{'active': tenant === item?.tenantName }"
                         (click)="tenantSelected(item?.tenantName);" id="v-pills-Trash-tab" data-toggle="pill"
                         href="javascript:" role="tab">
@@ -124,7 +125,7 @@
                   </ul>
                 </app-card>
               </div>
-              <div class="col-xl-9 col-lg-12">
+              <div class="col-xl-10 col-lg-12">
                 <app-card [customHeader]="true" [options]="false">
                   <div class="app-card-header">
                     <!-- <h5 class="mb-3"><i class="fas fa-ticket-alt m-r-5"></i> Ticket List Doesn't Support Commas</h5> -->
@@ -137,53 +138,53 @@
                       <div class="table-responsive p-t-20">
                         <div class="table-responsive">
                           <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                          class="table table-bordered table-striped mb-0">
-                        <thead>
-                          <tr class="text-uppercase">
-                            <th class="text-center">meter Serial Number</th>
-                            <th class="text-center">meter Type</th>
-                            <th class="text-center">gateway</th>
-                            
-                            <th class="text-center">block</th>
-                            <th class="text-center">floor</th>
-                            <th class="text-center">Wing</th>
+                            class="table table-bordered table-striped mb-0">
+                            <thead>
+                              <tr class="text-uppercase">
+                                <th class="text-center">meter Serial Number</th>
+                                <th class="text-center">meter Type</th>
+                                <th class="text-center">gateway</th>
 
-                            <th class="text-center">Start Date</th>
-                            <th class="text-center">End Date</th>
-                            <th class="text-center">Status</th>
-                            <th>Actions</th>
+                                <th class="text-center">block</th>
+                                <th class="text-center">floor</th>
+                                <th class="text-center">Wing</th>
 
-                          </tr>
-                        </thead>
-                        <tbody class="text-center text-muted">
-                          <tr *ngFor="let item of mappedMeterTenantsList | filter: {tenantName: tenant} ">
-                            <td>{{item?.meterSerialNumberID?.meterSerialNumber }}</td>
-                            <td>{{item?.meterSerialNumberID?.meterType }}</td>
-                            <td>{{item?.meterSerialNumberID?.gateway }}</td>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">End Date</th>
+                                <th class="text-center">Status</th>
+                                <th>Actions</th>
 
-                            <td>{{item?.floorID?.block }}</td>
-                            <td>{{item?.floorID?.floor }}</td>
-                            <td>{{item?.floorID?.occupantNumber }}</td>
+                              </tr>
+                            </thead>
+                            <tbody class="text-center text-muted">
+                              <tr *ngFor="let item of mappedMeterTenantsList | filter: {tenantName: tenant} ">
+                                <td>{{item?.meterSerialNumberID?.meterSerialNumber }}</td>
+                                <td>{{item?.meterSerialNumberID?.meterType }}</td>
+                                <td>{{item?.meterSerialNumberID?.gateway }}</td>
 
-                            <td>{{item?.createdOn | date :'MMM dd yyyy, hh:mm a' }}</td>
-                            <td>{{item?.vacatedOn | date :'MMM dd yyyy, hh:mm a' }}</td>
-                            <td>
-                              <span *ngIf="item.active" class="badge badge-success">Active</span>
-                              <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
-                            </td>
-                            <td class="table-action" *ngIf="item.active">
-                              <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                                  class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                                    class="feather icon-edit"></i></a></span>
-                              <a href="javascript:" class="btn btn-icon btn-outline-danger"
-                                (click)="confirmAlertDelete(item)"><i class="feather icon-trash-2"></i></a>
-                            </td>
-                            <td *ngIf="!item.active"> NA
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      </div>
+                                <td>{{item?.floorID?.block }}</td>
+                                <td>{{item?.floorID?.floor }}</td>
+                                <td>{{item?.floorID?.occupantNumber }}</td>
+
+                                <td>{{item?.createdOn | date :'MMM dd yyyy, hh:mm a' }}</td>
+                                <td>{{item?.vacatedOn | date :'MMM dd yyyy, hh:mm a' }}</td>
+                                <td>
+                                  <span *ngIf="item.active" class="badge badge-success">Active</span>
+                                  <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                                </td>
+                                <td class="table-action" *ngIf="item.active">
+                                  <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                                      class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                                        class="feather icon-edit"></i></a></span>
+                                  <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                                    (click)="confirmAlertDelete(item)"><i class="feather icon-trash-2"></i></a>
+                                </td>
+                                <td *ngIf="!item.active"> NA
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -440,13 +441,13 @@
     width: 50px;
     height: 24px;
   }
-  
-  .switch input { 
+
+  .switch input {
     opacity: 0;
     width: 0;
     height: 0;
   }
-  
+
   .slider {
     position: absolute;
     cursor: pointer;
@@ -458,7 +459,7 @@
     -webkit-transition: .4s;
     transition: .4s;
   }
-  
+
   .slider:before {
     position: absolute;
     content: "";
@@ -470,27 +471,28 @@
     -webkit-transition: .4s;
     transition: .4s;
   }
-  
-  input:checked + .slider {
+
+  input:checked+.slider {
     background-color: #2196F3;
   }
-  
-  input:focus + .slider {
+
+  input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
   }
-  
-  input:checked + .slider:before {
+
+  input:checked+.slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
   }
-  
+
   /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
   }
-  
+
   .slider.round:before {
     border-radius: 50%;
   }
-  </style>
+
+</style>
