@@ -50,8 +50,11 @@ export class MapMeterTenantsComponent implements OnInit {
   tenant: any;
   tenantID123: string;
   model;
-
-
+  searchText;
+  Allbtn:boolean=false;
+  Activebtn:boolean=false;
+  InActivebtn:boolean=false;
+  mappedMeterTenantsListOriginal:any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -102,6 +105,7 @@ export class MapMeterTenantsComponent implements OnInit {
       // block: new FormControl('', [Validators.required]),
       floorID: new FormControl('', [Validators.required]),
       assignTenant: new FormControl('yes', [Validators.required]),
+      assignTenantActive: new FormControl('yes', [Validators.required]),
       tenantID: new FormControl(''),
       inactiveTenant: new FormControl(''),
       // contactNumber: new FormControl('', [Validators.required]),
@@ -145,12 +149,38 @@ export class MapMeterTenantsComponent implements OnInit {
       }
     );
   }
-
+  Search(searchText)
+  {
+    debugger
+    const val = searchText;
+    
+  if (val == '') {
+      this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
+  }
+  else {
+      this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
+      if (val && val.trim() != '') {
+          this.mappedMeterTenantsList = this.mappedMeterTenantsList.filter((item) => {
+              return (item.tenantName.toString().toLowerCase().indexOf(val.toLowerCase()) > -1 );
+          })
+      }
+  }
+    // if(searchText.length==0)
+    // {
+    //   this.mappedMeterTenantsList=this.mappedMeterTenantsListOriginal;
+    // }
+    // else
+    // {
+    // //  this.mappedMeterTenantsList=this.mappedMeterTenantsList.filter( this.mappedMeterTenantsList => (this.mappedMeterTenantsList.tenantName === searchText));
+    //   this.mappedMeterTenantsList =  this.mappedMeterTenantsList.filter(e => e.tenantName === searchText);  
+    // }
+  }
   getmappedMeterTenants() {
     this.meterService.getAll().subscribe(
       data => {
         if (data['success'] === true) {
           this.mappedMeterTenantsList = data['result'];
+          this.mappedMeterTenantsListOriginal=data['result'];
           this.tenant = this.mappedMeterTenantsList[0].tenantName;
         } else {
           Swal.fire('', data['error'], 'error');
@@ -285,7 +315,58 @@ export class MapMeterTenantsComponent implements OnInit {
     if (this.dtTrigger)
       this.dtTrigger.unsubscribe();
   }
-
+  handleChangeActive(evt)
+  {
+    debugger
+    let target = evt.target;
+    if (target.value === 'All') {
+      this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
+      // if(target.checked === true)
+      // {
+      //   // this.InActivebtn=false;
+      //   // this.Activebtn=false;
+      //   this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
+      // }
+      // else
+      // {
+      //   // this.InActivebtn=true;
+      //   // this.Activebtn=true;
+      //   this.mappedMeterTenantsList ="";
+      // }
+      
+    }
+    if (target.value === 'Active') {
+      this.mappedMeterTenantsList =  this.mappedMeterTenantsListOriginal.filter(one => one.active === true);
+      // if(target.checked === true)
+      // {
+      //   // this.Allbtn=true;
+      //   // this.InActivebtn=false;
+      // this.mappedMeterTenantsList =  this.mappedMeterTenantsListOriginal.filter(one => one.active === true);
+      // }
+      // else
+      // {
+      //   // this.Allbtn=false;
+      //   // this.InActivebtn=false;
+      //   this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
+      // }
+      }
+    
+    if (target.value === 'InActive') {
+      this.mappedMeterTenantsList =this.mappedMeterTenantsListOriginal.filter(one => one.active === false);
+      // if(target.checked === true)
+      // {
+      //   // this.Allbtn=true;
+      //   // this.Activebtn=false;
+      // this.mappedMeterTenantsList =this.mappedMeterTenantsListOriginal.filter(one => one.active === false);
+      // }
+      // else
+      // {
+      //   // this.Allbtn=false;
+      //   // this.Activebtn=false;
+      //   this.mappedMeterTenantsList = this.mappedMeterTenantsListOriginal;
+      // }
+    }
+  }
   handleChange(evt) {
     // this.TenantsList = [];
     let target = evt.target;

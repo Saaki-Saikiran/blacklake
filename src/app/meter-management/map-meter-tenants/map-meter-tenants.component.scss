@@ -1,7 +1,7 @@
 .container {
     display: block;
     position: relative;
-    padding-left: 35px;
+    padding-left: 0px;
     margin-bottom: 12px;
     cursor: pointer;
     font-size: 15px;
@@ -19,13 +19,14 @@
   }
   
   /* Create a custom radio button */
+
   .checkmark {
     position: absolute;
     top: 0;
-    left: 0;
+    left: -33px;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: #c1c1c1;
     border-radius: 50%;
   }
   
@@ -60,3 +61,9 @@
       border-radius: 50%;
       background: white;
   }
+  .nav-link {
+    display: block;
+    padding: 14px 2px 0px 29px;
+  }
+  
+  

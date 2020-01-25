@@ -32,25 +32,88 @@
       <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
         <ngb-tab title="Tenant Mapped Meters List" id="UserlistId">
           <ng-template ngbTabContent>
-
             <div class="row btn-page">
-              <div class="col-xl-2 col-lg-12 task-detail-right">
-
+              <div class="col-xl-3 col-lg-12 task-detail-right" style="padding: 0px;">
                 <app-card cardTitle="Tenants List" blockClass="task-details" [options]="false">
-                  <!-- <table class="table"> -->
-                  <!-- <tbody> -->
-                  <!-- <tr *ngFor="let item of mappedMeterTenantsList"> -->
-                  <!-- <td><i class="fas fa-user m-r-5"></i> {{item?.tenantID?.tenantName}}</td> -->
-                  <!-- <td><i class="fas fa-adjust m-r-5"></i> Project:</td>
-                        <td class="text-right"><span class="float-right"><a class="text-secondary" href="javascript:">
-                              Singular app</a></span></td> -->
-                  <!-- </tr>
-                    </tbody>
-                  </table> -->
+                  <ul>
+                    <div class="form-group" style="margin-left: -40px;">
+                      <select class="form-control"  (change)="handleChangeActive($event)">
+                        <option value="All">All</option>
+                        <option value="Active" >Active</option>
+                        <option value="InActive" >In Active</option>
+                      </select>
+                    </div>
+                    <!-- <div class="row" style="margin-left: -74px;">
+                      <div class="col-4" style="text-align: center;">All
+                        </div>
+                        <div class="col-4" style="text-align: center;">Active
+                        </div>
+                        <div class="col-4" style="text-align: center;">In Active
+                        </div>
+                    </div>
 
-                  <ul class="mb-2 nav nav-tab flex-column nav-pills" id="v-pills-tab" role="tablist"
+                    <div class="row" style="margin-left: -55px;">
+                      <div class="col-4">
+                      <label class="switch" *ngIf="Allbtn==false">
+                        <input type="checkbox"  value="All" (change)="handleChangeActive($event)" checked>
+                        <span class="slider round" ></span>
+                      </label>
+                      <label class="switch" *ngIf="Allbtn==true">
+                        <input type="checkbox"  value="All" (change)="handleChangeActive($event)" >
+                        <span class="slider round" ></span>
+                      </label>
+                      </div>
+                      <div class="col-4">
+                      <label class="switch" *ngIf="Activebtn==false">
+                        <input type="checkbox"  value="Active" (change)="handleChangeActive($event)">
+                        <span class="slider round"></span>
+                      </label>
+                      <label class="switch" *ngIf="Activebtn==true">
+                        <input type="checkbox"  value="Active" (change)="handleChangeActive($event)" checked>
+                        <span class="slider round"></span>
+                      </label>
+                      </div>
+                      <div class="col-4">
+                        <label class="switch" *ngIf="InActivebtn==false">
+                          <input type="checkbox" value="InActive" (change)="handleChangeActive($event)" >
+                          <span class="slider round" ></span>
+                        </label>
+                      <label class="switch" *ngIf="InActivebtn==true">
+                        <input type="checkbox" value="InActive" (change)="handleChangeActive($event)" checked>
+                        <span class="slider round" ></span>
+                      </label>
+                      </div> -->
+                      <!-- <label class="container">All
+                        <input type="radio" name="radio" formControlName="assignTenantActive"
+                           name="assignTenantActive" value="All"
+                          (change)="handleChangeActive($event)">
+                        <span class="checkmark" ></span>
+                      </label> -->
+                      <!-- <label class="container"><span>Active</span>
+                        <input type="radio" name="radio" formControlName="assignTenantActive"
+                           name="assignTenantActive" value="Active"
+                          (change)="handleChangeActive($event)">
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="container">In Active
+                        <input type="radio" name="radio" formControlName="assignTenantActive"
+                         name="assignTenantActive" value="InActive"
+                          (change)="handleChangeActive($event)">
+                        <span class="checkmark"></span>
+                      </label> -->
+                    <!-- </div> -->
+
+                   </ul>
+                  <ul class="mb-2 nav nav-tab flex-column nav-pills" >
+                    <li  class="nav-item mail-section">
+                      <input class="form-control" type="text" name="search" [(ngModel)]="searchText" (input)="Search(searchText)" autocomplete="off"
+                        placeholder="Search by Tenant">
+                    </li>
+                  </ul>
+                  <ul style="margin-top: 19px;margin: -20px;padding-top: 26px;"class="mb-2 nav nav-tab flex-column nav-pills" id="v-pills-tab" role="tablist"
                     aria-orientation="vertical">
-                    <li class="nav-item mail-section" *ngFor="let item of mappedMeterTenantsList | filterUnique">
+                    <li style="margin-top: -10px;" class="nav-item mail-section"
+                      *ngFor="let item of mappedMeterTenantsList | filterUnique">
                       <a class="nav-link text-left" [ngClass]="{'active': tenant === item?.tenantName }"
                         (click)="tenantSelected(item?.tenantName);" id="v-pills-Trash-tab" data-toggle="pill"
                         href="javascript:" role="tab">
@@ -59,11 +122,9 @@
                       </a>
                     </li>
                   </ul>
-
-
                 </app-card>
               </div>
-              <div class="col-xl-10 col-lg-12">
+              <div class="col-xl-9 col-lg-12">
                 <app-card [customHeader]="true" [options]="false">
                   <div class="app-card-header">
                     <!-- <h5 class="mb-3"><i class="fas fa-ticket-alt m-r-5"></i> Ticket List Doesn't Support Commas</h5> -->
@@ -71,15 +132,18 @@
                   <div class="m-b-20">
                     <h6>Meter Details</h6>
                     <hr>
+                    <!-- class="table m-b-0 f-14 b-solid requid-table" -->
                     <div class="table-responsive m-t-20">
-                      <table class="table m-b-0 f-14 b-solid requid-table">
+                      <div class="table-responsive p-t-20">
+                        <div class="table-responsive">
+                          <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                          class="table table-bordered table-striped mb-0">
                         <thead>
                           <tr class="text-uppercase">
                             <th class="text-center">meter Serial Number</th>
                             <th class="text-center">meter Type</th>
                             <th class="text-center">gateway</th>
-                            <!-- <th class="text-center">dept Meter Number</th> -->
-
+                            
                             <th class="text-center">block</th>
                             <th class="text-center">floor</th>
                             <th class="text-center">Wing</th>
@@ -96,7 +160,6 @@
                             <td>{{item?.meterSerialNumberID?.meterSerialNumber }}</td>
                             <td>{{item?.meterSerialNumberID?.meterType }}</td>
                             <td>{{item?.meterSerialNumberID?.gateway }}</td>
-                            <!-- <td>{{item?.meterSerialNumberID?.deptMeterNumberID }}</td> -->
 
                             <td>{{item?.floorID?.block }}</td>
                             <td>{{item?.floorID?.floor }}</td>
@@ -120,6 +183,8 @@
                           </tr>
                         </tbody>
                       </table>
+                      </div>
+                      </div>
                     </div>
                   </div>
                 </app-card>
@@ -368,3 +433,64 @@
     </app-card>
   </div>
 </div>
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  </style>
