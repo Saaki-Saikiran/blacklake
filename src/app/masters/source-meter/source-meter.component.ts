@@ -57,7 +57,7 @@ export class SourceMeterComponent implements OnInit {
     this.formHeader="Add Source Details";
     this.getDeptMeter();
     this.userForm = this.formBuilder.group({
-      sourceTypeId: new FormControl('', [Validators.required]),
+      //sourceTypeId: new FormControl('', [Validators.required]),
       isAutomated: new FormControl('', [Validators.required, Validators.minLength(3)]),
       isUtilitySupported: new FormControl('', [Validators.required]),
       isGeneratorSupported: new FormControl('', [Validators.required]),
@@ -74,7 +74,7 @@ export class SourceMeterComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
-      sourceTypeId: new FormControl(data.sourceTypeId, [Validators.required]),
+     // sourceTypeId: new FormControl(data.sourceTypeId, [Validators.required]),
       isAutomated: new FormControl(data.isAutomated, [Validators.required, Validators.minLength(3)]),
       isUtilitySupported: new FormControl(data.isUtilitySupported, [Validators.required]),
       isGeneratorSupported: new FormControl(data.isGeneratorSupported, [Validators.required]),
