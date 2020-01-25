@@ -58,198 +58,198 @@ export class MastersService {
       );
   }
 
-// For MeterParameters
+  // For MeterParameters
 
-getAllMeterParameters() {
-  const match = { active: true };
-  const pagination = { limit: 1000 };
-  return this.http.post(`${environment.baseUrl}/meterparamsmaster/list`, { match, pagination }, httpOptions)
-    .pipe(
-      map(data => {
-        data['result'].map((item, index) => {
-          item.sno = index + 1;
-        });
-        return data;
-      }),
-      // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  getAllMeterParameters() {
+    const match = { active: true, isSupported: true };
+    const pagination = { limit: 1000 };
+    return this.http.post(`${environment.baseUrl}/meterparamsmaster/list`, { match, pagination }, httpOptions)
+      .pipe(
+        map(data => {
+          data['result'].map((item, index) => {
+            item.sno = index + 1;
+          });
+          return data;
+        }),
+        // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-createMeterParameters(user) {
-  return this.http.post(`${environment.baseUrl}/meterparamsmaster/create`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('Added user\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  createMeterParameters(user) {
+    return this.http.post(`${environment.baseUrl}/meterparamsmaster/create`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('Added user\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-updateMeterParameters(user) {
-  return this.http.put(`${environment.baseUrl}/meterparamsmaster/update`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('updateUser: ', JSON.stringify(data))),
-      // Return the User on an update
-      // map(() => user),
-      catchError(this.errorHandler)
-    );
-}
+  updateMeterParameters(user) {
+    return this.http.put(`${environment.baseUrl}/meterparamsmaster/update`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('updateUser: ', JSON.stringify(data))),
+        // Return the User on an update
+        // map(() => user),
+        catchError(this.errorHandler)
+      );
+  }
 
-deleteMeterParameters(id) {
-  return this.http.delete(`${environment.baseUrl}/meterparamsmaster/${id}`, httpOptions)
-    .pipe(
-      tap(data => console.log('deleted user\n' + JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  deleteMeterParameters(id) {
+    return this.http.delete(`${environment.baseUrl}/meterparamsmaster/${id}`, httpOptions)
+      .pipe(
+        tap(data => console.log('deleted user\n' + JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-// for  Panel 
+  // for  Panel 
 
-getAllPanel() {
-  const match = { active: true };
-  const pagination = { limit: 1000 };
-  return this.http.post(`${environment.baseUrl}/panelmaster/list`, { match, pagination }, httpOptions)
-    .pipe(
-      map(data => {
-        data['result'].map((item, index) => {
-          item.sno = index + 1;
-        });
-        return data;
-      }),
-      // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  getAllPanel() {
+    const match = { active: true };
+    const pagination = { limit: 1000 };
+    return this.http.post(`${environment.baseUrl}/panelmaster/list`, { match, pagination }, httpOptions)
+      .pipe(
+        map(data => {
+          data['result'].map((item, index) => {
+            item.sno = index + 1;
+          });
+          return data;
+        }),
+        // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-createPanel(user) {
-  return this.http.post(`${environment.baseUrl}/panelmaster/create`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('Added user\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  createPanel(user) {
+    return this.http.post(`${environment.baseUrl}/panelmaster/create`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('Added user\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-updatePanel(user) {
-  return this.http.put(`${environment.baseUrl}/panelmaster/update`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('updateUser: ', JSON.stringify(data))),
-      // Return the User on an update
-      // map(() => user),
-      catchError(this.errorHandler)
-    );
-}
+  updatePanel(user) {
+    return this.http.put(`${environment.baseUrl}/panelmaster/update`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('updateUser: ', JSON.stringify(data))),
+        // Return the User on an update
+        // map(() => user),
+        catchError(this.errorHandler)
+      );
+  }
 
-deletePanel(id) {
-  return this.http.delete(`${environment.baseUrl}/panelmaster/${id}`, httpOptions)
-    .pipe(
-      tap(data => console.log('deleted user\n' + JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  deletePanel(id) {
+    return this.http.delete(`${environment.baseUrl}/panelmaster/${id}`, httpOptions)
+      .pipe(
+        tap(data => console.log('deleted user\n' + JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-// For Source Master
-getAllSource() {
-  const match = { active: true };
-  const pagination = { limit: 1000 };
-  return this.http.post(`${environment.baseUrl}/sourcemaster/list`, { match, pagination }, httpOptions)
-    .pipe(
-      map(data => {
-        data['result'].map((item, index) => {
-          item.sno = index + 1;
-        });
-        return data;
-      }),
-      // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  // For Source Master
+  getAllSource() {
+    const match = { active: true };
+    const pagination = { limit: 1000 };
+    return this.http.post(`${environment.baseUrl}/sourcemaster/list`, { match, pagination }, httpOptions)
+      .pipe(
+        map(data => {
+          data['result'].map((item, index) => {
+            item.sno = index + 1;
+          });
+          return data;
+        }),
+        // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-createSource(user) {
-  return this.http.post(`${environment.baseUrl}/sourcemaster/create`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('Added user\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  createSource(user) {
+    return this.http.post(`${environment.baseUrl}/sourcemaster/create`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('Added user\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-updateSource(user) {
-  return this.http.put(`${environment.baseUrl}/sourcemaster/update`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('updateUser: ', JSON.stringify(data))),
-      // Return the User on an update
-      // map(() => user),
-      catchError(this.errorHandler)
-    );
-}
+  updateSource(user) {
+    return this.http.put(`${environment.baseUrl}/sourcemaster/update`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('updateUser: ', JSON.stringify(data))),
+        // Return the User on an update
+        // map(() => user),
+        catchError(this.errorHandler)
+      );
+  }
 
-deleteSource(id) {
-  return this.http.delete(`${environment.baseUrl}/sourcemaster/${id}`, httpOptions)
-    .pipe(
-      tap(data => console.log('deleted user\n' + JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  deleteSource(id) {
+    return this.http.delete(`${environment.baseUrl}/sourcemaster/${id}`, httpOptions)
+      .pipe(
+        tap(data => console.log('deleted user\n' + JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
 
-//for gateway
+  //for gateway
 
-getAllGateway() {
-  const match = { active: true };
-  const pagination = { limit: 1000 };
-  return this.http.post(`${environment.baseUrl}/gatewaymaster/list`, { match, pagination }, httpOptions)
-    .pipe(
-      map(data => {
-        data['result'].map((item, index) => {
-          item.sno = index + 1;
-        });
-        return data;
-      }),
-      // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  getAllGateway() {
+    const match = { active: true };
+    const pagination = { limit: 1000 };
+    return this.http.post(`${environment.baseUrl}/gatewaymaster/list`, { match, pagination }, httpOptions)
+      .pipe(
+        map(data => {
+          data['result'].map((item, index) => {
+            item.sno = index + 1;
+          });
+          return data;
+        }),
+        // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-createGateway(user) {
-  return this.http.post(`${environment.baseUrl}/gatewaymaster/create`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('Added user\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  createGateway(user) {
+    return this.http.post(`${environment.baseUrl}/gatewaymaster/create`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('Added user\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
-updateGateway(user) {
-  return this.http.put(`${environment.baseUrl}/gatewaymaster/update`, user, httpOptions)
-    .pipe(
-      tap(data => console.log('updateUser: ', JSON.stringify(data))),
-      // Return the User on an update
-      // map(() => user),
-      catchError(this.errorHandler)
-    );
-}
+  updateGateway(user) {
+    return this.http.put(`${environment.baseUrl}/gatewaymaster/update`, user, httpOptions)
+      .pipe(
+        tap(data => console.log('updateUser: ', JSON.stringify(data))),
+        // Return the User on an update
+        // map(() => user),
+        catchError(this.errorHandler)
+      );
+  }
 
-deleteGateway(id) {
-  return this.http.delete(`${environment.baseUrl}/gatewaymaster/${id}`, httpOptions)
-    .pipe(
-      tap(data => console.log('deleted user\n' + JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
-//for floors
+  deleteGateway(id) {
+    return this.http.delete(`${environment.baseUrl}/gatewaymaster/${id}`, httpOptions)
+      .pipe(
+        tap(data => console.log('deleted user\n' + JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
+  //for floors
 
-getAllFloors() {
-  const match = { active: true };
-  const pagination = { limit: 1000 };
-  return this.http.post(`${environment.baseUrl}/floors/list`, { match, pagination }, httpOptions)
-    .pipe(
-      map(data => {
-        data['result'].map((item, index) => {
-          item.sno = index + 1;
-        });
-        return data;
-      }),
-      // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
-      catchError(this.errorHandler)
-    );
-}
+  getAllFloors() {
+    const match = { active: true };
+    const pagination = { limit: 1000 };
+    return this.http.post(`${environment.baseUrl}/floors/list`, { match, pagination }, httpOptions)
+      .pipe(
+        map(data => {
+          data['result'].map((item, index) => {
+            item.sno = index + 1;
+          });
+          return data;
+        }),
+        // tap(data => console.log('Get metertypes called\n', JSON.stringify(data))),
+        catchError(this.errorHandler)
+      );
+  }
 
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
