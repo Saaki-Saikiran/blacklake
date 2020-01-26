@@ -269,7 +269,7 @@ export class MetersComponent implements OnInit {
       meterType: new FormControl(data.meterType._id, [Validators.required]),
       deptMeterNumberID: new FormControl(data.deptMeterNumberID._id, [Validators.required]),
       sourceType: new FormControl(data.sourceType._id, [Validators.required]),
-      panel: new FormControl(data.panel._id, []),
+      panel: new FormControl((data.panel) ? data.panel._id : '', []),
       gateway: new FormControl(data.gateway._id, [Validators.required]),
       provider: new FormControl(data.provider, []),
       multifyingFactor: new FormControl(data.multifyingFactor, [Validators.required]),
