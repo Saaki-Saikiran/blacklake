@@ -11,6 +11,7 @@ import { MetersService } from './meters.service';
 import { UsersService } from 'src/app/admin/user-entry/user-entry.service';
 import { DeptMetersService } from '../dept-meters/dept-meters.service';
 import{MastersService} from '../../masters/masters.service';
+import{MeterTypesService} from '../../admin/meter-types/meter-types.service'
 @Component({
   selector: 'app-meters',
   templateUrl: './meters.component.html',
@@ -42,10 +43,12 @@ export class MetersComponent implements OnInit {
 GatewayList:any;
 MetersList:any;
 MeterModelList:any;
+metersTypeList:any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private meterService: MetersService,
+    private meterTypeService: MeterTypesService,
     private deptmeterService: DeptMetersService,private MasterService: MastersService) {
     this.modalOptions = {
       backdrop: 'static',
@@ -76,8 +79,9 @@ MeterModelList:any;
     this.getSourceType();
     this.getPanel();
     this.getGateway();
-    this.getMeterList();
+    //this.getMeterList();
     this.getMeterModel();
+    this.getMeterTypeList();
     this.formHeader = 'Add Meter Details';
     this.buttonType = 'Add';
     this.isEditing = false;
@@ -96,11 +100,29 @@ MeterModelList:any;
   }
 
   get f() { return this.userForm.controls; }
-
+  getMeterTypeList(): void {
+    this.meterTypeService.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+         
+          this.metersTypeList = data['result'];
+          this.dtTrigger.next();
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
   getUsers(): void {
     this.meterService.getAll().subscribe(
       data => {
         if (data['success'] === true) {
+         debugger
           this.metersList = data['result'];
           this.dtTrigger.next();
         } else {
@@ -115,7 +137,7 @@ MeterModelList:any;
     );
   }
   getMeterModel() {
-    this.MeterModelList.getAll().subscribe(
+    this.MasterService.getAllMeterModelMaster().subscribe(
       data => {
         if (data['success'] === true) {
           this.MeterModelList = data['result'];
@@ -147,7 +169,7 @@ MeterModelList:any;
     );
   }
   getSourceType(): void {
-    debugger
+   
     this.MasterService.getAllSource().subscribe(
       data => {
         if (data['success'] === true) {
@@ -165,7 +187,7 @@ MeterModelList:any;
     );
   }
   getPanel(): void {
-    debugger
+   
     this.MasterService.getAllPanel().subscribe(
       data => {
         if (data['success'] === true) {
@@ -183,7 +205,7 @@ MeterModelList:any;
     );
   }
   getGateway(): void {
-    debugger
+    
     this.MasterService.getAllGateway().subscribe(
       data => {
         if (data['success'] === true) {
@@ -200,24 +222,25 @@ MeterModelList:any;
       }
     );
   }
-  getMeterList(): void {
-    debugger
-    this.MasterService.getAllMeterModelMaster().subscribe(
-      data => {
-        if (data['success'] === true) {
-          this.MetersList = data['result'];
-          this.dtTrigger.next();
-        } else {
-          Swal.fire('', data['error'], 'error');
-        }
-        this.loading = false;
-      },
-      error => {
-        this.loading = false;
-        Swal.fire('', error, 'error');
-      }
-    );
-  }
+  // getMeterList(): void {
+   
+  //   this.MasterService.getAllMeterModelMaster().subscribe(
+  //     data => {
+  //       if (data['success'] === true) {
+  //         debugger
+  //         this.MetersList = data['result'];
+  //         this.dtTrigger.next();
+  //       } else {
+  //         Swal.fire('', data['error'], 'error');
+  //       }
+  //       this.loading = false;
+  //     },
+  //     error => {
+  //       this.loading = false;
+  //       Swal.fire('', error, 'error');
+  //     }
+  //   );
+  // }
   beforeChange($event: NgbTabChangeEvent) {
     // dont do anything if id matches
     if ($event.activeId === 'AdduserId') {

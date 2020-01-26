@@ -28,8 +28,8 @@
                       </td>
                       <td>{{item.description}}</td>
                       <td class="align-middle">
-                          <span *ngIf="item.isActive" class="badge badge-success">Active</span>
-                          <span *ngIf="!item.isActive" class="badge badge-danger">In-Active</span>
+                          <span *ngIf="item.active" class="badge badge-success">Active</span>
+                          <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
                         </td>
                       <td class="table-action">
                         <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"

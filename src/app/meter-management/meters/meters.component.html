@@ -27,7 +27,7 @@
                 <tr *ngFor="let item of metersList;let i = index;">
                   <td>{{i+1}}</td>
                   <td>{{item?.meterSerialNumber}}</td>
-                  <td>{{item?.model}}</td>
+                  <td>{{item?.model?.meterModelName}}</td>
                   <td>{{item?.meterType}}</td>
                   <td>{{item?.deptMeterNumberID?.deptMeterNumber}}</td>
                   <td>{{item?.sourceType}}</td>
@@ -89,7 +89,7 @@
                           <select formControlName="meterType" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.meterType.errors }">
                             <option value="">Select Meter Type</option>
-                            <option value="{{item._id}}" *ngFor="let item of MetersList">{{item.meterModelName}}</option>
+                            <option value="{{item._id}}" *ngFor="let item of metersTypeList">{{item.type}}</option>
                           </select>
                           <div *ngIf="submitted && f.meterType.errors" class="invalid-feedback">
                             <div *ngIf="f.meterType.errors.required">Meter Type  is required</div>

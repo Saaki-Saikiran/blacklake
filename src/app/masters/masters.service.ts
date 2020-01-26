@@ -253,7 +253,7 @@ export class MastersService {
 
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
-    debugger
+   
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {

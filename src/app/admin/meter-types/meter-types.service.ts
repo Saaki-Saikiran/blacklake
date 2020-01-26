@@ -34,7 +34,7 @@ export class MeterTypesService {
   }
 
   getMeterTypeById(id) {
-    debugger
+   
     return this.http.get(`${environment.baseUrl}/metertypes/${id}`)
       .pipe(
         tap(data =>
@@ -72,7 +72,7 @@ export class MeterTypesService {
 
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
-    debugger
+    
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {

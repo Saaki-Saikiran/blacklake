@@ -36,7 +36,7 @@ export class UsersService {
   }
 
   getUser(id): Observable<User> {
-    debugger
+   
     return this.http.get<User>(`${environment.baseUrl}/users/${id}`)
       .pipe(
         tap(data =>
@@ -74,7 +74,7 @@ export class UsersService {
 
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
-    debugger
+    
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
