@@ -6,49 +6,49 @@
           <ng-template ngbTabContent>
             <div class="table-responsive p-t-20">
               <div class="table-responsive">
-            <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-              class="table table-bordered table-striped mb-0">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>meter Serial Number</th>
-                  <th>model</th>
-                  <th>meter Type</th>
-                  <th>dept Meter Number</th>
-                  <th>source Type</th>
-                  <th>panel</th>
-                  <th>gateway</th>
-                  <th>provider</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of metersList;let i = index;">
-                  <td>{{i+1}}</td>
-                  <td>{{item?.meterSerialNumber}}</td>
-                  <td>{{item?.model?.meterModelName}}</td>
-                  <td>{{item?.meterType}}</td>
-                  <td>{{item?.deptMeterNumberID?.deptMeterNumber}}</td>
-                  <td>{{item?.sourceType}}</td>
-                  <td>{{item?.panel}}</td>
-                  <td>{{item?.gateway}}</td>
-                  <td>{{item?.provider}}</td>
-                  <td class="align-middle">
-                    <span *ngIf="item?.active" class="badge badge-success">Active</span>
-                    <span *ngIf="!item?.active" class="badge badge-danger">In-Active</span>
-                  </td>
-                  <td class="table-action">
-                    <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                        class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                          class="feather icon-edit"></i></a></span>
-                    <a href="javascript:" class="btn btn-icon btn-outline-danger" (click)="confirmAlert(item._id)"><i
-                        class="feather icon-trash-2"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
+                <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                  class="table table-bordered table-striped mb-0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>meter Serial Number</th>
+                      <th>model</th>
+                      <th>meter Type</th>
+                      <th>dept Meter Number</th>
+                      <th>source Type</th>
+                      <th>panel</th>
+                      <th>gateway</th>
+                      <th>provider</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of metersList;let i = index;">
+                      <td>{{i+1}}</td>
+                      <td>{{item?.meterSerialNumber}}</td>
+                      <td>{{item?.model?.meterModelName}}</td>
+                      <td>{{item?.meterType?.type}}</td>
+                      <td>{{item?.deptMeterNumberID?.deptMeterNumber}}</td>
+                      <td>{{item?.sourceType?.sourceType}}</td>
+                      <td>{{item?.panel?.panelName}}</td>
+                      <td>{{item?.gateway?.name}}</td>
+                      <td>{{item?.provider}}</td>
+                      <td class="align-middle">
+                        <span *ngIf="item?.active" class="badge badge-success">Active</span>
+                        <span *ngIf="!item?.active" class="badge badge-danger">In-Active</span>
+                      </td>
+                      <td class="table-action">
+                        <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                            class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                              class="feather icon-edit"></i></a></span>
+                        <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                          (click)="confirmAlert(item._id)"><i class="feather icon-trash-2"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </ng-template>
         </ngb-tab>
@@ -61,40 +61,41 @@
                   <div class="form-row">
                     <div class="form-group col">
                       <label>Meter Serial Number</label>
-                      <input type="number" placeholder="Enter Meter Serial Number" formControlName="meterSerialNumber" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.meterSerialNumber.errors }" />
+                      <input type="number" placeholder="Enter Meter Serial Number" formControlName="meterSerialNumber"
+                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meterSerialNumber.errors }" />
                       <div *ngIf="submitted && f.meterSerialNumber.errors" class="invalid-feedback">
                         <div *ngIf="f.meterSerialNumber.errors.required">Meter SerialNumber is required</div>
                       </div>
                     </div>
                     <div class="form-group col-1">
-                      </div>
+                    </div>
                     <div class="form-group col">
-                     <label>Meter Model</label>
-                     <select formControlName="model" class="form-control"
-                     [ngClass]="{ 'is-invalid': submitted && f.model.errors }">
-                     <option value="">Select Meter Model</option>
-                     <option value="{{item._id}}" *ngFor="let item of MeterModelList">{{item.meterModelName}}</option>
-                   </select>
+                      <label>Meter Model</label>
+                      <select formControlName="model" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.model.errors }">
+                        <option value="">Select Meter Model</option>
+                        <option value="{{item._id}}" *ngFor="let item of MeterModelList">{{item.meterModelName}}
+                        </option>
+                      </select>
                       <!--  <input type="text" placeholder="Enter Model" formControlName="model" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />-->
                       <div *ngIf="submitted && f.model.errors" class="invalid-feedback">
                         <div *ngIf="f.model.errors.required">Model is required</div>
-                      </div> 
+                      </div>
                     </div>
                   </div>
                   <div class="form-row">
-                      <div class="form-group col">
-                          <label>Meter Type</label>
-                          <select formControlName="meterType" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.meterType.errors }">
-                            <option value="">Select Meter Type</option>
-                            <option value="{{item._id}}" *ngFor="let item of metersTypeList">{{item.type}}</option>
-                          </select>
-                          <div *ngIf="submitted && f.meterType.errors" class="invalid-feedback">
-                            <div *ngIf="f.meterType.errors.required">Meter Type  is required</div>
-                          </div>
-                        </div>
+                    <div class="form-group col">
+                      <label>Meter Type</label>
+                      <select formControlName="meterType" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.meterType.errors }">
+                        <option value="">Select Meter Type</option>
+                        <option value="{{item._id}}" *ngFor="let item of metersTypeList">{{item.type}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.meterType.errors" class="invalid-feedback">
+                        <div *ngIf="f.meterType.errors.required">Meter Type is required</div>
+                      </div>
+                    </div>
                     <!-- <div class="form-group col">
                       <label>Meter Type</label>
                       <input type="text" formControlName="meterType" class="form-control"
@@ -105,7 +106,7 @@
                       </div>
                     </div> -->
                     <div class="form-group col-1">
-                      </div>
+                    </div>
                     <div class="form-group col">
                       <label>Dept Meter Number</label>
                       <select formControlName="deptMeterNumberID" class="form-control"
@@ -121,30 +122,30 @@
                     </div>
                   </div>
                   <div class="form-row">
-                      <div class="form-group col">
-                          <label>Source Type</label>
-                          <select formControlName="sourceType" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.sourceType.errors }">
-                            <option value="">Select Source Type</option>
-                            <option value="{{item._id}}" *ngFor="let item of SourceType">{{item.sourceType}}</option>
-                          </select>
-                          <div *ngIf="submitted && f.sourceType.errors" class="invalid-feedback">
-                            <div *ngIf="f.sourceType.errors.required">Source Type  is required</div>
-                          </div>
-                        </div>
-                        <div class="form-group col-1">
-                        </div>
-                        <div class="form-group col">
-                            <label>Panel</label>
-                            <select formControlName="panel" class="form-control"
-                              [ngClass]="{ 'is-invalid': submitted && f.panel.errors }">
-                              <option value="">Select Panel</option>
-                              <option value="{{item._id}}" *ngFor="let item of PanelList">{{item.panelName}}</option>
-                            </select>
-                            <div *ngIf="submitted && f.panel.errors" class="invalid-feedback">
-                              <div *ngIf="f.panel.errors.required">Panel  is required</div>
-                            </div>
-                          </div>
+                    <div class="form-group col">
+                      <label>Source Type</label>
+                      <select formControlName="sourceType" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.sourceType.errors }">
+                        <option value="">Select Source Type</option>
+                        <option value="{{item._id}}" *ngFor="let item of SourceType">{{item.sourceType}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.sourceType.errors" class="invalid-feedback">
+                        <div *ngIf="f.sourceType.errors.required">Source Type is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-1">
+                    </div>
+                    <div class="form-group col">
+                      <label>Panel</label>
+                      <select formControlName="panel" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.panel.errors }">
+                        <option value="">Select Panel</option>
+                        <option value="{{item._id}}" *ngFor="let item of PanelList">{{item.panelName}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.panel.errors" class="invalid-feedback">
+                        <div *ngIf="f.panel.errors.required">Panel is required</div>
+                      </div>
+                    </div>
                     <!-- <div class="form-group col">
                       <label>Source Type</label>
                       <input type="text" formControlName="sourceType" class="form-control"
@@ -164,19 +165,19 @@
                     </div> -->
                   </div>
                   <div class="form-row">
-                      <div class="form-group col">
-                          <label>Gateway</label>
-                          <select formControlName="gateway" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.gateway.errors }">
-                            <option value="">Select Gateway</option>
-                            <option value="{{item._id}}" *ngFor="let item of GatewayList">{{item.gatewayModel}}</option>
-                          </select>
-                          <div *ngIf="submitted && f.gateway.errors" class="invalid-feedback">
-                            <div *ngIf="f.gateway.errors.required">Gateway  is required</div>
-                          </div>
-                        </div>
-                        <div class="form-group col-1">
-                          </div>
+                    <div class="form-group col">
+                      <label>Gateway</label>
+                      <select formControlName="gateway" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.gateway.errors }">
+                        <option value="">Select Gateway</option>
+                        <option value="{{item._id}}" *ngFor="let item of GatewayList">{{item.gatewayModel}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.gateway.errors" class="invalid-feedback">
+                        <div *ngIf="f.gateway.errors.required">Gateway is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-1">
+                    </div>
                     <!-- <div class="form-group col">
                       <label>Gateway</label>
                       <input type="text" formControlName="gateway" class="form-control"
@@ -198,8 +199,8 @@
                   <div class="form-row">
                     <div class="form-group col">
                       <label>Multifying Factor</label>
-                      <input type="number" placeholder="Enter Multifying Factor" formControlName="multifyingFactor" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.multifyingFactor.errors }" />
+                      <input type="number" placeholder="Enter Multifying Factor" formControlName="multifyingFactor"
+                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.multifyingFactor.errors }" />
                       <div *ngIf="submitted && f.multifyingFactor.errors" class="invalid-feedback">
                         <div *ngIf="f.multifyingFactor.errors.required">Multifying Factor is required</div>
                         <div *ngIf="f.multifyingFactor.errors.minlength">Multifying Factor must be at least 6
@@ -207,7 +208,7 @@
                       </div>
                     </div>
                     <div class="form-group col-1">
-                      </div>
+                    </div>
                     <div class="form-group col">
                       <label>Comments</label>
                       <input type="text" placeholder="Enter Comments" formControlName="comments" class="form-control"

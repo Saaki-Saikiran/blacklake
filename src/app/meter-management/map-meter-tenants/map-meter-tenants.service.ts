@@ -34,6 +34,7 @@ export class MapMeterTenantsService {
             if ((item.inactiveTenant != '') && (item.inactiveTenant != undefined)) {
               console.log(item.inactiveTenant, '--------inactiveTenant--------');
               item.tenantName = item.inactiveTenant;
+              item.tenantStatus = false;
             }
           });
           console.log(data);

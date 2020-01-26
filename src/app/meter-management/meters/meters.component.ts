@@ -10,8 +10,8 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MetersService } from './meters.service';
 import { UsersService } from 'src/app/admin/user-entry/user-entry.service';
 import { DeptMetersService } from '../dept-meters/dept-meters.service';
-import{MastersService} from '../../masters/masters.service';
-import{MeterTypesService} from '../../admin/meter-types/meter-types.service'
+import { MastersService } from '../../masters/masters.service';
+import { MeterTypesService } from '../../admin/meter-types/meter-types.service'
 @Component({
   selector: 'app-meters',
   templateUrl: './meters.component.html',
@@ -32,24 +32,24 @@ export class MetersComponent implements OnInit {
   modalOptions: NgbModalOptions;
   loading: boolean;
   usersList: any;
-  SourceType:any;
+  SourceType: any;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
   mySubscription: any;
   metersList: any;
   deptMeters: any[];
-  PanelList:any;
-GatewayList:any;
-MetersList:any;
-MeterModelList:any;
-metersTypeList:any;
+  PanelList: any;
+  GatewayList: any;
+  MetersList: any;
+  MeterModelList: any;
+  metersTypeList: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private meterService: MetersService,
     private meterTypeService: MeterTypesService,
-    private deptmeterService: DeptMetersService,private MasterService: MastersService) {
+    private deptmeterService: DeptMetersService, private MasterService: MastersService) {
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -68,7 +68,7 @@ metersTypeList:any;
 
   ngOnInit() {
     // console.log(this.myTabSet, '-------sai----------');
-      this.dtOptions = {
+    this.dtOptions = {
       retrieve: true,
       pagingType: 'full_numbers',
       pageLength: 10
@@ -104,7 +104,7 @@ metersTypeList:any;
     this.meterTypeService.getAll().subscribe(
       data => {
         if (data['success'] === true) {
-         
+
           this.metersTypeList = data['result'];
           this.dtTrigger.next();
         } else {
@@ -122,7 +122,7 @@ metersTypeList:any;
     this.meterService.getAll().subscribe(
       data => {
         if (data['success'] === true) {
-         debugger
+          debugger
           this.metersList = data['result'];
           this.dtTrigger.next();
         } else {
@@ -169,7 +169,7 @@ metersTypeList:any;
     );
   }
   getSourceType(): void {
-   
+
     this.MasterService.getAllSource().subscribe(
       data => {
         if (data['success'] === true) {
@@ -187,7 +187,7 @@ metersTypeList:any;
     );
   }
   getPanel(): void {
-   
+
     this.MasterService.getAllPanel().subscribe(
       data => {
         if (data['success'] === true) {
@@ -205,7 +205,7 @@ metersTypeList:any;
     );
   }
   getGateway(): void {
-    
+
     this.MasterService.getAllGateway().subscribe(
       data => {
         if (data['success'] === true) {
@@ -223,7 +223,7 @@ metersTypeList:any;
     );
   }
   // getMeterList(): void {
-   
+
   //   this.MasterService.getAllMeterModelMaster().subscribe(
   //     data => {
   //       if (data['success'] === true) {
@@ -265,12 +265,12 @@ metersTypeList:any;
     this.userForm = this.formBuilder.group({
       _id: new FormControl(data._id),
       meterSerialNumber: new FormControl(data.meterSerialNumber, [Validators.required, Validators.minLength(3)]),
-      model: new FormControl(data.model, [Validators.required]),
-      meterType: new FormControl(data.meterType, [Validators.required]),
+      model: new FormControl(data.model._id, [Validators.required]),
+      meterType: new FormControl(data.meterType._id, [Validators.required]),
       deptMeterNumberID: new FormControl(data.deptMeterNumberID._id, [Validators.required]),
-      sourceType: new FormControl(data.sourceType, [Validators.required]),
-      panel: new FormControl(data.panel, []),
-      gateway: new FormControl(data.gateway, [Validators.required]),
+      sourceType: new FormControl(data.sourceType._id, [Validators.required]),
+      panel: new FormControl(data.panel._id, []),
+      gateway: new FormControl(data.gateway._id, [Validators.required]),
       provider: new FormControl(data.provider, []),
       multifyingFactor: new FormControl(data.multifyingFactor, [Validators.required]),
       comments: new FormControl(data.comments, []),
