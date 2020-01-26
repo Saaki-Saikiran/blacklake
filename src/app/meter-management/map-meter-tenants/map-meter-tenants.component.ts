@@ -15,6 +15,8 @@ import { DeptMetersService } from '../dept-meters/dept-meters.service';
 import { TenantsService } from '../tenants/tenants.service';
 import { FloorsService } from '../floors/floors.service';
 import { OrderByPipe } from '../../_pipes/orderby-pipe';
+import { MeterTypesService } from 'src/app/admin/meter-types/meter-types.service';
+import { MastersService } from 'src/app/masters/masters.service';
 
 @Component({
   selector: 'app-map-meter-tenants',
@@ -57,6 +59,8 @@ export class MapMeterTenantsComponent implements OnInit {
   Activebtn: boolean = false;
   InActivebtn: boolean = false;
   mappedMeterTenantsListOriginal: any;
+  GatewayList: any;
+  metersTypeList: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -65,6 +69,8 @@ export class MapMeterTenantsComponent implements OnInit {
     private deptmeterService: DeptMetersService,
     private TenantService: TenantsService,
     private floorService: FloorsService,
+    private meterTypeService: MeterTypesService,
+    private MasterService: MastersService,
     private capitalize: OrderByPipe) {
     this.modalOptions = {
       backdrop: 'static',
@@ -91,7 +97,9 @@ export class MapMeterTenantsComponent implements OnInit {
       pageLength: 10
     };
     // this.getUsers();
-    // this.getDeptMeters();
+    this.getGateway();
+    this.getMeterTypeList();
+    this.getDeptMeters();
     this.getMeters();
     this.getFloors();
     this.getTenants();
@@ -152,6 +160,48 @@ export class MapMeterTenantsComponent implements OnInit {
       }
     );
   }
+
+  getGateway(): void {
+    this.MasterService.getAllGateway().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.GatewayList = data['result'];
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+
+  getMeterTypeList(): void {
+    this.meterTypeService.getAll().subscribe(
+      data => {
+        if (data['success'] === true) {
+          this.metersTypeList = data['result'];
+        } else {
+          Swal.fire('', data['error'], 'error');
+        }
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        Swal.fire('', error, 'error');
+      }
+    );
+  }
+
+  filterValue(obj, key, value) {
+    console.log(obj);
+    console.log(key);
+    console.log(value);
+    return obj.find(function (v) { return v[key] === value });
+  }
+
   Search(searchText) {
     debugger
     const val = searchText;

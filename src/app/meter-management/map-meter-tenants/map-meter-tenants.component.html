@@ -141,6 +141,7 @@
                             class="table table-bordered table-striped mb-0">
                             <thead>
                               <tr class="text-uppercase">
+                                <th class="text-center">Debt Meter</th>
                                 <th class="text-center">meter Serial Number</th>
                                 <th class="text-center">meter Type</th>
                                 <th class="text-center">gateway</th>
@@ -158,9 +159,17 @@
                             </thead>
                             <tbody class="text-center text-muted">
                               <tr *ngFor="let item of mappedMeterTenantsList | filter: {tenantName: tenant} ">
+                                <td>
+                                  {{filterValue(deptMeters,'_id',item?.meterSerialNumberID?.deptMeterNumberID).deptMeterNumber}}
+                                </td>
                                 <td>{{item?.meterSerialNumberID?.meterSerialNumber }}</td>
-                                <td>{{item?.meterSerialNumberID?.meterType }}</td>
-                                <td>{{item?.meterSerialNumberID?.gateway }}</td>
+                                <td>
+                                  {{filterValue(metersTypeList,'_id',item?.meterSerialNumberID?.meterType).type}}
+
+                                </td>
+                                <td>
+                                  {{filterValue(GatewayList,'_id',item?.meterSerialNumberID?.gateway).gatewayModel}}
+                                </td>
 
                                 <td>{{item?.floorID?.block }}</td>
                                 <td>{{item?.floorID?.floor }}</td>
