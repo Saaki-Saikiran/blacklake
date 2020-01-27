@@ -50,6 +50,7 @@ export class MetersComponent implements OnInit {
     private meterService: MetersService,
     private meterTypeService: MeterTypesService,
     private deptmeterService: DeptMetersService, private MasterService: MastersService) {
+     
     this.modalOptions = {
       backdrop: 'static',
       // backdropClass: 'customBackdrop',
@@ -67,6 +68,7 @@ export class MetersComponent implements OnInit {
   }
 
   ngOnInit() {
+  
     // console.log(this.myTabSet, '-------sai----------');
     this.dtOptions = {
       retrieve: true,
