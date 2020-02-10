@@ -4,6 +4,15 @@ import {NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/
 import {ColorPickerService, Rgba} from 'ngx-color-picker';
 import { MeterTypesService } from '../../admin/meter-types/meter-types.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
+
+import { environment } from '../../../environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
 
@@ -45,7 +54,7 @@ export class MeterLogReportComponent implements OnInit {
   dtResponsiveOptions: any = {};
   dtRowSelectOptions: any = {};
   dtRouterLinkOptions: any = {};
-  constructor(public parserFormatter: NgbDateParserFormatter,  private formBuilder: FormBuilder, private meterTypeService: MeterTypesService, public calendar: NgbCalendar, public cpService: ColorPickerService) {
+  constructor(private http: HttpClient,public parserFormatter: NgbDateParserFormatter,  private formBuilder: FormBuilder, private meterTypeService: MeterTypesService, public calendar: NgbCalendar, public cpService: ColorPickerService) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 30);
    }
@@ -83,6 +92,8 @@ export class MeterLogReportComponent implements OnInit {
     this.getMeterTypeList();
     this.userForm = this.formBuilder.group({
       MeterType: new FormControl('', [Validators.required]),
+      modelPopup: new FormControl('', [Validators.required]),
+      modelPopupTo: new FormControl('', [Validators.required]),
     });
    
   }
@@ -130,9 +141,26 @@ export class MeterLogReportComponent implements OnInit {
     }
     else
     {
-      this.fromDate;
-      this.toDate;
+      user.modelPopup;
+      user.modelPopupTo;
       user.MeterType;
+       user.modelPopup;
+      user.modelPopupTo;
+      let FromDate=user.modelPopup.year+'-'+user.modelPopup.month+'-'+user.modelPopup.day;
+      let ToDate=user.modelPopup.year+'-'+user.modelPopup.month+'-'+user.modelPopup.day;
+      let formData: FormData = new FormData();
+      formData.append('fromDate',FromDate);
+      formData.append('toDate',ToDate);
+      formData.append('meterID',user.MeterType);
+      let url=`${environment.baseUrl}/reports/meterLogsReport`;
+      this.http.post(url, formData).pipe(map(res => res)).subscribe((data: any) => {
+      // this.http.post(url,formData).pipe(
+      //   tap(data =>
+      //     console.log(data)),
+      //   catchError(this.errorHandler)
+      //   );
+      console.log(data);
+       } );
     }
   }
 }
