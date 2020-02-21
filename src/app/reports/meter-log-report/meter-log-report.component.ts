@@ -46,6 +46,8 @@ export class MeterLogReportComponent implements OnInit {
   userForm: FormGroup;
   formHeader: string;
   submitted = false;
+  ConsumptionArray: any = [];
+  Consumptiondata: any;
   @Input() testRangeDate: Date;
   public date: {year: number, month: number};
 
@@ -60,35 +62,35 @@ export class MeterLogReportComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.dtExportButtonOptions = {
-      ajax: 'fake-data/datatable-data.json',
-      columns: [{
-        title: 'Name',
-        data: 'name'
-      }, {
-        title: 'Position',
-        data: 'position'
-      }, {
-        title: 'Office',
-        data: 'office'
-      }, {
-        title: 'Age',
-        data: 'age'
-      }, {
-        title: 'Start Date',
-        data: 'date'
-      }, {
-        title: 'Salary',
-        data: 'salary'
-      }],
-      dom: 'Bfrtip',
-      buttons: [
-        'copy',
-        'print',
-        'excel',
-        'csv'
-      ]
-    };
+    // this.dtExportButtonOptions = {
+    //   ajax: 'fake-data/datatable-data.json',
+    //   columns: [{
+    //     title: 'Name',
+    //     data: 'name'
+    //   }, {
+    //     title: 'Position',
+    //     data: 'position'
+    //   }, {
+    //     title: 'Office',
+    //     data: 'office'
+    //   }, {
+    //     title: 'Age',
+    //     data: 'age'
+    //   }, {
+    //     title: 'Start Date',
+    //     data: 'date'
+    //   }, {
+    //     title: 'Salary',
+    //     data: 'salary'
+    //   }],
+    //   dom: 'Bfrtip',
+    //   buttons: [
+    //     'copy',
+    //     'print',
+    //     'excel',
+    //     'csv'
+    //   ]
+    // };
     this.getMeterTypeList();
     this.userForm = this.formBuilder.group({
       MeterType: new FormControl('', [Validators.required]),
@@ -141,25 +143,69 @@ export class MeterLogReportComponent implements OnInit {
     }
     else
     {
+      debugger
       user.modelPopup;
       user.modelPopupTo;
       user.MeterType;
        user.modelPopup;
       user.modelPopupTo;
-      let FromDate=user.modelPopup.year+'-'+user.modelPopup.month+'-'+user.modelPopup.day;
-      let ToDate=user.modelPopup.year+'-'+user.modelPopup.month+'-'+user.modelPopup.day;
-      let formData: FormData = new FormData();
-      formData.append('fromDate',FromDate);
-      formData.append('toDate',ToDate);
-      formData.append('meterID',user.MeterType);
+      let FromDate = user.modelPopup.year + '-' + user.modelPopup.month + '-' + user.modelPopup.day;
+      let ToDate = user.modelPopup.year + '-' + user.modelPopup.month + '-' + user.modelPopup.day;
       let url=`${environment.baseUrl}/reports/meterLogsReport`;
-      this.http.post(url, formData).pipe(map(res => res)).subscribe((data: any) => {
-      // this.http.post(url,formData).pipe(
-      //   tap(data =>
-      //     console.log(data)),
-      //   catchError(this.errorHandler)
-      //   );
-      console.log(data);
+      let data2 = {
+        "meterID": "24zE2vix",
+        "fromDate": FromDate,
+        "toDate": ToDate,
+      };
+      this.http.post(url, data2).pipe(map(res => res)).subscribe((data1: any) => {
+        this.ConsumptionArray = [];
+        for (var i = 0; i < data1.meterDetails.length; i++) {
+          for (var j = 0; j < data1.modbusLogs.length; j++) {
+           // if (data1.meterDetails[i].meterSerialNumberID == data1.modbusLogs[j]._id) {
+              let m = data1.modbusLogs[j].modbusObj;
+              for (var k = 0; k < m.length; k++) {
+                if (k == 0) {
+                  let obj = {
+                    "block": data1.meterDetails[i].block,
+                    "floor": data1.meterDetails[i].floor,
+                    "meterType": data1.meterDetails[i].meterType,
+                    "model": data1.meterDetails[i].model,
+                    "tenantName": data1.meterDetails[i].tenantName,
+                    "timestamp": m[k].timestamp,
+                    "value": m[k].value
+                  }
+                  this.ConsumptionArray.push(obj);
+                }
+                else {
+                  let obj = {
+                    "block": "",
+                    "floor": "",
+                    "meterType": "",
+                    "model": "",
+                    "tenantName": "",
+                    "timestamp": m[k].timestamp,
+                    "value": m[k].value
+                  }
+                  this.ConsumptionArray.push(obj);
+                }
+              }
+            //}
+          }
+        }
+        debugger
+        $(document).ready(function() {
+          $('#example').DataTable( {
+              dom: 'Bfrtip',
+              buttons: [
+                  'copyHtml5',
+                  'excelHtml5',
+                  'csvHtml5',
+                  'pdfHtml5'
+              ]
+            
+          } );
+         
+      } );
        } );
     }
   }

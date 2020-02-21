@@ -1,7 +1,7 @@
-import { Component,  Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import {NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import {ColorPickerService, Rgba} from 'ngx-color-picker';
+import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ColorPickerService, Rgba } from 'ngx-color-picker';
 import { MeterTypesService } from '../../admin/meter-types/meter-types.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -47,56 +47,31 @@ export class ConsumptionReportComponent implements OnInit {
   toDate: NgbDateStruct;
   userForm: FormGroup;
   formHeader: string;
+  ConsumptionArray: any = [];
+  Consumptiondata: any;
   submitted = false;
+  dtOptions: any = {};
   @Input() testRangeDate: Date;
-  public date: {year: number, month: number};
+  public date: { year: number, month: number };
 
   dtExportButtonOptions: any = {};
   dtColumnsReorderOptions: any = {};
   dtResponsiveOptions: any = {};
   dtRowSelectOptions: any = {};
   dtRouterLinkOptions: any = {};
-  constructor(private http: HttpClient,public parserFormatter: NgbDateParserFormatter,  private formBuilder: FormBuilder, private meterTypeService: MeterTypesService, public calendar: NgbCalendar, public cpService: ColorPickerService) {
+  constructor(private http: HttpClient, public parserFormatter: NgbDateParserFormatter, private formBuilder: FormBuilder, private meterTypeService: MeterTypesService, public calendar: NgbCalendar, public cpService: ColorPickerService) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 30);
-   }
+  }
 
   ngOnInit() {
-    this.dtExportButtonOptions = {
-      ajax: 'fake-data/datatable-data.json',
-      columns: [{
-        title: 'Name',
-        data: 'name'
-      }, {
-        title: 'Position',
-        data: 'position'
-      }, {
-        title: 'Office',
-        data: 'office'
-      }, {
-        title: 'Age',
-        data: 'age'
-      }, {
-        title: 'Start Date',
-        data: 'date'
-      }, {
-        title: 'Salary',
-        data: 'salary'
-      }],
-      dom: 'Bfrtip',
-      buttons: [
-        'copy',
-        'print',
-        'excel',
-        'csv'
-      ]
-    };
+   
     this.getMeterTypeList();
     this.userForm = this.formBuilder.group({
       modelPopup: new FormControl('', [Validators.required]),
       modelPopupTo: new FormControl('', [Validators.required]),
     });
-   
+
   }
 
   isHovered = date => this.fromDate && !this.toDate && this.hoveredDate && after(date, this.fromDate) && before(date, this.hoveredDate);
@@ -110,7 +85,7 @@ export class ConsumptionReportComponent implements OnInit {
         if (data['success'] === true) {
 
           this.metersTypeList = data['result'];
-         // this.dtTrigger.next();
+          // this.dtTrigger.next();
         } else {
           Swal.fire('', data['error'], 'error');
         }
@@ -130,27 +105,68 @@ export class ConsumptionReportComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    else
-    {
+    else {
       user.modelPopup;
       user.modelPopupTo;
-      let FromDate=user.modelPopup.year+'-'+user.modelPopup.month+'-'+user.modelPopup.day;
-      let ToDate=user.modelPopup.year+'-'+user.modelPopup.month+'-'+user.modelPopup.day;
-      let formData: FormData = new FormData();
-      formData.append('fromDate','2020-01-27');
-      formData.append('toDate','2020-01-27');
-      let url=`${environment.baseUrl}/reports/consumptionReport`;
-      this.http.post(url, formData).pipe(map(res => res)).subscribe((data: any) => {
-      // this.http.post(url,formData).pipe(
-      //   tap(data =>
-      //     console.log(data)),
-      //   catchError(this.errorHandler)
-      //   );
-      debugger
-      console.log(data);
-       } );
+      let FromDate = user.modelPopup.year + '-' + user.modelPopup.month + '-' + user.modelPopup.day;
+      let ToDate = user.modelPopup.year + '-' + user.modelPopup.month + '-' + user.modelPopup.day;
+      let url = `${environment.baseUrl}/reports/consumptionReport`;
+      let data2 = {
+        "fromDate": FromDate,
+        "toDate": ToDate
+      };
+      this.http.post(url, data2).pipe(map(res => res)).subscribe((data1: any) => {
+        debugger
+        this.ConsumptionArray = [];
+        for (var i = 0; i < data1.meterDetails.length; i++) {
+          for (var j = 0; j < data1.modbusLogs.length; j++) {
+            if (data1.meterDetails[i].meterSerialNumberID == data1.modbusLogs[j]._id) {
+              let m = data1.modbusLogs[j].modbusObj;
+              for (var k = 0; k < m.length; k++) {
+                 if (k == 0) {
+                  let obj = {
+                    "block": data1.meterDetails[i].block,
+                    "floor": data1.meterDetails[i].floor,
+                    "meterType": data1.meterDetails[i].meterType,
+                    "model": data1.meterDetails[i].model,
+                    "tenantName": data1.meterDetails[i].tenantName,
+                    "timestamp": m[k].timestamp,
+                    "value": m[k].value
+                  }
+                  this.ConsumptionArray.push(obj);
+                }
+                else {
+                  let obj = {
+                    "block": "",
+                    "floor": "",
+                    "meterType": "",
+                    "model": "",
+                    "tenantName": "",
+                    "timestamp": m[k].timestamp,
+                    "value": m[k].value
+                  }
+                  this.ConsumptionArray.push(obj);
+                }
+              }
+            }
+          }
+        }
+        debugger
+        $(document).ready(function() {
+          $('#example').DataTable( {
+              dom: 'Bfrtip',
+              buttons: [
+                  'copyHtml5',
+                  'excelHtml5',
+                  'csvHtml5',
+                  'pdfHtml5'
+              ]
+          } );
+      } );
+      });
      
     }
+   
   }
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
