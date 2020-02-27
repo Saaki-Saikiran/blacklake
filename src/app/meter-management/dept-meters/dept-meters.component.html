@@ -1,117 +1,121 @@
 <div class="row btn-page">
   <div class="col-sm-12">
-     
-          <app-card [hidHeader]="true">
-            <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
-              <ngb-tab title="Department  Meters List" id="UserlistId">
-                <ng-template ngbTabContent>
-                  <div class="table-responsive p-t-20">
-                    <div class="table-responsive">
-                    <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                    class="table table-bordered table-striped mb-0">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Department  Meter Number</th>
-                        <th>Location</th>
-                        <th>Provider</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Actions</th>
 
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of DeptMetersList;let i = index;">
-                        <td>{{i+1}}</td>
-                        <td>{{item.deptMeterNumber}}</td>
-                        <td>
-                          {{item.location}}
-                        </td>
-                        <td>{{item.provider}}</td>
-                        <td>{{item.description}}</td>
-                        <td class="align-middle">
-                            <span *ngIf="item.active" class="badge badge-success">Active</span>
-                            <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
-                          </td>
-                        <td class="table-action">
-                          <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                              class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                                class="feather icon-edit"></i></a></span>
-                          <a href="javascript:" class="btn btn-icon btn-outline-danger"
-                            (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+    <app-card [hidHeader]="true">
+      <ngb-tabset activeId="UserlistId" (tabChange)="beforeChange($event)" #myTabSet="ngbTabset">
+        <ngb-tab title="Department  Meters List" id="UserlistId">
+          <ng-template ngbTabContent>
+            <div class="table-responsive p-t-20">
+              <div class="table-responsive">
+                <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                  class="table table-bordered table-striped mb-0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Department Meter Number</th>
+                      <th>Location</th>
+                      <th>Provider</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of DeptMetersList;let i = index;">
+                      <td>{{i+1}}</td>
+                      <td>{{item.deptMeterNumber}}</td>
+                      <td>
+                        {{item.location}}
+                      </td>
+                      <td>{{item.provider}}</td>
+                      <td>{{item.description}}</td>
+                      <td class="align-middle">
+                        <span *ngIf="item.active" class="badge badge-success">Active</span>
+                        <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                      </td>
+                      <td class="table-action">
+                        <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                            class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                              class="feather icon-edit"></i></a></span>
+                        <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                          (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-                </ng-template>
-              </ngb-tab>
-              <ngb-tab title={{tabHeader}} id="AdduserId">
-                <ng-template ngbTabContent>
-                    <div class="card m-3">
-                        <h5 class="card-header">{{formHeader}}</h5>
-                        <div class="card-body">
-                          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                            <div class="form-row">
-        
-                              <div class="form-group col">
-                                <label>Department  Meter Number <span style="color:red">*</span> </label>
-                                <input type="number" placeholder="Enter Department  Meter Number" formControlName="deptMeterNumber" class="form-control"
-                                  [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumber.errors }" />
-                                <div *ngIf="submitted && f.deptMeterNumber.errors" class="invalid-feedback">
-                                  <div *ngIf="f.deptMeterNumber.errors.required">Department  Meter number is required</div>
-                                </div>
-                              </div>
-                              <div class="form-group col-1">
-                              </div>
-                              <div class="form-group col">
-                                  <label>Location</label>
-                                <input type="text" placeholder="Enter Location" formControlName="location" class="form-control"
-                                  [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
-                                <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
-                                  <div *ngIf="f.location.errors.required">Loction is required</div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="form-row">
-                            <div class="form-group col">
-                                <label>Provider </label>
-                              <input type="text" placeholder="Enter Provider" formControlName="provider" class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.provider.errors }" />
-                              <div *ngIf="submitted && f.provider.errors" class="invalid-feedback">
-                                <div *ngIf="f.provider.errors.required">Provider is required</div>
-                               
-                              </div>
-                            </div>
-                            <div class="form-group col-1">
-                            </div>
-                              <div class="form-group col">
-                                  <label>Description</label>
-                                <input type="text" placeholder="Enter Description"  formControlName="description" class="form-control"
-                                  [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
-                                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                                  <div *ngIf="f.description.errors.required">Description is required</div>
-                                  
-                                </div>
-                              </div>
-                            </div>
-                            <div class="text-center">
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title={{tabHeader}} id="AdduserId">
+          <ng-template ngbTabContent>
+            <!-- <div class="card m-3"> -->
+            <h5 class="card-header">{{formHeader}}</h5>
+            <div class="card-body">
+              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="row" >
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Department Meter Number <span style="color:red">*</span> </label>
+                      <input type="number" placeholder="Enter Department  Meter Number"
+                        formControlName="deptMeterNumber" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.deptMeterNumber.errors }" />
+                      <div *ngIf="submitted && f.deptMeterNumber.errors" class="invalid-feedback">
+                        <div *ngIf="f.deptMeterNumber.errors.required">Department Meter number is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Location</label>
+                      <input type="text" placeholder="Enter Location" formControlName="location" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
+                      <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                        <div *ngIf="f.location.errors.required">Loction is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Provider </label>
+                      <input type="text" placeholder="Enter Provider" formControlName="provider" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.provider.errors }" />
+                      <div *ngIf="submitted && f.provider.errors" class="invalid-feedback">
+                        <div *ngIf="f.provider.errors.required">Provider is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Description</label>
+                      <input type="text" placeholder="Enter Description" formControlName="description"
+                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="text-center">
+                      <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                    </div>
+                  </div>
+                  <!-- <div class="text-center">
                               <button class="btn btn-primary mr-1">{{buttonType}}</button>
                               <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-      
-                </ng-template>
-              </ngb-tab>
-            </ngb-tabset>
-          </app-card>
-       
+                            </div> -->
+                </div>
+              </form>
+            </div>
+            <!-- </div> -->
 
-      <!-- <div class="table-responsive">
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </app-card>
+
+
+    <!-- <div class="table-responsive">
         <table datatable id="report-table" class="table table-bordered table-striped mb-0">
           <thead>
             <tr>

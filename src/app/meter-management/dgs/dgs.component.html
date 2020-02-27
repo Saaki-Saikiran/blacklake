@@ -59,13 +59,13 @@
           </ngb-tab>
           <ngb-tab title={{tabHeader}} id="AdduserId">
             <ng-template ngbTabContent>
-              <div class="card m-3">
+              <!-- <div class="card m-3"> -->
                 <h5 class="card-header">{{formHeader}}</h5>
                 <div class="card-body">
                   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                    <div class="form-row">
-
-                      <div class="form-group col">
+                    <div class="row" >
+                      <div class="col-md-6">
+                        <div class="form-group">
                         <label>DG Serial Number</label>
                         <input type="text" placeholder="Enter DG Serial Number" formControlName="dgSerialNumber" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.dgSerialNumber.errors }" />
@@ -73,9 +73,7 @@
                           <div *ngIf="f.dgSerialNumber.errors.required">DG SerialNumber is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                        </div>
-                      <div class="form-group col">
+                      <div class="form-group">
                         <label> Model</label>
                         <input type="text" placeholder="Enter Model" formControlName="model" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />
@@ -84,8 +82,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="form-row">
-                      <div class="form-group col">
+                    <div class="col-md-6">
+                      <div class="form-group">
                       <label>Meter Serial Number</label>
                       <select formControlName="meterSerialNumberID" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.meterSerialNumberID.errors }">
@@ -96,13 +94,7 @@
                         <div *ngIf="f.meterSerialNumberID.errors.required">Dept Meter Number is required</div>
                       </div>
                       </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col">
+                      <div class="form-group">
                         <label>year Make</label>
                         <input type="number" placeholder="Year Make" formControlName="yearMake" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.yearMake.errors }" />
@@ -110,9 +102,9 @@
                           <div *ngIf="f.yearMake.errors.required">Year Make is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                        </div>
-                      <div class="form-group col">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
                         <label>description</label>
                         <input type="text" placeholder="Enter Description" formControlName="description" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
@@ -121,14 +113,20 @@
                         </div>
                       </div>
                     </div>
-
-                    <div class="text-center">
+                    <div class="col-md-12">
+                      <div class="text-center">
+                        <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                        <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                      </div>
+                    </div>
+                    <!-- <div class="text-center">
                       <button class="btn btn-primary mr-1">{{buttonType}}</button>
                       <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-                    </div>
+                    </div> -->
+                  </div>
                   </form>
                 </div>
-              </div>
+              <!-- </div> -->
 
             </ng-template>
           </ngb-tab>
