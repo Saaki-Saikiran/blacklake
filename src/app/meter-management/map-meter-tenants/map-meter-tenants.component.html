@@ -286,13 +286,14 @@
         </ngb-tab>
         <ngb-tab title={{tabHeader}} id="AdduserId">
           <ng-template ngbTabContent>
-            <div class="card m-3">
-              <h5 class="card-header">{{formHeader}}</h5>
-              <div class="card-body" *ngIf="buttonType != 'Update'">
-                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <!-- <div class="card m-3"> -->
+            <h5 class="card-header">{{formHeader}}</h5>
+            <div class="card-body" *ngIf="buttonType != 'Update'">
+              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-                  <div class="form-row">
-                    <div class="form-group col">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
                       <label>Select Meter Type to Assign</label>
                       <select formControlName="meterSerialNumberID" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.meterSerialNumberID.errors }">
@@ -303,15 +304,7 @@
                         <div *ngIf="f.meterSerialNumberID.errors.required">Meter Type to Assign is required</div>
                       </div>
                     </div>
-                    <div class="form-group col-1">
-                    </div>
-                    <div class="form-group col">
-                    </div>
-                  </div>
-
-                  <div class="form-row">
-
-                    <div class="form-group col">
+                    <div class="form-group">
                       <label>Select Building & Block</label>
                       <select formControlName="buildingBlock" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.buildingBlock.errors }">
@@ -323,9 +316,11 @@
                         <div *ngIf="f.buildingBlock.errors.required">Meter Type to Assign is required</div>
                       </div>
                     </div>
-                    <div class="form-group col-1">
-                    </div>
-                    <div class="form-group col">
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group">
                       <label>Select Floor & Wing</label>
                       <select formControlName="floorID" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.floorID.errors }">
@@ -339,56 +334,7 @@
                           required</div>
                       </div>
                     </div>
-                  </div>
-
-
-                  <div class="form-row">
-
-                    <div class="form-group col">
-                      Do you want to assign to a Tenant?
-                    </div>
-                    <!-- <div class="form-group col">
-                        <div class="form-check">
-
-                          <input class="form-check-input" formControlName="assignTenant" style="color: orangered;"
-                            type="radio" name="gridRadios" id="gridRadios" value="option1" checked>
-                          <label class="form-check-label" for="gridRadios">Yes</label>
-                        </div>
-                      </div>
-                      <div class="form-group col">
-                        <div class="form-check">
-                          <input class="form-check-input" formControlName="assignTenant" type="radio" name="gridRadios"
-                            id="gridRadios" value="option2">
-                          <label class="form-check-label" for="gridRadios">No</label>
-                        </div>
-                      </div> -->
-                      <div class="form-group col-1">
-                      </div>
-                    <div class="form-group col">
-                      <label class="container">Yes
-                        <input type="radio" name="radio" formControlName="assignTenant"
-                          style="margin: 0px 15px 0px 15px;" name="assignTenant" value="yes"
-                          (change)="handleChange($event)">
-                        <span class="checkmark"></span>
-                      </label>
-                      <label class="container">No
-                        <input type="radio" name="radio" formControlName="assignTenant"
-                          style="margin: 0px 15px 0px 30px;" name="assignTenant" value="no"
-                          (change)="handleChange($event)">
-                        <span class="checkmark"></span>
-                      </label>
-                      <!-- <fieldset class="form-group"  >
-                        <input type="radio" class="checkmark" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
-                          name="assignTenant" value="yes" (change)="handleChange($event)"><span >Yes</span>
-                        <input type="radio" class="checkmark" formControlName="assignTenant" style="margin: 0px 15px 0px 30px;"
-                          name="assignTenant" value="no" (change)="handleChange($event)"><span >No</span>
-                      </fieldset> -->
-                    </div>
-
-
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col">
+                    <div class="form-group">
                       <label>Common Meter Category</label>
                       <select *ngIf="userForm.value.assignTenant == 'yes'" formControlName="tenantID"
                         class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tenantID.errors }">
@@ -408,42 +354,79 @@
                         <div *ngIf="f.tenantID.errors.required">Meter Type to Assign is required</div>
                       </div>
                     </div>
-                    <div class="form-group col-1">
+                  </div>
+
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      Do you want to assign to a Tenant?
                     </div>
-                    <div class="form-group col">
+                    <div class="form-group">
+                    </div>
+
+
+                  </div>
+                  <div class="col-md-6">
+                    
+                    <div class="form-group">
+                      <label class="container">Yes
+                        <input type="radio" name="radio" formControlName="assignTenant"
+                          style="margin: 0px 15px 0px 15px;" name="assignTenant" value="yes"
+                          (change)="handleChange($event)">
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="container">No
+                        <input type="radio" name="radio" formControlName="assignTenant"
+                          style="margin: 0px 15px 0px 30px;" name="assignTenant" value="no"
+                          (change)="handleChange($event)">
+                        <span class="checkmark"></span>
+                      </label>
+                      <!-- <fieldset class="form-group"  >
+                        <input type="radio" class="checkmark" formControlName="assignTenant" style="margin: 0px 15px 0px 15px;"
+                          name="assignTenant" value="yes" (change)="handleChange($event)"><span >Yes</span>
+                        <input type="radio" class="checkmark" formControlName="assignTenant" style="margin: 0px 15px 0px 30px;"
+                          name="assignTenant" value="no" (change)="handleChange($event)"><span >No</span>
+                      </fieldset> -->
                     </div>
                   </div>
-                  <div class="text-center">
+                  <!-- <div class="text-center">
                     <button class="btn btn-primary mr-1">{{buttonType}}</button>
                     <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-                  </div>
-                </form>
-              </div>
-              <div *ngIf="buttonType == 'Update'">
-
-                <div class="form-row">
-                  <div class="form-group col">
-                    <label>Select Vacate Meter Date</label>
-                    <input class="form-control" #statustime="ngModel" placeholder="yyyy-mm-dd" name="dp"
-                      [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" required>
-                    <div class="input-group-append">
-                      <button (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                  </div> -->
+                  <div class="col-md-12">
+                    <div class="text-center">
+                      <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
                     </div>
                   </div>
-                  <div class="form-group col">
+                </div>
+              </form>
+            </div>
+            <div *ngIf="buttonType == 'Update'">
+
+              <div class="form-row">
+                <div class="form-group col">
+                  <label>Select Vacate Meter Date</label>
+                  <input class="form-control" #statustime="ngModel" placeholder="yyyy-mm-dd" name="dp"
+                    [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" required>
+                  <div class="input-group-append">
+                    <button (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
                   </div>
                 </div>
-
-                <hr />
-                <!-- <pre>Model: {{ model | json }}</pre> -->
-                <div class="text-center">
-                  <button class="btn btn-primary mr-1" [disabled]="!statustime.valid"
-                    (click)="changeVacateTime(Userdata,model);">{{buttonType}}</button>
-                  <button class="btn btn-secondary" type="reset" (click)="Cancel()">Cancel</button>
+                <div class="form-group col">
                 </div>
               </div>
 
+              <hr />
+              <!-- <pre>Model: {{ model | json }}</pre> -->
+              <div class="text-center">
+                <button class="btn btn-primary mr-1" [disabled]="!statustime.valid"
+                  (click)="changeVacateTime(Userdata,model);">{{buttonType}}</button>
+                <button class="btn btn-secondary" type="reset" (click)="Cancel()">Cancel</button>
+              </div>
             </div>
+
+            <!-- </div> -->
           </ng-template>
         </ngb-tab>
       </ngb-tabset>
@@ -510,5 +493,4 @@
   .slider.round:before {
     border-radius: 50%;
   }
-
 </style>
