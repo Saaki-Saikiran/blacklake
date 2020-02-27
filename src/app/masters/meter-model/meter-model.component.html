@@ -58,22 +58,13 @@
                 </ngb-tab>
                 <ngb-tab title={{tabHeader}} id="AdduserId">
                   <ng-template ngbTabContent>
-                      <div class="card m-3">
+                      <!-- <div class="card m-3"> -->
                           <h5 class="card-header">{{formHeader}}</h5>
-                          <div class="card-body">
+                          <!-- <div class="card-body"> -->
                             <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                              <div class="form-row">
-                                  <!-- <div class="form-group col">
-                                    <label>Meter Model </label>
-                                      <input type="number" placeholder="Enter Meter Model" formControlName="meterModelId" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.meterModelId.errors }" />
-                                      <div *ngIf="submitted && f.meterModelId.errors" class="invalid-feedback">
-                                        <div *ngIf="f.meterModelId.errors.required">Meter Model is required</div>
-                                      </div>
-                                    </div> -->
-                                    <!-- <div class="form-group col-1">
-                                      </div> -->
-                                <div class="form-group col">
+                              <div class="row" >
+                                <div class="col-md-6">
+                                  <div class="form-group">
                                   <label>Meter Model Name </label>
                                   <input type="text" placeholder="Enter Meter Model Name" formControlName="meterModelName" class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.meterModelName.errors }" />
@@ -81,13 +72,21 @@
                                     <div *ngIf="f.meterModelName.errors.required">Meter Model Name is required</div>
                                   </div>
                                 </div>
-                                <div class="form-group col-1">
-                                </div>
-                                <div class="form-group col">
+                                <div class="form-group">
+                                  <label>Supported</label>
+                                  <select formControlName="isSupported" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }">
+                                    <option value="">Select Supported</option>
+                                    <option value="true" >true</option>
+                                    <option value="false">false</option>
+                                  </select>
+                                  <div *ngIf="submitted && f.isSupported.errors" class="invalid-feedback">
+                                    <div *ngIf="f.isSupported.errors.required">Supported is required</div>
+                                  </div>
                                 </div>
                               </div>
-                              <div class="form-row">
-                                  <div class="form-group col">
+                              <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Manufacturer</label>
                                       <input type="text" placeholder="Enter Manufacturer" formControlName="manufacturer" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.manufacturer.errors }" />
@@ -95,9 +94,7 @@
                                         <div *ngIf="f.manufacturer.errors.required">Manufacturer is required</div>
                                       </div>
                                     </div>
-                                    <div class="form-group col-1">
-                                      </div>
-                              <div class="form-group col">
+                                    <div class="form-group">
                                 <label>Starting Register</label>
                                 <input type="number" placeholder="Enter Starting Register" formControlName="startingRegister" class="form-control"
                                   [ngClass]="{ 'is-invalid': submitted && f.startingRegister.errors }" />
@@ -108,8 +105,8 @@
                               </div>
                                 
                               </div>
-                              <div class="form-row">
-                                  <div class="form-group col">
+                              <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Length</label>
                                       <input type="number" placeholder="Enter Length"  formControlName="length" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.length.errors }" />
@@ -118,9 +115,7 @@
                                         
                                       </div>
                                     </div>
-                                    <div class="form-group col-1">
-                                      </div>
-                                  <div class="form-group col">
+                                    <div class="form-group">
                                     <label>Data Type</label>
                                     <input type="text" placeholder="Enter Data Type" formControlName="dataType" class="form-control"
                                       [ngClass]="{ 'is-invalid': submitted && f.dataType.errors }" />
@@ -139,22 +134,9 @@
                                       </div>
                                     </div> -->
                                   </div>
-                              <div class="form-row">
-                                  <div class="form-group col">
-                                      <label>Supported</label>
-                                      <select formControlName="isSupported" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }">
-                                        <option value="">Select Supported</option>
-                                        <option value="true" >true</option>
-                                        <option value="false">false</option>
-                                      </select>
-                                      <div *ngIf="submitted && f.isSupported.errors" class="invalid-feedback">
-                                        <div *ngIf="f.isSupported.errors.required">Supported is required</div>
-                                      </div>
-                                    </div>
-                                    <div class="form-group col-1">
-                                      </div>
-                                    <div class="form-group col">
+                                  <div class="col-md-6">
+                                    
+                                    <div class="form-group">
                                       <label>Comments</label>
                                       <input type="text" placeholder="Enter Comments"  formControlName="comments" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
@@ -166,13 +148,21 @@
                                   </div>
                              
                                 
-                              <div class="text-center">
+                              <!-- <div class="text-center">
                                 <button class="btn btn-primary mr-1">{{buttonType}}</button>
                                 <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                              </div> -->
+
+                              <div class="col-md-12">
+                                <div class="text-center">
+                                  <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                                  <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                                </div>
                               </div>
+                            </div>
                             </form>
-                          </div>
-                        </div>
+                          <!-- </div>
+                        </div> -->
         
                   </ng-template>
                 </ngb-tab>

@@ -62,23 +62,13 @@
           </ngb-tab>
           <ngb-tab title={{tabHeader}} id="AdduserId">
             <ng-template ngbTabContent>
-              <div class="card m-3">
+              <!-- <div class="card m-3"> -->
                 <h5 class="card-header">{{formHeader}}</h5>
-                <div class="card-body">
+                <!-- <div class="card-body"> -->
                   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                    <div class="form-row">
-                      <!-- <div class="form-group col">
-                        <label>Meter Params </label>
-                        <input type="number" placeholder="Meter Params " formControlName="meterParamsId"
-                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meterParamsId.errors }" />
-                        <div *ngIf="submitted && f.meterParamsId.errors" class="invalid-feedback">
-                          <div *ngIf="f.meterParamsId.errors.required">Meter Params  is required</div>
-
-                        </div>
-                      </div>
-                      <div class="form-group col-1">
-                      </div> -->
-                      <div class="form-group col">
+                    <div class="row" >
+                      <div class="col-md-6">
+                        <div class="form-group">
                         <label>Meter Model </label>
                         <select formControlName="meterModelId" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.meterModelId.errors }">
@@ -91,94 +81,7 @@
                           <div *ngIf="f.meterModelId.errors.required">Meter Model is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col">
-                      </div>
-
-
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col">
-                        <label>Parameter Name</label>
-                        <input type="text" placeholder="Enter Parameter Name" formControlName="parameterName"
-                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.parameterName.errors }" />
-                        <div *ngIf="submitted && f.parameterName.errors" class="invalid-feedback">
-                          <div *ngIf="f.parameterName.errors.required">Parameter Name is required</div>
-                        </div>
-                      </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col">
-                        <label>Description</label>
-                        <input type="text" placeholder="Enter Description" formControlName="description"
-                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
-                        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                          <div *ngIf="f.description.errors.required">Description is required</div>
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col">
-                        <label>Units </label>
-                        <input type="text" placeholder="Enter Units" formControlName="units" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.units.errors }" />
-                        <div *ngIf="submitted && f.units.errors" class="invalid-feedback">
-                          <div *ngIf="f.units.errors.required">Units is required</div>
-
-                        </div>
-                      </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col">
-                        <label>Data Type</label>
-                        <input type="text" placeholder="Enter Data Type" formControlName="dataType" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.dataType.errors }" />
-                        <div *ngIf="submitted && f.dataType.errors" class="invalid-feedback">
-                          <div *ngIf="f.dataType.errors.required">Data Type is required</div>
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col">
-                        <label>Scaling</label>
-                        <input type="number" placeholder="Enter Scaling" formControlName="scaling" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.scaling.errors }" />
-                        <div *ngIf="submitted && f.scaling.errors" class="invalid-feedback">
-                          <div *ngIf="f.scaling.errors.required">Scaling is required</div>
-                          <div *ngIf="f.scaling.errors?.pattern">Please enter valid Scaling!</div>
-                        </div>
-                      </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col">
-                        <label>MOD Register</label>
-                        <input type="number" placeholder="Enter Mod Register" formControlName="modRegister"
-                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modRegister.errors }" />
-                        <div *ngIf="submitted && f.modRegister.errors" class="invalid-feedback">
-                          <div *ngIf="f.modRegister.errors.required">Mod Register is required</div>
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col">
-                        <label>Register Length</label>
-                        <input type="number" placeholder="Enter Register Length" formControlName="registerLength"
-                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.registerLength.errors }" />
-                        <div *ngIf="submitted && f.registerLength.errors" class="invalid-feedback">
-                          <div *ngIf="f.registerLength.errors.required">Register Length is required</div>
-
-                        </div>
-                      </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col">
+                      <div class="form-group">
                         <label>Supported</label>
                         <select formControlName="isSupported" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.isSupported.errors }">
@@ -190,15 +93,94 @@
                           <div *ngIf="f.isSupported.errors.required">Supported is required</div>
                         </div>
                       </div>
+
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Parameter Name</label>
+                        <input type="text" placeholder="Enter Parameter Name" formControlName="parameterName"
+                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.parameterName.errors }" />
+                        <div *ngIf="submitted && f.parameterName.errors" class="invalid-feedback">
+                          <div *ngIf="f.parameterName.errors.required">Parameter Name is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" placeholder="Enter Description" formControlName="description"
+                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                          <div *ngIf="f.description.errors.required">Description is required</div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Units </label>
+                        <input type="text" placeholder="Enter Units" formControlName="units" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.units.errors }" />
+                        <div *ngIf="submitted && f.units.errors" class="invalid-feedback">
+                          <div *ngIf="f.units.errors.required">Units is required</div>
+
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Data Type</label>
+                        <input type="text" placeholder="Enter Data Type" formControlName="dataType" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.dataType.errors }" />
+                        <div *ngIf="submitted && f.dataType.errors" class="invalid-feedback">
+                          <div *ngIf="f.dataType.errors.required">Data Type is required</div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Scaling</label>
+                        <input type="number" placeholder="Enter Scaling" formControlName="scaling" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.scaling.errors }" />
+                        <div *ngIf="submitted && f.scaling.errors" class="invalid-feedback">
+                          <div *ngIf="f.scaling.errors.required">Scaling is required</div>
+                          <div *ngIf="f.scaling.errors?.pattern">Please enter valid Scaling!</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>MOD Register</label>
+                        <input type="number" placeholder="Enter Mod Register" formControlName="modRegister"
+                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modRegister.errors }" />
+                        <div *ngIf="submitted && f.modRegister.errors" class="invalid-feedback">
+                          <div *ngIf="f.modRegister.errors.required">Mod Register is required</div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Register Length</label>
+                        <input type="number" placeholder="Enter Register Length" formControlName="registerLength"
+                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.registerLength.errors }" />
+                        <div *ngIf="submitted && f.registerLength.errors" class="invalid-feedback">
+                          <div *ngIf="f.registerLength.errors.required">Register Length is required</div>
+
+                        </div>
+                      </div>
+                      
                     </div>
 
-                    <div class="text-center">
-                      <button class="btn btn-primary mr-1">{{buttonType}}</button>
-                      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                    <div class="col-md-12">
+                      <div class="text-center">
+                        <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                        <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                      </div>
                     </div>
+                  </div>
                   </form>
-                </div>
-              </div>
+                <!-- </div>
+              </div> -->
 
             </ng-template>
           </ngb-tab>

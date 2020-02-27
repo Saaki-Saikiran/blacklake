@@ -17,57 +17,57 @@
             <ng-template ngbTabContent>
               <div class="table-responsive p-t-20">
                 <div class="table-responsive">
-              <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                class="table table-bordered table-striped mb-0">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Building</th>
-                    <th>block</th>
-                    <th>floor</th>
-                    <th>occupant Number</th>
-                    <th>sqFts</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of FloorsList;let i = index;">
-                    <td>{{i+1}}</td>
-                    <td>{{item.building}}</td>
-                    <td>
-                      {{item.block}}
-                    </td>
-                    <td>{{item.floor}}</td>
-                    <td>{{item.occupantNumber}}</td>
-                    <td>{{item.sqFts}}</td>
-                    <td class="align-middle">
-                      <span *ngIf="item.active" class="badge badge-success">Active</span>
-                      <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
-                    </td>
-                    <td class="table-action">
-                      <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
-                          class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
-                            class="feather icon-edit"></i></a></span>
-                      <a href="javascript:" class="btn btn-icon btn-outline-danger"
-                        (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                  <table datatable id="report-table" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Building</th>
+                        <th>block</th>
+                        <th>floor</th>
+                        <th>occupant Number</th>
+                        <th>sqFts</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of FloorsList;let i = index;">
+                        <td>{{i+1}}</td>
+                        <td>{{item.building}}</td>
+                        <td>
+                          {{item.block}}
+                        </td>
+                        <td>{{item.floor}}</td>
+                        <td>{{item.occupantNumber}}</td>
+                        <td>{{item.sqFts}}</td>
+                        <td class="align-middle">
+                          <span *ngIf="item.active" class="badge badge-success">Active</span>
+                          <span *ngIf="!item.active" class="badge badge-danger">In-Active</span>
+                        </td>
+                        <td class="table-action">
+                          <span (click)="myTabSet.select('AdduserId')"><a href="javascript:"
+                              class="btn btn-icon btn-outline-success" (click)="userModal('Edit', item)"><i
+                                class="feather icon-edit"></i></a></span>
+                          <a href="javascript:" class="btn btn-icon btn-outline-danger"
+                            (click)="confirmAlertDelete(item._id)"><i class="feather icon-trash-2"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </ng-template>
           </ngb-tab>
           <ngb-tab title={{tabHeader}} id="AdduserId">
             <ng-template ngbTabContent>
-              <div class="card m-3">
-                <h5 class="card-header">{{formHeader}}</h5>
-                <div class="card-body">
-                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                    <div class="form-row">
-
-                      <div class="form-group col">
+              <!-- <div class="card m-3"> -->
+              <h5 class="card-header">{{formHeader}}</h5>
+              <!-- <div class="card-body"> -->
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
                         <label>Building</label>
                         <input type="text" placeholder="Enter Building" formControlName="building" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.building.errors }" />
@@ -75,9 +75,7 @@
                           <div *ngIf="f.building.errors.required">Building Name is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                        </div>
-                      <div class="form-group col">
+                      <div class="form-group">
                         <label> Block</label>
                         <input type="text" placeholder="Enter Block" formControlName="block" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.block.errors }" />
@@ -86,8 +84,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="form-row">
-                      <div class="form-group col">
+                    <div class="col-md-6">
+                      <div class="form-group">
                         <label>Floor</label>
                         <input type="text" placeholder="Enter Floor" formControlName="floor" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.floor.errors }" />
@@ -95,19 +93,18 @@
                           <div *ngIf="f.floor.errors.required">Floor is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                        </div>
-                      <div class="form-group col">
+
+                      <div class="form-group">
                         <label>Occupant Number</label>
-                        <input type="text" placeholder="Enter Occupant Number" formControlName="occupantNumber" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.occupantNumber.errors }" />
+                        <input type="text" placeholder="Enter Occupant Number" formControlName="occupantNumber"
+                          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.occupantNumber.errors }" />
                         <div *ngIf="submitted && f.occupantNumber.errors" class="invalid-feedback">
                           <div *ngIf="f.occupantNumber.errors.required">Occupant Number is required</div>
                         </div>
                       </div>
                     </div>
-                    <div class="form-row">
-                      <div class="form-group col">
+                    <div class="col-md-6">
+                      <div class="form-group">
                         <label>Sqfts</label>
                         <input type="text" placeholder="Enter Sqfts" formControlName="sqFts" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.sqFts.errors }" />
@@ -115,18 +112,23 @@
                           <div *ngIf="f.sqFts.errors.required">Sqfts is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                        </div>
-                        <div class="form-group col">
-                          </div>
+                      <div class="form-group">
+                      </div>
                     </div>
-                    <div class="text-center">
+                    <div class="col-md-12">
+                      <div class="text-center">
+                        <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                        <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                      </div>
+                    </div>
+                    <!-- <div class="text-center">
                       <button class="btn btn-primary mr-1">{{buttonType}}</button>
                       <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
+                    </div> -->
+                  </div>
+                </form>
+              <!-- </div> -->
+              <!-- </div> -->
 
             </ng-template>
           </ngb-tab>

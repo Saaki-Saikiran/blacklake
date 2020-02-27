@@ -69,12 +69,12 @@
                     </ngb-tab>
                     <ngb-tab title={{tabHeader}} id="AdduserId">
                         <ng-template ngbTabContent>
-                            <div class="card m-3">
-                                <h5 class="card-header">{{formHeader}}</h5>
-                                <div class="card-body">
-                                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                                        <div class="form-row">
-                                            <!-- <div class="form-group col">
+                            <!-- <div class="card m-3"> -->
+                            <h5 class="card-header">{{formHeader}}</h5>
+                            <!-- <div class="card-body"> -->
+                            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+                                <!-- <div class="form-group col">
                                                     <label>Gateway</label>
                                                         <input type="text" placeholder="Enter Gateway "
                                                             formControlName="gatewayId" class="form-control"
@@ -87,171 +87,154 @@
                                                     </div>
                                                     <div class="form-group col-1">
                                                     </div> -->
-                                            <div class="form-group col">
-                                                <label>Gateway Name</label>
-                                                <input type="text" placeholder="Enter Gateway Name"
-                                                    formControlName="name" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-                                                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.name.errors.required">Gateway Name is
-                                                        required</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-1">
-                                            </div>
-                                            <div class="form-group col">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Gateway Name</label>
+                                            <input type="text" placeholder="Enter Gateway Name" formControlName="name"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                                <div *ngIf="f.name.errors.required">Gateway Name is
+                                                    required</div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col">
-                                                <label>Gateway Model</label>
-                                                <input type="text" placeholder="Enter Gateway Model"
-                                                    formControlName="gatewayModel" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.gatewayModel.errors }" />
-                                                <div *ngIf="submitted && f.gatewayModel.errors"
-                                                    class="invalid-feedback">
-                                                    <div *ngIf="f.gatewayModel.errors.required">Gateway Model is
-                                                        required</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-1">
-                                            </div>
-                                            <div class="form-group col">
-                                                <label>Location</label>
-                                                <input type="text" placeholder="Enter Location"
-                                                    formControlName="location" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
-                                                <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.location.errors.required">Location is required
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col">
-                                                <label>IP</label>
-                                                <input type="text" placeholder="Enter IP" formControlName="ip"
-                                                    class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.ip.errors }" />
-                                                <div *ngIf="submitted && f.ip.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.ip.errors.required">IP is required</div>
-                                                    <div *ngIf="f.ip.errors?.pattern">Please enter valid IP address!
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-1">
-                                            </div>
-                                            <div class="form-group col">
-                                                <label>TCP COM PortNo </label>
-                                                <input type="number" placeholder="Enter TCP COM PortNo"
-                                                    formControlName="tcp_COM_PortNo" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_PortNo.errors }" />
-                                                <div *ngIf="submitted && f.tcp_COM_PortNo.errors"
-                                                    class="invalid-feedback">
-                                                    <div *ngIf="f.tcp_COM_PortNo.errors.required">TCP COM PortNo is
-                                                        required</div>
-
-                                                </div>
+                                        <div class="form-group">
+                                            <label>Gateway Model</label>
+                                            <input type="text" placeholder="Enter Gateway Model"
+                                                formControlName="gatewayModel" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.gatewayModel.errors }" />
+                                            <div *ngIf="submitted && f.gatewayModel.errors" class="invalid-feedback">
+                                                <div *ngIf="f.gatewayModel.errors.required">Gateway Model is
+                                                    required</div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-
-                                            <div class="form-group col">
-                                                <label>Baud Rate</label>
-                                                <input type="number" placeholder="Enter Baud Rate"
-                                                    formControlName="baudRate" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.baudRate.errors }" />
-                                                <div *ngIf="submitted && f.baudRate.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.baudRate.errors.required">Baud Rate is required
-                                                    </div>
-
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Location</label>
+                                            <input type="text" placeholder="Enter Location" formControlName="location"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
+                                            <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                                                <div *ngIf="f.location.errors.required">Location is required
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-1">
-                                            </div>
-                                            <div class="form-group col">
-                                                <label>Parity</label>
-                                                <input type="text" placeholder="Enter Parity" formControlName="parity"
-                                                    class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.parity.errors }" />
-                                                <div *ngIf="submitted && f.parity.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.parity.errors.required">Parity is
-                                                        required</div>
 
-                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-
-                                            <div class="form-group col">
-                                                <label>Stop Bits</label>
-                                                <input type="number" placeholder="Enter Stop Bits"
-                                                    formControlName="stopBits" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.stopBits.errors }" />
-                                                <div *ngIf="submitted && f.stopBits.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.stopBits.errors.required">Stop Bits is required
-                                                    </div>
-
+                                        <div class="form-group">
+                                            <label>IP</label>
+                                            <input type="text" placeholder="Enter IP" formControlName="ip"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.ip.errors }" />
+                                            <div *ngIf="submitted && f.ip.errors" class="invalid-feedback">
+                                                <div *ngIf="f.ip.errors.required">IP is required</div>
+                                                <div *ngIf="f.ip.errors?.pattern">Please enter valid IP address!
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-1">
-                                            </div>
-                                            <div class="form-group col">
-                                                <label>Data Size</label>
-                                                <input type="number" placeholder="Enter Data Size"
-                                                    formControlName="dataSize" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.dataSize.errors }" />
-                                                <div *ngIf="submitted && f.dataSize.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.dataSize.errors.required">Data Size is required
-                                                    </div>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>TCP COM PortNo </label>
+                                            <input type="number" placeholder="Enter TCP COM PortNo"
+                                                formControlName="tcp_COM_PortNo" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_PortNo.errors }" />
+                                            <div *ngIf="submitted && f.tcp_COM_PortNo.errors" class="invalid-feedback">
+                                                <div *ngIf="f.tcp_COM_PortNo.errors.required">TCP COM PortNo is
+                                                    required</div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Baud Rate</label>
+                                            <input type="number" placeholder="Enter Baud Rate"
+                                                formControlName="baudRate" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.baudRate.errors }" />
+                                            <div *ngIf="submitted && f.baudRate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.baudRate.errors.required">Baud Rate is required
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parity</label>
+                                            <input type="text" placeholder="Enter Parity" formControlName="parity"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.parity.errors }" />
+                                            <div *ngIf="submitted && f.parity.errors" class="invalid-feedback">
+                                                <div *ngIf="f.parity.errors.required">Parity is
+                                                    required</div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Stop Bits</label>
+                                            <input type="number" placeholder="Enter Stop Bits"
+                                                formControlName="stopBits" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.stopBits.errors }" />
+                                            <div *ngIf="submitted && f.stopBits.errors" class="invalid-feedback">
+                                                <div *ngIf="f.stopBits.errors.required">Stop Bits is required
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       
+                                        <div class="form-group">
+                                            <label>Data Size</label>
+                                            <input type="number" placeholder="Enter Data Size"
+                                                formControlName="dataSize" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.dataSize.errors }" />
+                                            <div *ngIf="submitted && f.dataSize.errors" class="invalid-feedback">
+                                                <div *ngIf="f.dataSize.errors.required">Data Size is required
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Select TCP/COM Type</label>
+                                            <select formControlName="tcp_COM_Type" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_Type.errors }">
+                                                <option value="">Select TCP/COM Type</option>
+                                                <option value="TCP">TCP</option>
+                                                <option value="COM">COM</option>
+                                            </select>
+                                            <div *ngIf="submitted && f.tcp_COM_Type.errors" class="invalid-feedback">
+                                                <div *ngIf="f.tcp_COM_Type.errors.required">TCP/COM Type is required
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="form-row">
-                                            <div class="form-group col">
-                                                <label>Select TCP/COM Type</label>
-                                                <select formControlName="tcp_COM_Type" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.tcp_COM_Type.errors }">
-                                                    <option value="">Select TCP/COM Type</option>
-                                                    <option value="TCP">TCP</option>
-                                                    <option value="COM">COM</option>
-                                                </select>
-                                                <div *ngIf="submitted && f.tcp_COM_Type.errors"
-                                                    class="invalid-feedback">
-                                                    <div *ngIf="f.tcp_COM_Type.errors.required">TCP/COM Type is required
-                                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Comments</label>
+                                            <input type="text" placeholder="Enter Comments" formControlName="comments"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
+                                            <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
+                                                <div *ngIf="f.comments.errors.required">Comments is required
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-1">
-                                            </div>
-                                            <div class="form-group col">
-                                                <label>Comments</label>
-                                                <input type="text" placeholder="Enter Comments"
-                                                    formControlName="comments" class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.comments.errors }" />
-                                                <div *ngIf="submitted && f.comments.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.comments.errors.required">Comments is required
-                                                    </div>
 
-                                                </div>
                                             </div>
-
                                         </div>
+
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="text-center">
-                                            <button class="btn btn-primary mr-1">{{buttonType}}</button>
-                                            <button class="btn btn-secondary" type="reset"
-                                                (click)="onReset()">Cancel</button>
+                                          <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                                          <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
                                         </div>
-                                    </form>
+                                      </div>
                                 </div>
-                            </div>
+                            </form>
+                            <!-- </div>
+                            </div> -->
 
                         </ng-template>
                     </ngb-tab>

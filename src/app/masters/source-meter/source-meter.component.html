@@ -56,9 +56,9 @@
           </ngb-tab>
           <ngb-tab title={{tabHeader}} id="AdduserId">
             <ng-template ngbTabContent>
-              <div class="card m-3">
+              <!-- <div class="card m-3"> -->
                 <h5 class="card-header">{{formHeader}}</h5>
-                <div class="card-body">
+                <!-- <div class="card-body"> -->
                   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                     <!-- <div class="form-row">
                       <div class="form-group col">
@@ -74,8 +74,9 @@
                       <div class="form-group col">
                       </div>
                     </div> -->
-                    <div class="form-row">
-                      <div class="form-group col">
+                    <div class="row" >
+                      <div class="col-md-6">
+                        <div class="form-group">
                         <label>Automated</label>
                         <select formControlName="isAutomated" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.isAutomated.errors }">
@@ -87,16 +88,7 @@
                           <div *ngIf="f.isAutomated.errors.required">Automated is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <!-- <div class="form-group col">
-                                  <input type="text" placeholder="Automated" formControlName="isAutomated" class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.isAutomated.errors }" />
-                                  <div *ngIf="submitted && f.isAutomated.errors" class="invalid-feedback">
-                                    <div *ngIf="f.isAutomated.errors.required">Automated is required</div>
-                                  </div>
-                                </div> -->
-                      <div class="form-group col">
+                      <div class="form-group">
                         <label>Utility Supported</label>
                         <select formControlName="isUtilitySupported" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.isUtilitySupported.errors }">
@@ -109,8 +101,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="form-row">
-                      <div class="form-group col">
+                    <div class="col-md-6">
+                      <div class="form-group">
                         <label>Generator Supported</label>
                         <select formControlName="isGeneratorSupported" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.isGeneratorSupported.errors }">
@@ -122,9 +114,7 @@
                           <div *ngIf="f.isGeneratorSupported.errors.required">Generator Supported is required</div>
                         </div>
                       </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col">
+                      <div class="form-group">
                         <label>Source Type</label>
                         <input type="text" placeholder="Source Type" formControlName="sourceType" class="form-control"
                           [ngClass]="{ 'is-invalid': submitted && f.sourceType.errors }" />
@@ -133,13 +123,16 @@
                         </div>
                       </div>
                     </div>
-                    <div class="text-center">
-                      <button class="btn btn-primary mr-1">{{buttonType}}</button>
-                      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                    <div class="col-md-12">
+                      <div class="text-center">
+                        <button class="btn btn-primary mr-1">{{buttonType}}</button>
+                        <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                      </div>
                     </div>
+                  </div>
                   </form>
-                </div>
-              </div>
+                <!-- </div>
+              </div> -->
 
             </ng-template>
           </ngb-tab>
